@@ -109,7 +109,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7652117877001887262}
   serializedVersion: 2
-  m_Mass: 6
+  m_Mass: 2
   m_Drag: 2
   m_AngularDrag: 20
   m_UseGravity: 1
@@ -130,8 +130,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObj: {fileID: 7652117877036800820}
-  speed: 10000
+  speed: 500
   sensitivity: 30
+  layer:
+    serializedVersion: 2
+    m_Bits: 8
+  range: 2
+  radius: 0.3
 --- !u!1 &7652117877036800820
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,14 +12,19 @@ public class PlayerController : MonoBehaviour
     private InputAction movement;
     private InputAction looking;
 
+    private GameObject interactibleObject;
     private Rigidbody rb;
     private float xRotation = 0.0f;
 
     [SerializeField] private GameObject cameraObj;
     [SerializeField] private float speed = 100.0f;
     [SerializeField] private float sensitivity = 100.0f;
-    
-    
+    [SerializeField] private LayerMask layer;
+    [SerializeField] private float range = 20.0f;
+    [SerializeField] private float radius = 5.0f;
+
+    private bool isLookingToInteractible = false;
+
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -53,11 +58,31 @@ public class PlayerController : MonoBehaviour
 
     private void DoInteract(InputAction.CallbackContext ctx)
     {
-        Debug.Log("interact");
+        if (isLookingToInteractible)
+        {
+            Debug.Log("interact");
+            Destroy(interactibleObject);
+        }
     }
 
     private void Update()
     {
+        RaycastHit info;
+        if(Physics.SphereCast(cameraObj.transform.position, radius, cameraObj.transform.forward, out info, range, layer))
+        {
+            Debug.DrawLine(cameraObj.transform.position, info.transform.position, Color.green);
+            Debug.Log("TOUCHÉ ! : " + info.transform.name.ToString());
+            isLookingToInteractible = true;
+            interactibleObject = info.transform.gameObject;
+        }
+        else
+        {
+            Debug.DrawLine(cameraObj.transform.position, cameraObj.transform.position + (cameraObj.transform.forward * range), Color.black);
+            isLookingToInteractible = false;
+            interactibleObject = null;
+        }
+
+
         // Souris horizontale
         transform.Rotate(Vector3.up * (looking.ReadValue<Vector2>().x * sensitivity * Time.deltaTime));
 
@@ -70,10 +95,16 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Déplacement dans le monde
-        Debug.Log("Movement : " + movement.ReadValue<Vector2>());
+        // Debug.Log("Movement : " + movement.ReadValue<Vector2>());
         Vector3 direction = transform.rotation * new Vector3(movement.ReadValue<Vector2>().x, 0.0f, movement.ReadValue<Vector2>().y);
-
         rb.AddForce(direction * speed * Time.fixedDeltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(cameraObj.transform.position, radius);// départ
+        Gizmos.DrawSphere(cameraObj.transform.position + (cameraObj.transform.forward * range), radius);// arriver
     }
 }
 
