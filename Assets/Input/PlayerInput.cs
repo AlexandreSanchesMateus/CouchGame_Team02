@@ -189,6 +189,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact1"",
+                    ""type"": ""Button"",
+                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a237247-2a82-47e3-97fa-e61b1d396780"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -235,6 +253,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Decrement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""181787ee-c1b1-42c9-a5d3-2bb5deaa3644"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -278,6 +318,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
         m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
         m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
+        m_HackerController_Interact1 = m_HackerController.FindAction("Interact1", throwIfNotFound: true);
+        m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -388,12 +430,16 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
     private readonly InputAction m_HackerController_Increment;
     private readonly InputAction m_HackerController_Decrement;
+    private readonly InputAction m_HackerController_Interact1;
+    private readonly InputAction m_HackerController_Back;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
         public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
         public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
+        public InputAction @Interact1 => m_Wrapper.m_HackerController_Interact1;
+        public InputAction @Back => m_Wrapper.m_HackerController_Back;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -409,6 +455,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Interact1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -419,6 +471,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started += instance.OnDecrement;
                 @Decrement.performed += instance.OnDecrement;
                 @Decrement.canceled += instance.OnDecrement;
+                @Interact1.started += instance.OnInteract1;
+                @Interact1.performed += instance.OnInteract1;
+                @Interact1.canceled += instance.OnInteract1;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -451,5 +509,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnIncrement(InputAction.CallbackContext context);
         void OnDecrement(InputAction.CallbackContext context);
+        void OnInteract1(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

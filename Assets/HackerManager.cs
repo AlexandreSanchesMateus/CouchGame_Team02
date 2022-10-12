@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class HackerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    //singleton
+
+
+    
     public static HackerManager instance;
     void Start()
     {
@@ -20,9 +21,5 @@ public class HackerManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
