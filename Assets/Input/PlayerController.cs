@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private InputAction movement;
     private InputAction looking;
 
+    private Vector2 movementInput = Vector2.zero;
+
     private IIteractible interactibleObject;
     private Rigidbody rb;
     private float xRotation = 0.0f;
@@ -37,8 +39,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        movement = playerInput.FPSController.Move;
-        movement.Enable();
+        playerInput.FPSController.Move.performed += OnMove;
+        playerInput.FPSController.Move.Enable();
 
         looking = playerInput.FPSController.Look;
         looking.Enable();
@@ -50,9 +52,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        movement.Disable();
+        playerInput.FPSController.Move.Disable();
         looking.Disable();
         playerInput.FPSController.Interact.Disable();
+    }
+
+    public void OnMove(InputAction.CallbackContext callback)
+    {
+        movementInput = callback.ReadValue<Vector2>();
     }
 
     private void DoInteract(InputAction.CallbackContext ctx)
@@ -86,7 +93,8 @@ public class PlayerController : MonoBehaviour
                 interactibleObject = null;
             }
         }
-
+        Vector3 direction = transform.rotation * new Vector3(movementInput.x, 0.0f, movementInput.y);
+        rb.AddForce(direction * speed * Time.fixedDeltaTime);
 
         // Souris horizontale
         transform.Rotate(Vector3.up * (looking.ReadValue<Vector2>().x * sensitivity * Time.deltaTime));
@@ -99,16 +107,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Déplacement dans le monde
+        // Dï¿½placement dans le monde
         // Debug.Log("Movement : " + movement.ReadValue<Vector2>());
-        Vector3 direction = transform.rotation * new Vector3(movement.ReadValue<Vector2>().x, 0.0f, movement.ReadValue<Vector2>().y);
-        rb.AddForce(direction * speed * Time.fixedDeltaTime);
+        
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(cameraObj.transform.position, radius);// départ
+        Gizmos.DrawSphere(cameraObj.transform.position, radius);// dï¿½part
         Gizmos.DrawSphere(cameraObj.transform.position + (cameraObj.transform.forward * range), radius);// arriver
     }
 }
