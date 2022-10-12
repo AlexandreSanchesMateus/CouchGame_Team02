@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private InputAction movement;
     private InputAction looking;
 
-    private GameObject interactibleObject;
+    private IIteractible interactibleObject;
     private Rigidbody rb;
     private float xRotation = 0.0f;
 
@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float range = 20.0f;
     [SerializeField] private float radius = 5.0f;
 
-    private bool isLookingToInteractible = false;
 
     private void Awake()
     {
@@ -58,10 +57,10 @@ public class PlayerController : MonoBehaviour
 
     private void DoInteract(InputAction.CallbackContext ctx)
     {
-        if (isLookingToInteractible)
+        if (interactibleObject != null)
         {
-            Debug.Log("interact");
-            Destroy(interactibleObject);
+            Debug.Log("INTERACT");
+            interactibleObject.OnIteract();
         }
     }
 
@@ -71,15 +70,21 @@ public class PlayerController : MonoBehaviour
         if(Physics.SphereCast(cameraObj.transform.position, radius, cameraObj.transform.forward, out info, range, layer))
         {
             Debug.DrawLine(cameraObj.transform.position, info.transform.position, Color.green);
-            Debug.Log("TOUCHÉ ! : " + info.transform.name.ToString());
-            isLookingToInteractible = true;
-            interactibleObject = info.transform.gameObject;
+            if (interactibleObject == null && info.transform.TryGetComponent<IIteractible>(out interactibleObject))
+            {
+                Debug.Log("HOVER");
+                interactibleObject.OnItemHover();
+            }
         }
         else
         {
             Debug.DrawLine(cameraObj.transform.position, cameraObj.transform.position + (cameraObj.transform.forward * range), Color.black);
-            isLookingToInteractible = false;
-            interactibleObject = null;
+            if (interactibleObject != null)
+            {
+                Debug.Log("EXIT");
+                interactibleObject.OnItemExit();
+                interactibleObject = null;
+            }
         }
 
 
