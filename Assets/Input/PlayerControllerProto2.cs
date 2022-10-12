@@ -9,25 +9,28 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
+    [SerializeField] private float sensitivity = 30f;
+    private float xRotation;
 
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private GameObject cameraObj;
 
     private Vector2 movementInput;
     private Vector2 rotateInput;
-    
+
 
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        Debug.Log(controller);
+        cameraObj = gameObject.transform.GetChild(0).gameObject;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
-        Debug.Log("move");
     }
 
     public void OnRotate(InputAction.CallbackContext context)
@@ -45,6 +48,14 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
         controller.Move(move * Time.deltaTime * playerSpeed);
+
+        // Souris Horitale
+        transform.Rotate(Vector3.up * (rotateInput.x * sensitivity * Time.deltaTime));
+
+        // Souris verticale
+        xRotation -= rotateInput.y * sensitivity * Time.deltaTime;
+        xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
+        cameraObj.transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
 
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && groundedPlayer)

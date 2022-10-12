@@ -93,8 +93,7 @@ public class PlayerController : MonoBehaviour
                 interactibleObject = null;
             }
         }
-        Vector3 direction = transform.rotation * new Vector3(movementInput.x, 0.0f, movementInput.y);
-        rb.AddForce(direction * speed * Time.fixedDeltaTime);
+        
 
         // Souris horizontale
         transform.Rotate(Vector3.up * (looking.ReadValue<Vector2>().x * sensitivity * Time.deltaTime));
@@ -109,7 +108,8 @@ public class PlayerController : MonoBehaviour
     {
         // D�placement dans le monde
         // Debug.Log("Movement : " + movement.ReadValue<Vector2>());
-        
+        Vector3 direction = transform.rotation * new Vector3(movement.ReadValue<Vector2>().x, 0.0f, movement.ReadValue<Vector2>().y);
+        rb.AddForce(direction * speed * Time.fixedDeltaTime);
     }
 
     private void OnDrawGizmos()
