@@ -173,9 +173,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""149470da-7395-40c0-81e0-d5ceb4750f35"",
             ""actions"": [
                 {
-                    ""name"": ""WindowIncrement "",
+                    ""name"": ""Increment"",
                     ""type"": ""Button"",
-                    ""id"": ""55b799c1-b7e6-4793-89cd-3d6ce09aad4b"",
+                    ""id"": ""8eea24cc-65bc-4d5a-b1c5-b882748c9cb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Decrement"",
+                    ""type"": ""Button"",
+                    ""id"": ""c067800b-d7b0-46ec-86cd-a71e5b824e09"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -184,59 +193,48 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""Iteration"",
-                    ""id"": ""4b36e1fa-bfab-4780-8c35-624e2e7dde42"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WindowIncrement "",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""36b76d31-a0eb-4c9d-9b2e-432fc06827f3"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""WindowIncrement "",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""b4ede076-94d6-4c4b-91ba-e2e6c80c7848"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""WindowIncrement "",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""1068031b-9ac2-47c6-aecf-76078054a542"",
+                    ""name"": """",
+                    ""id"": ""106a1ba1-9faa-45cb-8816-88582459e82f"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""WindowIncrement "",
+                    ""action"": ""Increment"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""09e1c240-5d00-4eb6-b98e-4c77a6431b69"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""name"": """",
+                    ""id"": ""78b7bc1f-acd7-4d02-9546-b88b0962187e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""WindowIncrement "",
+                    ""action"": ""Increment"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dccec6e-81dd-45cd-a52f-bf7d9e1db03b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""173e08c3-506d-4441-aa1d-333a1269585e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,7 +271,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Interact = m_FPSController.FindAction("Interact", throwIfNotFound: true);
         // HackerController
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
-        m_HackerController_WindowIncrement = m_HackerController.FindAction("WindowIncrement ", throwIfNotFound: true);
+        m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
+        m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -382,12 +381,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // HackerController
     private readonly InputActionMap m_HackerController;
     private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
-    private readonly InputAction m_HackerController_WindowIncrement;
+    private readonly InputAction m_HackerController_Increment;
+    private readonly InputAction m_HackerController_Decrement;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
         public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @WindowIncrement => m_Wrapper.m_HackerController_WindowIncrement;
+        public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
+        public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -397,16 +398,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_HackerControllerActionsCallbackInterface != null)
             {
-                @WindowIncrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
-                @WindowIncrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
-                @WindowIncrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
+                @Increment.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @WindowIncrement.started += instance.OnWindowIncrement;
-                @WindowIncrement.performed += instance.OnWindowIncrement;
-                @WindowIncrement.canceled += instance.OnWindowIncrement;
+                @Increment.started += instance.OnIncrement;
+                @Increment.performed += instance.OnIncrement;
+                @Increment.canceled += instance.OnIncrement;
+                @Decrement.started += instance.OnDecrement;
+                @Decrement.performed += instance.OnDecrement;
+                @Decrement.canceled += instance.OnDecrement;
             }
         }
     }
@@ -437,6 +444,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IHackerControllerActions
     {
-        void OnWindowIncrement(InputAction.CallbackContext context);
+        void OnIncrement(InputAction.CallbackContext context);
+        void OnDecrement(InputAction.CallbackContext context);
     }
 }
