@@ -138,7 +138,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""fd4495e7-8a5b-4f5d-b40f-b04277b05d05"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.5,y=0.5)"",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -257,6 +257,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
