@@ -9,10 +9,6 @@ public class HackerController : MonoBehaviour
     public GameObject MiniGamescreens;
     
     public GameObject curentDisplayedScreen;
-    public MiniGame focusedMinigame;
-    public bool isInFrontOfMiniGame;
-    
-    public bool isFocused;
     
     public static HackerController instance;
     private void Update()
@@ -38,13 +34,6 @@ public class HackerController : MonoBehaviour
         Debug.Log("Increment");
         MiniGamescreens.transform.Rotate(0, -90, 0);
         }
-
-
-        //raycast catch gameobject
-
-        
-
-
     }
     public void Decrement(InputAction.CallbackContext callback)
     {
@@ -62,13 +51,12 @@ public class HackerController : MonoBehaviour
         Debug.Log("Interact");
         MiniGame mg;
         RaycastHit hit;
-        Screen sc;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 2, out hit))
         {
             if (hit.transform.tag=="MiniGame")
             {
                 Debug.Log("is a game");
-                    sc = hit.transform.GetComponent<Screen>();
+                    
                     mg = hit.transform.GetComponent<Screen>().game;
                     
 

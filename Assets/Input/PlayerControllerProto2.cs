@@ -31,15 +31,17 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        Debug.Log(context.ReadValue<Vector2>());
         movementInput = context.ReadValue<Vector2>();
     }
 
     public void OnRotate(InputAction.CallbackContext context)
     {
+        
         rotateInput = context.ReadValue<Vector2>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -47,7 +49,10 @@ public class PlayerControllerProto2 : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
+        Vector3 move =  new Vector3(movementInput.x, 0, movementInput.y);
+        Debug.DrawRay(transform.position, move * 10, Color.yellow);
+
+        //transform.position = transform.forward + (move * Time.deltaTime * playerSpeed);
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         // Souris Horitale
