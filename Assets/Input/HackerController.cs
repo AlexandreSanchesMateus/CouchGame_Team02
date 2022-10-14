@@ -3,49 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
-
+using DG.Tweening;
+using Cinemachine;
 public class HackerController : MonoBehaviour
 {
     public GameObject MiniGamescreens;
-    
-    public GameObject curentDisplayedScreen;
-    public MiniGame focusedMinigame;
-    public bool isInFrontOfMiniGame;
-    
-    public bool isFocused;
-    
+    public float rotToAdd;
+    public float currentRot;
     public static HackerController instance;
+    public CinemachineVirtualCamera cam1,cam2;
+    private void Start()
+    {
+        rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
+        currentRot = 0;
+    }
     private void Update()
     {
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 2, Color.yellow);
+        Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
     }
-    void Start()
-    {
-        //singleton
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    
     public void Increment(InputAction.CallbackContext callback)
     {
         if(callback.started)
         {
         Debug.Log("Increment");
-        MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
-        }
+            MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
 
+            //MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+        }
+        
     }
     public void Decrement(InputAction.CallbackContext callback)
     {
         if (callback.started)
         {
-            Debug.Log("Increment");
-            MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+            Debug.Log("decrement");
+            MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
         } 
     }
     public void Interact(InputAction.CallbackContext callback)
@@ -54,11 +47,10 @@ public class HackerController : MonoBehaviour
         MiniGame mg;
         RaycastHit hit;
         Screen sc;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 2, out hit))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
         {
             if (hit.transform.tag=="MiniGame")
             {
-                Debug.Log("is a game");
                     sc = hit.transform.GetComponent<Screen>();
                     mg = hit.transform.GetComponent<Screen>().game;
                     
@@ -78,12 +70,23 @@ public class HackerController : MonoBehaviour
                 Debug.Log("not game");
             }
         }
-        else
-        {
-           
-        }
-        Debug.Log(hit.transform.tag);
 
+    }
+    public void SwitchCam(InputAction.CallbackContext callback)
+    {
+        if (callback.started)
+        {
+            if (cam1.Priority == 10)
+            {
+                cam1.Priority = 0;
+                cam2.Priority = 10;
+            }
+            else
+            {
+                cam1.Priority = 10;
+                cam2.Priority = 0;
+            }
+        }
     }
     public void Back(InputAction.CallbackContext callback)
     {
