@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IIteractible
+public class Item : MonoBehaviour, IInteractible
 {
     [SerializeField] private GameObject GUI;
 

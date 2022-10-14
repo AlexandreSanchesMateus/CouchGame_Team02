@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IIteractible
+public interface IInteractible
 {
     public void OnItemHover();
     public void OnItemExit();

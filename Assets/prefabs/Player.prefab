@@ -113,9 +113,21 @@ MonoBehaviour:
     m_ActionName: FPSController/Interact[/XInputControllerWindows/buttonSouth,/Keyboard/e]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 55b799c1-b7e6-4793-89cd-3d6ce09aad4b
-    m_ActionName: HackerController/WindowIncrement [/XInputControllerWindows/leftShoulder,/Keyboard/q,/XInputControllerWindows/rightShoulder,/Keyboard/e]
-  m_NeverAutoSwitchControlSchemes: 0
+    m_ActionId: 8eea24cc-65bc-4d5a-b1c5-b882748c9cb5
+    m_ActionName: HackerController/Increment[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c067800b-d7b0-46ec-86cd-a71e5b824e09
+    m_ActionName: HackerController/Decrement[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65d73bc4-8a79-4e28-bff9-9b294ebb0f1a
+    m_ActionName: HackerController/Interact1[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a237247-2a82-47e3-97fa-e61b1d396780
+    m_ActionName: HackerController/Back[/Keyboard/enter]
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: FPSController
   m_SplitScreenIndex: -1

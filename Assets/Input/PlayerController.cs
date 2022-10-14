@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movementInput = Vector2.zero;
 
-    private IIteractible interactibleObject;
+    private IInteractible interactibleObject;
     private Rigidbody rb;
     private float xRotation = 0.0f;
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         if(Physics.SphereCast(cameraObj.transform.position, radius, cameraObj.transform.forward, out info, range, layer))
         {
             Debug.DrawLine(cameraObj.transform.position, info.transform.position, Color.green);
-            if (interactibleObject == null && info.transform.TryGetComponent<IIteractible>(out interactibleObject))
+            if (interactibleObject == null && info.transform.TryGetComponent<IInteractible>(out interactibleObject))
             {
                 Debug.Log("HOVER");
                 interactibleObject.OnItemHover();
