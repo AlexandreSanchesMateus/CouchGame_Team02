@@ -25,6 +25,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private bool enablePlayerMovement = true;
     private IInteractible interactibleObject;
 
     private Vector2 movementInput;
@@ -37,18 +38,12 @@ public class PlayerControllerProto2 : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        movementInput = context.ReadValue<Vector2>();
-    }
-
-    public void OnRotate(InputAction.CallbackContext context)
-    {
-        rotateInput = context.ReadValue<Vector2>();
-    }
-
     void Update()
     {
+        // Désactivation des mouvement
+        if (!enablePlayerMovement)
+            return;
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -95,6 +90,43 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnRotate(InputAction.CallbackContext context)
+    {
+        rotateInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (interactibleObject != null)
+        {
+            interactibleObject.OnIteract();
+            enablePlayerMovement = false;
+        }
+    }
+
+    public void OnReturn(InputAction.CallbackContext context)
+    {
+        if (interactibleObject != null)
+        {
+            interactibleObject.OnReturn();
+            enablePlayerMovement = true;
+            interactibleObject = null;
+        }
+    }
+
+    public void OnActions(InputAction.CallbackContext context)
+    {
+        if (interactibleObject != null)
+        {
+            interactibleObject.OnActions(context.ReadValue<Vector2>());
+        }
     }
 
     private void OnDrawGizmos()

@@ -6,6 +6,11 @@ public class Item : MonoBehaviour, IInteractible
 {
     [SerializeField] private GameObject GUI;
 
+    public void OnActions(Vector2 action)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnItemExit()
     {
         GUI.SetActive(false);
@@ -19,5 +24,10 @@ public class Item : MonoBehaviour, IInteractible
     public void OnIteract()
     {
         Destroy(gameObject);
+    }
+
+    public void OnReturn()
+    {
+        throw new System.NotImplementedException();
     }
 }
