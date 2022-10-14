@@ -97,13 +97,13 @@ MonoBehaviour:
     m_ActionName: FPSController/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 7878069747631107474}
+        m_TargetAssemblyTypeName: PlayerControllerProto2, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -127,8 +127,40 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3a237247-2a82-47e3-97fa-e61b1d396780
     m_ActionName: HackerController/Back[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7878069747631107474}
+        m_TargetAssemblyTypeName: PlayerControllerProto2, Assembly-CSharp
+        m_MethodName: OnReturn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 424f6c09-846f-4a67-a7e3-9c9e9a2bf6de
+    m_ActionName: FPSController/Return[/Keyboard/f,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7878069747631107474}
+        m_TargetAssemblyTypeName: PlayerControllerProto2, Assembly-CSharp
+        m_MethodName: OnActions
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 71de111b-72a2-4ac7-8d5a-e8c7c0223811
+    m_ActionName: FPSController/Actions[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Keyboard
+  m_DefaultControlScheme: 
   m_DefaultActionMap: FPSController
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 7652117877036800810}
@@ -144,10 +176,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca3d5437212d4342b8c1b75d286bcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraObj: {fileID: 7652117877036800820}
   playerSpeed: 2
   jumpHeight: 1
   gravityValue: -9.81
   sensitivity: 30
+  radius: 0.4
+  range: 2
+  layer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!143 &2172451559358190396
 CharacterController:
   m_ObjectHideFlags: 0
