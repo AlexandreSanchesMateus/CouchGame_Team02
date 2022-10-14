@@ -6,6 +6,7 @@ public class MiniGame : MonoBehaviour
 {
     public bool isGood;
     public bool isInside;
+    public Camera Cam;
     public bool TestWin() 
     {
        if(isGood)

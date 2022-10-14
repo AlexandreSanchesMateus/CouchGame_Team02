@@ -36,7 +36,7 @@ public class HackerController : MonoBehaviour
         if(callback.started)
         {
         Debug.Log("Increment");
-        MiniGamescreens.transform.Rotate(0, -90, 0);
+        MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
         }
 
 
@@ -51,7 +51,7 @@ public class HackerController : MonoBehaviour
         if (callback.started)
         {
             Debug.Log("Increment");
-            MiniGamescreens.transform.Rotate(0, 90, 0);
+            MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
         }
 
        
