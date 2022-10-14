@@ -36,14 +36,8 @@ public class HackerController : MonoBehaviour
         if(callback.started)
         {
         Debug.Log("Increment");
-        MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+        MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
         }
-
-
-        //raycast catch gameobject
-
-        
-
 
     }
     public void Decrement(InputAction.CallbackContext callback)
@@ -51,11 +45,8 @@ public class HackerController : MonoBehaviour
         if (callback.started)
         {
             Debug.Log("Increment");
-            MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
-        }
-
-       
-            
+            MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+        } 
     }
     public void Interact(InputAction.CallbackContext callback)
     {
