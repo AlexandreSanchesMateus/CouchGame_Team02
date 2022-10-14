@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
 
     private InputAction movement;
     private InputAction looking;

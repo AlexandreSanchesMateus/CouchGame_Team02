@@ -2,51 +2,103 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class HackerController : MonoBehaviour
 {
-    private PlayerInput hackerInput;
-
-    [SerializeField] private GameObject[] UIPage;
-    private bool canUse = false;
-    private int lastUIid = 0;
-    private int currentUIID = 0;
-
-    private void Awake()
+    public GameObject MiniGamescreens;
+    
+    public GameObject curentDisplayedScreen;
+    public MiniGame focusedMinigame;
+    public bool isInFrontOfMiniGame;
+    
+    public bool isFocused;
+    
+    public static HackerController instance;
+    private void Update()
     {
-        hackerInput = new PlayerInput();
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 2, Color.yellow);
     }
-
-    private void Start()
+    void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
-        if (!(UIPage.Length > 0))
-            return;
-
-        for (int i = 1; i < UIPage.Length; i++)
-           UIPage[i].SetActive(false);
-
-        canUse = true;
-        UIPage[0].SetActive(true);
+        //singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-
-    private void OnEnable()
+    public void Increment(InputAction.CallbackContext callback)
     {
-        hackerInput.HackerController.WindowIncrement.performed += DoIncrement;
-        hackerInput.HackerController.WindowIncrement.Enable();
-    }
+        if(callback.started)
+        {
+        Debug.Log("Increment");
+        MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+        }
 
-    private void DoIncrement(InputAction.CallbackContext ctx)
+
+        //raycast catch gameobject
+
+        
+
+
+    }
+    public void Decrement(InputAction.CallbackContext callback)
     {
-        if (!canUse)
-            return;
+        if (callback.started)
+        {
+            Debug.Log("Increment");
+            MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+        }
 
-        UIPage[lastUIid].SetActive(false);
-        currentUIID = (currentUIID + (int)ctx.ReadValue<float>()) % UIPage.Length;
-        if (currentUIID < 0)
-            currentUIID = UIPage.Length - 1;
-        UIPage[currentUIID].SetActive(true);
-        lastUIid = currentUIID;
+       
+            
     }
+    public void Interact(InputAction.CallbackContext callback)
+    {
+        Debug.Log("Interact");
+        MiniGame mg;
+        RaycastHit hit;
+        Screen sc;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 2, out hit))
+        {
+            if (hit.transform.tag=="MiniGame")
+            {
+                Debug.Log("is a game");
+                    sc = hit.transform.GetComponent<Screen>();
+                    mg = hit.transform.GetComponent<Screen>().game;
+                    
+
+                    if (mg.TestWin())
+                    {
+                        Debug.Log("win");
+                    }
+                    else
+                    {
+                        Debug.Log("nop");
+                    }
+
+            }
+            else
+            {
+                Debug.Log("not game");
+            }
+        }
+        else
+        {
+           
+        }
+        Debug.Log(hit.transform.tag);
+
+    }
+    public void Back(InputAction.CallbackContext callback)
+    {
+        Debug.Log("Back");
+    }
+    //rotate MiniGamescreens from 90 degrees on axe y
+
+
 }

@@ -173,16 +173,132 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""149470da-7395-40c0-81e0-d5ceb4750f35"",
             ""actions"": [
                 {
-                    ""name"": ""WindowIncrement "",
+                    ""name"": ""Increment"",
                     ""type"": ""Button"",
-                    ""id"": ""55b799c1-b7e6-4793-89cd-3d6ce09aad4b"",
+                    ""id"": ""8eea24cc-65bc-4d5a-b1c5-b882748c9cb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Decrement"",
+                    ""type"": ""Button"",
+                    ""id"": ""c067800b-d7b0-46ec-86cd-a71e5b824e09"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact1"",
+                    ""type"": ""Button"",
+                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a237247-2a82-47e3-97fa-e61b1d396780"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
-            ""bindings"": []
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""106a1ba1-9faa-45cb-8816-88582459e82f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Increment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78b7bc1f-acd7-4d02-9546-b88b0962187e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Increment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dccec6e-81dd-45cd-a52f-bf7d9e1db03b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""173e08c3-506d-4441-aa1d-333a1269585e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""181787ee-c1b1-42c9-a5d3-2bb5deaa3644"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09480ec0-363a-48ef-9524-2c4f7b5e02ab"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -222,7 +338,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Interact = m_FPSController.FindAction("Interact", throwIfNotFound: true);
         // HackerController
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
-        m_HackerController_WindowIncrement = m_HackerController.FindAction("WindowIncrement ", throwIfNotFound: true);
+        m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
+        m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
+        m_HackerController_Interact1 = m_HackerController.FindAction("Interact1", throwIfNotFound: true);
+        m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -331,12 +450,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // HackerController
     private readonly InputActionMap m_HackerController;
     private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
-    private readonly InputAction m_HackerController_WindowIncrement;
+    private readonly InputAction m_HackerController_Increment;
+    private readonly InputAction m_HackerController_Decrement;
+    private readonly InputAction m_HackerController_Interact1;
+    private readonly InputAction m_HackerController_Back;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
         public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @WindowIncrement => m_Wrapper.m_HackerController_WindowIncrement;
+        public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
+        public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
+        public InputAction @Interact1 => m_Wrapper.m_HackerController_Interact1;
+        public InputAction @Back => m_Wrapper.m_HackerController_Back;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -346,16 +471,34 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_HackerControllerActionsCallbackInterface != null)
             {
-                @WindowIncrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
-                @WindowIncrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
-                @WindowIncrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
+                @Increment.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Interact1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @WindowIncrement.started += instance.OnWindowIncrement;
-                @WindowIncrement.performed += instance.OnWindowIncrement;
-                @WindowIncrement.canceled += instance.OnWindowIncrement;
+                @Increment.started += instance.OnIncrement;
+                @Increment.performed += instance.OnIncrement;
+                @Increment.canceled += instance.OnIncrement;
+                @Decrement.started += instance.OnDecrement;
+                @Decrement.performed += instance.OnDecrement;
+                @Decrement.canceled += instance.OnDecrement;
+                @Interact1.started += instance.OnInteract1;
+                @Interact1.performed += instance.OnInteract1;
+                @Interact1.canceled += instance.OnInteract1;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -386,6 +529,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IHackerControllerActions
     {
-        void OnWindowIncrement(InputAction.CallbackContext context);
+        void OnIncrement(InputAction.CallbackContext context);
+        void OnDecrement(InputAction.CallbackContext context);
+        void OnInteract1(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
