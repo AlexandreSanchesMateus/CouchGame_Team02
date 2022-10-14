@@ -29,12 +29,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""331495d7-4fcc-49d1-829f-823af91d50fa"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Look"",
@@ -70,7 +70,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""6d35ed1d-ce46-4329-a53a-5da4d121c567"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -92,7 +92,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""23da9d56-ba63-4f32-9144-bbaead244758"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -138,7 +138,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""fd4495e7-8a5b-4f5d-b40f-b04277b05d05"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.5,y=0.5)"",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -167,18 +167,51 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""HackerController"",
+            ""id"": ""149470da-7395-40c0-81e0-d5ceb4750f35"",
+            ""actions"": [
+                {
+                    ""name"": ""WindowIncrement "",
+                    ""type"": ""Button"",
+                    ""id"": ""55b799c1-b7e6-4793-89cd-3d6ce09aad4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
         {
             ""name"": ""Gamepad"",
             ""bindingGroup"": ""Gamepad"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         },
         {
             ""name"": ""Keyboard"",
             ""bindingGroup"": ""Keyboard"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -187,6 +220,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Move = m_FPSController.FindAction("Move", throwIfNotFound: true);
         m_FPSController_Look = m_FPSController.FindAction("Look", throwIfNotFound: true);
         m_FPSController_Interact = m_FPSController.FindAction("Interact", throwIfNotFound: true);
+        // HackerController
+        m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
+        m_HackerController_WindowIncrement = m_HackerController.FindAction("WindowIncrement ", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -291,6 +327,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public FPSControllerActions @FPSController => new FPSControllerActions(this);
+
+    // HackerController
+    private readonly InputActionMap m_HackerController;
+    private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
+    private readonly InputAction m_HackerController_WindowIncrement;
+    public struct HackerControllerActions
+    {
+        private @PlayerInput m_Wrapper;
+        public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @WindowIncrement => m_Wrapper.m_HackerController_WindowIncrement;
+        public InputActionMap Get() { return m_Wrapper.m_HackerController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HackerControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IHackerControllerActions instance)
+        {
+            if (m_Wrapper.m_HackerControllerActionsCallbackInterface != null)
+            {
+                @WindowIncrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
+                @WindowIncrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
+                @WindowIncrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWindowIncrement;
+            }
+            m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @WindowIncrement.started += instance.OnWindowIncrement;
+                @WindowIncrement.performed += instance.OnWindowIncrement;
+                @WindowIncrement.canceled += instance.OnWindowIncrement;
+            }
+        }
+    }
+    public HackerControllerActions @HackerController => new HackerControllerActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -314,5 +383,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IHackerControllerActions
+    {
+        void OnWindowIncrement(InputAction.CallbackContext context);
     }
 }
