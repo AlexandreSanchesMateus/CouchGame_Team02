@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8161986894761104262}
   - component: {fileID: 8161986894761104267}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,19 +129,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39c26e3657998ab42941ce537908ad7b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.77093
+      value: 0.81509167
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39c26e3657998ab42941ce537908ad7b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.48946476
+      value: 0.4769247
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39c26e3657998ab42941ce537908ad7b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.066
+      value: 0.064304
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39c26e3657998ab42941ce537908ad7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.776
+      value: -0.77793
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39c26e3657998ab42941ce537908ad7b, type: 3}
       propertyPath: m_LocalPosition.z

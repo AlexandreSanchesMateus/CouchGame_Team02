@@ -37,10 +37,6 @@ public class screensholder : MonoBehaviour
             if(i==0)
             {
                 screenGO.GetComponent<Screen>().game = minigames[0];
-                //screenGO.GetComponent<Renderer>().material = mat[0].;
-                //RenderTexture rT = new RenderTexture(256,256,8);
-                //minigames[0].Cam.targetTexture = rT;
-                //minigames[0].Cam.Render();
             }
             else
             {
