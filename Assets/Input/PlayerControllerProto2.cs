@@ -104,7 +104,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (interactibleObject != null)
+        if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnIteract();
             enablePlayerMovement = false;
@@ -113,7 +113,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnReturn(InputAction.CallbackContext context)
     {
-        if (interactibleObject != null)
+        if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnReturn();
             enablePlayerMovement = true;
@@ -123,7 +123,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnActions(InputAction.CallbackContext context)
     {
-        if (interactibleObject != null)
+        if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnActions(context.ReadValue<Vector2>());
         }
