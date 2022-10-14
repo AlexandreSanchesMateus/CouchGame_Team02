@@ -82,13 +82,11 @@ public class HackerMultipleController : MonoBehaviour
             {
                 cameraObj.transform.position = Vector3.Lerp(startPos, currentPos, positionTimer);
                 positionTimer -= Time.deltaTime * camSpeed;
-                Debug.Log("Reverse");
             }
             else
             {
                 cameraObj.transform.position = Vector3.Lerp(currentPos, gameScript.getPOF, positionTimer);
                 positionTimer += Time.deltaTime * camSpeed;
-                Debug.Log("Comming");
             }
 
             if (positionTimer < 0 || positionTimer > 1)
