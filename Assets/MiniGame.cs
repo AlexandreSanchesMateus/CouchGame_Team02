@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MiniGame : MonoBehaviour
@@ -7,13 +8,20 @@ public class MiniGame : MonoBehaviour
     public bool isGood;
     public bool isInside;
     public Camera Cam;
+    public int code;
+    public TextMeshPro text;
     public bool TestWin() 
     {
-       if(isGood)
-
+        if (isGood)
+        {
+            text.text = code.ToString();
             return true;
-       else
+        }
+        else
+        {
+            text.text = "shrek";
             return false;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
