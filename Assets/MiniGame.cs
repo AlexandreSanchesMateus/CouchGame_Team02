@@ -19,7 +19,7 @@ public class MiniGame : MonoBehaviour
         }
         else
         {
-            text.text = "shrek";
+            text.text = Random.Range(0, 99).ToString();
             return false;
         }
     }

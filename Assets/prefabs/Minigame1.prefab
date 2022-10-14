@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 1127699576}
   - component: {fileID: 1127699575}
   m_Layer: 0
-  m_Name: Plane (7)
+  m_Name: Arrow
   m_TagString: cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1016,7 +1016,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5949478322294919029}
   - component: {fileID: 5949478322294919031}
-  - component: {fileID: 5949478322294919028}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1066,7 +1065,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 5.86
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1082,14 +1081,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5949478322294919028
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5949478322294919050}
-  m_Enabled: 1
 --- !u!1 &5949478323046565278
 GameObject:
   m_ObjectHideFlags: 0
