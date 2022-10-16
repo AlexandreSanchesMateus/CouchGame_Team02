@@ -10,6 +10,7 @@ public class HackerController : MonoBehaviour
     public GameObject MiniGamescreens;
     public float rotToAdd;
     public float currentRot;
+    private bool canInteract=true;
     public static HackerController instance;
     public CinemachineVirtualCamera cam1,cam2;
     private void Start()
@@ -24,34 +25,30 @@ public class HackerController : MonoBehaviour
     
     public void Increment(InputAction.CallbackContext callback)
     {
-        if(callback.started)
+        if(callback.started&&canInteract)
         {
-        Debug.Log("Increment");
+        //Debug.Log("Increment");
             MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
-
-            //MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
         }
         
     }
     public void Decrement(InputAction.CallbackContext callback)
     {
-        if (callback.started)
+        if (callback.started&&canInteract)
         {
-            Debug.Log("decrement");
+            //Debug.Log("decrement");
             MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
         } 
     }
     public void Interact(InputAction.CallbackContext callback)
     {
-        Debug.Log("Interact");
         MiniGame mg;
         RaycastHit hit;
-        Screen sc;
         if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
         {
-            if (hit.transform.tag=="MiniGame")
+            if (hit.transform.tag=="MiniGame"&&canInteract)
             {
-                    sc = hit.transform.GetComponent<Screen>();
+                   
                     mg = hit.transform.GetComponent<Screen>().game;
                     
 
@@ -63,11 +60,11 @@ public class HackerController : MonoBehaviour
                     {
                         Debug.Log("nop");
                     }
-
             }
             else
             {
                 Debug.Log("not game");
+                StartCoroutine(Wait());
             }
         }
 
@@ -92,7 +89,13 @@ public class HackerController : MonoBehaviour
     {
         Debug.Log("Back");
     }
-    //rotate MiniGamescreens from 90 degrees on axe y
+    IEnumerator Wait()
+    {
+        canInteract = false;
+        yield return new WaitForSeconds(2);
+        canInteract = true;
+        Debug.Log("Stuck in ads");
+    }
 
 
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 public class Screen : MonoBehaviour
 {
     public MiniGame game;
@@ -16,6 +15,7 @@ public class Screen : MonoBehaviour
         {
             gameObject.tag = "MiniGame";
         }
+        
     }
     
 }

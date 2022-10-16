@@ -4,14 +4,14 @@ using UnityEngine;
 using DG.Tweening;
 public class screensholder : MonoBehaviour
 {
-    public MiniGame game;
+    //public MiniGame game;
     private float radius;
     public GameObject screenPrefabs;
     public int number;
 
     private float currentrot;
     private float newRot;
-    public float rotToAdd;
+    [HideInInspector]public float rotToAdd;
 
     public List<GameObject> screens = new List<GameObject>();
     public List<MiniGame> minigames = new List<MiniGame>();
