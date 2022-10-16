@@ -55,14 +55,17 @@ public class screensholder : MonoBehaviour
             newRot += rotToAdd;
             Sequence mySequence = DOTween.Sequence();
             mySequence.Append(transform.DORotate(new Vector3(0, newRot - rotToAdd  -7, 0), 0.1f));
-            mySequence.Append(transform.DORotate(new Vector3(0, newRot, 0), 0.5f));
+            mySequence.Append(transform.DORotate(new Vector3(0, newRot, 0), 0.5f).SetEase(Ease.OutBounce));
+            
+
+
         }
         else
         {
             newRot -= rotToAdd;
             Sequence mySequence = DOTween.Sequence();
             mySequence.Append(transform.DORotate(new Vector3(0, newRot + rotToAdd + 7, 0), 0.1f));
-            mySequence.Append(transform.DORotate(new Vector3(0, newRot, 0), 0.5f));
+            mySequence.Append(transform.DORotate(new Vector3(0, newRot, 0), 0.5f).SetEase(Ease.OutBounce));
         }
     }
 }
