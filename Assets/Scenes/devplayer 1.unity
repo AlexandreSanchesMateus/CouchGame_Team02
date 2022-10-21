@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,6 +133,10 @@ PrefabInstance:
     - target: {fileID: 371245845, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_DefaultBlend.m_Time
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 515651583, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_Name
+      value: 2screen VCcam
       objectReference: {fileID: 0}
     - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -307,9 +311,37 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6404365837669256634, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 2072576924}
+    - target: {fileID: 6404365837669256634, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: number
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404365837669256634, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: rotToAdd
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404365837669256634, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: offsetValue
+      value: 1.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404365837669256634, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: minigames.Array.data[0]
       value: 
       objectReference: {fileID: 1912187718}
+    - target: {fileID: 6404365837669256637, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404365837669256637, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404365837669256637, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.47
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 371245845, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
     - {fileID: 6404365836932758217, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
@@ -5668,6 +5700,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+--- !u!4 &2072576924 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+  m_PrefabInstance: {fileID: 22607162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2099353749
 GameObject:
   m_ObjectHideFlags: 0

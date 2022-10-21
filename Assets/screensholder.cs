@@ -7,16 +7,37 @@ public class screensholder : MonoBehaviour
     //public MiniGame game;
     private float radius;
     public GameObject screenPrefabs;
-    public int number;
-
     private float currentrot;
     private float newRot;
+      
+    
+    [Range(0,20)]
+    public int number;
+    
+
     [HideInInspector]public float rotToAdd;
 
     public List<GameObject> screens = new List<GameObject>();
     public List<MiniGame> minigames = new List<MiniGame>();
     public List<Material> scamAd = new List<Material>();
-    public List<Material> MiniGamesMat = new List<Material>();
+    private void OnDrawGizmosSelected()
+    {
+        radius = number * 0.30f;
+        for (int i = 0; i < number; i++)
+        {
+            float angle = i * Mathf.PI * 2f / number;
+            Vector3 newPos = new Vector3(transform.position.x + Mathf.Cos(angle) * radius, transform.position.y, transform.position.z + Mathf.Sin(angle) * radius);
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawSphere(newPos, 0.5f);
+        }
+        
+        
+    }
+
+
+
+
+    
     private void Start()
     {
         
