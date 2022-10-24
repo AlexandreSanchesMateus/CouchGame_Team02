@@ -80,7 +80,6 @@ public class KeyCode : MonoBehaviour, IInteractible
             if(currentCode.Count < 3)
             {
                 currentCode.Add(idKey);
-                
                 displayCode.text = DisplayCode();
             }
             else
@@ -126,8 +125,6 @@ public class KeyCode : MonoBehaviour, IInteractible
 
         return toDisplay;
     }
-
-
 
     private IEnumerator Verification() 
     {

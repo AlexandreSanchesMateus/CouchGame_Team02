@@ -33,10 +33,18 @@ public class ElementPad : MonoBehaviour, IInteractible
         if(action == Vector2.right)
         {
             idKey++;
+            if(idKey == 4)
+            {
+                idKey = 0;
+            }
         }
         else if(action == Vector2.left)
         {
             idKey--;
+            if(idKey < 0)
+            {
+                idKey = 3;
+            }
         }
 
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
@@ -55,7 +63,13 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnInteract()
     {
-        throw new System.NotImplementedException();
+        if (!isOpen)
+        {
+            GUIhover.SetActive(false);
+            Pad.SetActive(true);
+            PlayerControllerProto2.enablePlayerMovement = false;
+            isOpen = true;
+        }
     }
 
     public void OnReturn()
