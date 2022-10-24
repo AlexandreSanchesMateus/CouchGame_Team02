@@ -66,7 +66,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         GUIhover.SetActive(true);
     }
 
-    public void OnIteract()
+    public void OnInteract()
     {
         if (!isOpen)
         {

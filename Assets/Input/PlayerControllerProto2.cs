@@ -107,7 +107,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         if (context.performed && interactibleObject != null)
         {
-            interactibleObject.OnIteract();
+            interactibleObject.OnInteract();
         }
     }
 

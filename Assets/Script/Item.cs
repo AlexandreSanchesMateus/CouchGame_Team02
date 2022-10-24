@@ -21,7 +21,7 @@ public class Item : MonoBehaviour, IInteractible
         GUI.SetActive(true);
     }
 
-    public void OnIteract()
+    public void OnInteract()
     {
         Destroy(gameObject);
     }
