@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Runtime.CompilerServices;
+using UnityEngine.ProBuilder.Shapes;
 
 public class ElementPad : MonoBehaviour, IInteractible
 {
@@ -13,10 +15,19 @@ public class ElementPad : MonoBehaviour, IInteractible
     [SerializeField] private TextMeshProUGUI display;
     [SerializeField] private GameObject[] keys;
     [SerializeField] private GameObject lockey;
+    [SerializeField] private List<Image> lights;
+
+    [Header("Réponses")]
+    [SerializeField] private List<Etapes> etapes;
+
+    private Situation currentSituation;
 
     private List<int> previousElement = new List<int>();
     private int idKey;
     private bool isOpen;
+    private int actualEtape;
+    private bool isValid = false;
+
 
     void Start()
     {
@@ -58,18 +69,68 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnItemHover()
     {
-        GUIhover.SetActive(true);
+        if (!isValid)
+            GUIhover.SetActive(true);
     }
 
     public void OnInteract()
     {
+        
+
+        int idSituation = 0;
         if (!isOpen)
         {
             GUIhover.SetActive(false);
             Pad.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
+            idSituation = Random.Range(0, 3);
+            currentSituation = etapes[actualEtape].situations[idSituation];
+            display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+            return;
         }
+
+        if (isValid)
+        {
+            return;
+        }
+
+        // SI changement GD
+        // currentSituation = etapes[actualEtape].situations[Random.Range(0, etapes[actualEtape].situations.Length - 1)];
+        int key = currentSituation.goodkey;
+
+        if(currentSituation.goodkey < 0)
+        {
+            key = previousElement[Mathf.Abs(currentSituation.goodkey) - 1];
+        }
+
+        if (idKey == key)
+        {
+            lights[actualEtape].color = Color.green;
+            previousElement.Add(idKey);
+            actualEtape++;
+            if (actualEtape == 6)
+            {
+                Destroy(lockey);
+                StartCoroutine(Delay());
+                display.text = "Well done";
+                isValid = true;
+                return;
+            }
+        }
+        else
+        {
+            for(int i = actualEtape; i > -1; i--)
+            {
+                lights[i].color = Color.red;
+            }
+            previousElement.Clear();
+            actualEtape = 0;
+        }
+        
+        idSituation = Random.Range(0, 3);
+        currentSituation = etapes[actualEtape].situations[idSituation];
+        display.text = etapes[actualEtape].situations[idSituation].element.ToString();
     }
 
     public void OnReturn()
@@ -79,4 +140,12 @@ public class ElementPad : MonoBehaviour, IInteractible
         Pad.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        PlayerControllerProto2.enablePlayerMovement = true;
+        //yield return new WaitForSeconds(1);
+        Pad.SetActive(false);
+    }
+
 }
