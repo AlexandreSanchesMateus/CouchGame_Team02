@@ -25,7 +25,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private bool enablePlayerMovement = true;
+    public static bool enablePlayerMovement { get; set; }
     private IInteractible interactibleObject;
 
     private Vector2 movementInput;
@@ -36,6 +36,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         controller = gameObject.GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+        enablePlayerMovement = true;
     }
 
     void Update()
@@ -107,7 +108,6 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnIteract();
-            enablePlayerMovement = false;
         }
     }
 
@@ -116,7 +116,6 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnReturn();
-            enablePlayerMovement = true;
             interactibleObject = null;
         }
     }

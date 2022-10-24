@@ -17,6 +17,7 @@ public class KeyCode : MonoBehaviour, IInteractible
     private List<int> currentCode = new List<int>();
     private int idKey;
     private bool isOpen;
+    private bool isVerif = false;
 
 
     void Start()
@@ -30,6 +31,9 @@ public class KeyCode : MonoBehaviour, IInteractible
 
     public void OnActions(Vector2 action)
     {
+        if (isVerif)
+            return;
+
         keys[idKey].GetComponent<Image>().color = Color.white;
 
         if (action == Vector2.up)
@@ -68,6 +72,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         {
             GUIhover.SetActive(false);
             Keypad.SetActive(true);
+            PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
         }
         else
@@ -75,36 +80,15 @@ public class KeyCode : MonoBehaviour, IInteractible
             if(currentCode.Count < 3)
             {
                 currentCode.Add(idKey);
-                string toDisplay = "";
-
-                for (int i = 0; i < 4 - currentCode.Count; i++)
-                {
-                    toDisplay += " _";
-                }
-
-                foreach(int i in currentCode)
-                {
-                    toDisplay += i.ToString();
-                }
-                displayCode.text = toDisplay;
+                
+                displayCode.text = DisplayCode();
             }
             else
             {
                 currentCode.Add(idKey);
-                Debug.Log("Vérification de : " + ListToString(currentCode) + " " + goodCode);
-                if (ListToString(currentCode) == goodCode)
-                {
-                    Destroy(door);
-                    Debug.Log("Pass");
-                    foreach (GameObject key in keys)
-                        key.GetComponent<Image>().color = Color.green;
-                }
-                else
-                {
-                    Debug.Log("Don't pass");
-                    currentCode.Clear();
-                    displayCode.text = " _ _ _ _";
-                }
+                displayCode.text = DisplayCode();
+                StartCoroutine(Verification());
+                
             }
         }
     }
@@ -112,9 +96,9 @@ public class KeyCode : MonoBehaviour, IInteractible
     public void OnReturn()
     {
         isOpen = false;
-        idKey = 0;
         GUIhover.SetActive(false);
         Keypad.SetActive(false);
+        PlayerControllerProto2.enablePlayerMovement = true;
     }
 
     private string ListToString(List<int> list)
@@ -124,5 +108,56 @@ public class KeyCode : MonoBehaviour, IInteractible
             toReturn += i.ToString();
 
         return toReturn;
+    }
+
+    private string DisplayCode()
+    {
+        string toDisplay = "";
+
+        for (int i = 0; i < 4 - currentCode.Count; i++)
+        {
+            toDisplay += " _";
+        }
+
+        foreach (int i in currentCode)
+        {
+            toDisplay += i.ToString();
+        }
+
+        return toDisplay;
+    }
+
+
+
+    private IEnumerator Verification() 
+    {
+        isVerif = true;
+        yield return new WaitForSeconds(1);
+        Debug.Log("Vï¿½rification de : " + ListToString(currentCode) + " " + goodCode);
+        if (ListToString(currentCode) == goodCode)
+        {
+            Destroy(door);
+            StartCoroutine(Delay());
+            Debug.Log("Pass");
+            foreach (GameObject key in keys)
+                key.GetComponent<Image>().color = Color.green;
+            displayCode.text = " G O O D";
+
+        }
+        else
+        {
+            Debug.Log("Don't pass");
+            currentCode.Clear();
+            displayCode.text = " _ _ _ _";
+            isVerif = false;
+        }
+        
+    }
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1) ;
+        PlayerControllerProto2.enablePlayerMovement = true;
+        //yield return new WaitForSeconds(1);
+        Keypad.SetActive(false);
     }
 }
