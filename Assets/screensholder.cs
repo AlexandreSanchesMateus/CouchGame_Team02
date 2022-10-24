@@ -33,14 +33,8 @@ public class screensholder : MonoBehaviour
         
         
     }
-
-
-
-
-    
     private void Start()
     {
-        
         radius = number*0.30f;
         rotToAdd = 360/number;
         newRot = 0;
@@ -77,9 +71,6 @@ public class screensholder : MonoBehaviour
             Sequence mySequence = DOTween.Sequence();
             mySequence.Append(transform.DORotate(new Vector3(0, newRot - rotToAdd  -7, 0), 0.1f));
             mySequence.Append(transform.DORotate(new Vector3(0, newRot, 0), 0.5f).SetEase(Ease.OutBounce));
-            
-
-
         }
         else
         {
