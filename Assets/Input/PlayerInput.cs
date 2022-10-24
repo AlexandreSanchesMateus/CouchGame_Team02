@@ -29,12 +29,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""331495d7-4fcc-49d1-829f-823af91d50fa"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Look"",
@@ -53,6 +53,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""424f6c09-846f-4a67-a7e3-9c9e9a2bf6de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Actions"",
+                    ""type"": ""Value"",
+                    ""id"": ""71de111b-72a2-4ac7-8d5a-e8c7c0223811"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -70,7 +88,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""6d35ed1d-ce46-4329-a53a-5da4d121c567"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -92,7 +110,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""23da9d56-ba63-4f32-9144-bbaead244758"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -138,7 +156,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""fd4495e7-8a5b-4f5d-b40f-b04277b05d05"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.5,y=0.5)"",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -165,6 +183,270 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43ad26c5-9332-40ce-8670-8518ec75d68f"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c518489b-0581-4c01-8486-3cf5cd2fb02b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""KeyBoard"",
+                    ""id"": ""d5bc1021-f096-4fcb-94ba-49e9a7bb73e4"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Actions"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""6e25f6d8-905f-4af6-a60c-802ce8d75048"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""83058337-e538-49b2-b9fd-e167161b89e8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ed7a9710-770f-4ee4-9695-7e24dc51852c"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f11d6fd5-2c0b-4a78-b746-e51e2e307914"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""GamePad"",
+                    ""id"": ""2b09ba99-2203-4638-b9f0-f0bc870acfc8"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Actions"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1cd41c3b-7082-4c03-8e8e-be28ec8f1202"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""88134d29-e4cb-40e2-bf8c-7edb5c01e677"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""7db3802d-5cfc-4366-8701-21e7c5919cff"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""448522ca-9dd5-4302-a373-2b4cfae59c05"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Actions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""HackerController"",
+            ""id"": ""149470da-7395-40c0-81e0-d5ceb4750f35"",
+            ""actions"": [
+                {
+                    ""name"": ""Increment"",
+                    ""type"": ""Button"",
+                    ""id"": ""8eea24cc-65bc-4d5a-b1c5-b882748c9cb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Decrement"",
+                    ""type"": ""Button"",
+                    ""id"": ""c067800b-d7b0-46ec-86cd-a71e5b824e09"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact1"",
+                    ""type"": ""Button"",
+                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a237247-2a82-47e3-97fa-e61b1d396780"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""106a1ba1-9faa-45cb-8816-88582459e82f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Increment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78b7bc1f-acd7-4d02-9546-b88b0962187e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Increment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dccec6e-81dd-45cd-a52f-bf7d9e1db03b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""173e08c3-506d-4441-aa1d-333a1269585e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Decrement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""181787ee-c1b1-42c9-a5d3-2bb5deaa3644"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09480ec0-363a-48ef-9524-2c4f7b5e02ab"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -173,12 +455,29 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             ""name"": ""Gamepad"",
             ""bindingGroup"": ""Gamepad"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         },
         {
             ""name"": ""Keyboard"",
             ""bindingGroup"": ""Keyboard"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -187,6 +486,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Move = m_FPSController.FindAction("Move", throwIfNotFound: true);
         m_FPSController_Look = m_FPSController.FindAction("Look", throwIfNotFound: true);
         m_FPSController_Interact = m_FPSController.FindAction("Interact", throwIfNotFound: true);
+        m_FPSController_Return = m_FPSController.FindAction("Return", throwIfNotFound: true);
+        m_FPSController_Actions = m_FPSController.FindAction("Actions", throwIfNotFound: true);
+        // HackerController
+        m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
+        m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
+        m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
+        m_HackerController_Interact1 = m_HackerController.FindAction("Interact1", throwIfNotFound: true);
+        m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +556,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Move;
     private readonly InputAction m_FPSController_Look;
     private readonly InputAction m_FPSController_Interact;
+    private readonly InputAction m_FPSController_Return;
+    private readonly InputAction m_FPSController_Actions;
     public struct FPSControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -256,6 +565,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_FPSController_Move;
         public InputAction @Look => m_Wrapper.m_FPSController_Look;
         public InputAction @Interact => m_Wrapper.m_FPSController_Interact;
+        public InputAction @Return => m_Wrapper.m_FPSController_Return;
+        public InputAction @Actions => m_Wrapper.m_FPSController_Actions;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +585,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnInteract;
+                @Return.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnReturn;
+                @Return.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnReturn;
+                @Return.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnReturn;
+                @Actions.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
+                @Actions.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
+                @Actions.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
             }
             m_Wrapper.m_FPSControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -287,10 +604,73 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Return.started += instance.OnReturn;
+                @Return.performed += instance.OnReturn;
+                @Return.canceled += instance.OnReturn;
+                @Actions.started += instance.OnActions;
+                @Actions.performed += instance.OnActions;
+                @Actions.canceled += instance.OnActions;
             }
         }
     }
     public FPSControllerActions @FPSController => new FPSControllerActions(this);
+
+    // HackerController
+    private readonly InputActionMap m_HackerController;
+    private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
+    private readonly InputAction m_HackerController_Increment;
+    private readonly InputAction m_HackerController_Decrement;
+    private readonly InputAction m_HackerController_Interact1;
+    private readonly InputAction m_HackerController_Back;
+    public struct HackerControllerActions
+    {
+        private @PlayerInput m_Wrapper;
+        public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
+        public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
+        public InputAction @Interact1 => m_Wrapper.m_HackerController_Interact1;
+        public InputAction @Back => m_Wrapper.m_HackerController_Back;
+        public InputActionMap Get() { return m_Wrapper.m_HackerController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HackerControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IHackerControllerActions instance)
+        {
+            if (m_Wrapper.m_HackerControllerActionsCallbackInterface != null)
+            {
+                @Increment.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Increment.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnIncrement;
+                @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
+                @Interact1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Interact1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
+                @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+            }
+            m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Increment.started += instance.OnIncrement;
+                @Increment.performed += instance.OnIncrement;
+                @Increment.canceled += instance.OnIncrement;
+                @Decrement.started += instance.OnDecrement;
+                @Decrement.performed += instance.OnDecrement;
+                @Decrement.canceled += instance.OnDecrement;
+                @Interact1.started += instance.OnInteract1;
+                @Interact1.performed += instance.OnInteract1;
+                @Interact1.canceled += instance.OnInteract1;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
+            }
+        }
+    }
+    public HackerControllerActions @HackerController => new HackerControllerActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -314,5 +694,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
+        void OnActions(InputAction.CallbackContext context);
+    }
+    public interface IHackerControllerActions
+    {
+        void OnIncrement(InputAction.CallbackContext context);
+        void OnDecrement(InputAction.CallbackContext context);
+        void OnInteract1(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
