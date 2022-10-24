@@ -25,16 +25,17 @@ public class Screen : MonoBehaviour
 	
 	public void displayPopUp()
 	{
-		List<GameObject> popupsRandom =popups;
-		
-		int n = Random.Range(2,4);
+		List<GameObject> popupsRandom = popups;
+        //Debug.Log("displaying popup");
+        int n = Random.Range(2,4);
 		for (int j = 0; j < n; j++)
 		{
-            Debug.Log(popupsRandom.Count);
-
+			//Debug.Log(popupsRandom.Count);
+			//Debug.Log("dans le for de display");
             if (popupsRandom.Count >= 1)
 			{
-				Debug.Log("ça rentre?");
+                //Debug.Log("dans la condition qui display");
+                //Debug.Log("ça rentre?");
                 int i = Random.Range(0, popupsRandom.Count - 1);
                 popupsRandom[i].SetActive(true);
                 //Debug.Log("i = " + i);
@@ -49,16 +50,25 @@ public class Screen : MonoBehaviour
 	}
 	public bool FightPopup()
 	{
+
 		if (currentpopup.Count > 0)
 		{
+
 			currentPopupLife--;
 			if (currentPopupLife <= 0)
 			{
 				currentpopup[0].SetActive(false);
-				currentpopup.Remove(currentpopup[0]);
+				currentpopup.RemoveAt(0);
 				currentPopupLife = Random.Range(1, 3);
 			}
-			return true;
+			if (currentpopup.Count > 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		return false;
 	}

@@ -57,7 +57,6 @@ public class screensholder : MonoBehaviour
             }
             else
             {
-                
                 screenGO.GetComponent<Renderer>().material = scamAd[Random.Range(0, scamAd.Count)];
             }
             screens.Add(screenGO);

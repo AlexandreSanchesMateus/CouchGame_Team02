@@ -25,22 +25,24 @@ public class HackerController : MonoBehaviour
 	public CinemachineVirtualCamera cam1,cam2;
 	private bool popupCoFinished = true;
 	private RaycastHit hit;
+	private Coroutine lastCorout;
 	private void Start()
 	{
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
 
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
-		   
-	}
+        lastCorout = StartCoroutine(popupDelay());
+
+    }
 	private void Update()
 	{
 		Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
-		if (popupCoFinished)
-		{
-			popupCoFinished = false;
-			StartCoroutine(popupDelay(hit));
-		}
+		//if (popupCoFinished)
+		//{
+		//	popupCoFinished = false;
+		//	StartCoroutine(popupDelay());
+		//}
 
 	}
 	
@@ -50,56 +52,55 @@ public class HackerController : MonoBehaviour
 		{
 		//Debug.Log("Increment");
 			MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
-		}
+			StopCoroutine(lastCorout);
+            popupCoFinished = true;
+            if (lastCorout != null)
+            {
+                Debug.Log("last "+lastCorout);
+            }
+            
+            lastCorout = StartCoroutine(popupDelay());
+        }
 		
-	}
+
+    }
 	public void Decrement(InputAction.CallbackContext callback)
 	{
 		if (callback.started&&canInteract)
 		{
 			//Debug.Log("decrement");
 			MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
-		} 
-	}
+			StopCoroutine(lastCorout);
+            popupCoFinished = true;
+            lastCorout = StartCoroutine(popupDelay());
+        }
+		
+
+    }
 	public void Interact(InputAction.CallbackContext callback)
 	{
 		if (callback.started)
 		{
 			MiniGame mg;
-			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
 			{
 				if (gameState == GameState.MiniGame)
 				{
-
-					//	if (hit.transform.tag=="MiniGame"&&canInteract)
-					//	{
-
-					//		//mg = hit.transform.GetComponent<Screen>().FightPopup();
-
-
-					//		//if (mg.TestWin())
-					//		//    {
-					//		//        Debug.Log("win");
-					//		//    }
-					//		//    else
-					//		//    {
-					//		//        Debug.Log("nop");
-					//		//    }
-					//	}
-					//	else
-					//	{
-					//		Debug.Log("not game");
-					//		StartCoroutine(Wait());
-					//	}
-				}
+                    lastCorout = StartCoroutine(popupDelay());
+                }
 				else if (gameState == GameState.Popups)
 				{
-					if (popupIsActive)
-						popupIsActive = hit.transform.GetComponent<Screen>().FightPopup();
-					else
+					popupIsActive = hit.transform.GetComponent<Screen>().FightPopup();
+					if (!popupIsActive)
+					{
+						Debug.Log("startcour by space");
 						gameState = GameState.MiniGame;
-				}
+						canInteract = true;
+                        lastCorout = StartCoroutine(popupDelay());
+                    }
+
+                }
+                
 			}
 		}
 	}
@@ -119,26 +120,47 @@ public class HackerController : MonoBehaviour
 			}
 		}
 	}
+    
 	public void Back(InputAction.CallbackContext callback)
 	{
 		Debug.Log("Back");
 	}
-	IEnumerator Wait()
-	{
-		canInteract = false;
-		yield return new WaitForSeconds(2);
-		canInteract = true;
-		Debug.Log("Stuck in ads");
-	}
+	//IEnumerator Wait()
+	//{
+	//	canInteract = false;
+	//	yield return new WaitForSeconds(2);
+	//	canInteract = true;
+	//	Debug.Log("Stuck in ads");
+	//}
 	
-	IEnumerator popupDelay(RaycastHit hit)
+	IEnumerator popupDelay()
 	{
-		yield return new WaitForSeconds(Random.Range(0,1));
-		hit.transform.GetComponent<Screen>().displayPopUp();
-		popupIsActive = true;
-		gameState = GameState.Popups;
-		popupCoFinished = true;
-	}
+		if (popupCoFinished)
+		{
+			popupCoFinished = false;
+			RaycastHit courouhit;
+			yield return new WaitForSeconds(0.6f);
+			Debug.Log("cour 1");
+			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out courouhit))
+			{
+				Debug.Log("courou start");
+				//Debug.Log("cour 2");
+				//Debug.Log("name= "+courouhit.transform.name);
+
+				yield return new WaitForSeconds(Random.Range(2, 5));
+				canInteract = false;
+				hit.transform.GetComponent<Screen>().displayPopUp();
+				popupIsActive = true;
+				gameState = GameState.Popups;
+				Debug.Log("courou finishe");
+			}
+		}
+		else
+			yield return null;
+
+
+        popupCoFinished = true;
+    }
 
 
 }
