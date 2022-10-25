@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using DG.Tweening;
+
+public enum ScreenState
+{
+	MiniGame,
+	Popups,
+	Update
+};
+
 public class Screen : MonoBehaviour
 {
+	public ScreenState screenState;
 	public MiniGame game;
 	public List<GameObject> popups;
-    private List<GameObject> currentpopup = new List<GameObject>();
+    public List<GameObject> currentPopup = new List<GameObject>();
     private int currentPopupLife;
+	public bool focus = false;
 	
 	private void Start()
 	{
@@ -21,11 +31,13 @@ public class Screen : MonoBehaviour
 			gameObject.tag = "MiniGame";
 		}
         currentPopupLife = Random.Range(1, 3);
+
+		screenState = ScreenState.MiniGame;
     }
 	
 	public void displayPopUp()
 	{
-		List<GameObject> popupsRandom = popups;
+		List<GameObject> popupsRandom = new List<GameObject>(popups);
         //Debug.Log("displaying popup");
         int n = Random.Range(2,4);
 		for (int j = 0; j < n; j++)
@@ -40,36 +52,33 @@ public class Screen : MonoBehaviour
                 popupsRandom[i].SetActive(true);
                 //Debug.Log("i = " + i);
                 //         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
-                currentpopup.Add(popupsRandom[i]);
+                currentPopup.Add(popupsRandom[i]);
                 popupsRandom.RemoveAt(i);
             }
-            
-
-
 		}
+		screenState = ScreenState.Popups;
 	}
 	public bool FightPopup()
 	{
 
-		if (currentpopup.Count > 0)
+		if (currentPopup.Count > 0)
 		{
 
 			currentPopupLife--;
 			if (currentPopupLife <= 0)
 			{
-				currentpopup[0].SetActive(false);
-				currentpopup.RemoveAt(0);
+				currentPopup[0].SetActive(false);
+				currentPopup.RemoveAt(0);
 				currentPopupLife = Random.Range(1, 3);
 			}
-			if (currentpopup.Count > 0)
+			if (currentPopup.Count > 0)
 			{
 				return true;
 			}
-			else
-			{
-				return false;
-			}
 		}
+		screenState = ScreenState.MiniGame;
 		return false;
 	}
+
+	
 }
