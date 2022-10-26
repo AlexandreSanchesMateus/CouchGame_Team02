@@ -17,11 +17,14 @@ public class HackerController : MonoBehaviour
 	private RaycastHit hit;
 	private Coroutine lastCorout;
 
+	private Transform originalCamTransform;
 
 
 	private void Start()
 	{
-		if(instance == null)
+        originalCamTransform = cam1.transform;
+
+        if (instance == null)
         {
 			instance = this;
         }
@@ -150,5 +153,11 @@ public class HackerController : MonoBehaviour
 		if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
 			scr.displayPopUp();
 	}
-
+	public void CamShake()
+	{
+        Sequence newSequence = DOTween.Sequence();
+        newSequence.Append(cam1.transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true));
+        newSequence.Append(cam1.transform.DOMove(originalCamTransform.position, 0.2f));
+    }
 }
+
