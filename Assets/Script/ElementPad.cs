@@ -75,8 +75,6 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnInteract()
     {
-        
-
         int idSituation = 0;
         if (!isOpen)
         {
@@ -136,7 +134,6 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void OnReturn()
     {
         isOpen = false;
-        GUIhover.SetActive(false);
         Pad.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
