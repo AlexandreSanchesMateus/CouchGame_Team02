@@ -44,7 +44,7 @@ public class SimonPad : MonoBehaviour, IInteractible
         Pad.SetActive(false);
     }
 
-    public void OnActions(Vector2 action)
+    public void OnActions(Vector2 action, Vector2 joystick)
     {
         keys[idKey].GetComponent<Image>().sprite = unselected;
 

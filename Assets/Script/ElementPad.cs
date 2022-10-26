@@ -37,7 +37,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         GUIhover.SetActive(false);
         Pad.SetActive(false);
     }
-    public void OnActions(Vector2 action)
+    public void OnActions(Vector2 action, Vector2 joystick)
     {
         keys[idKey].GetComponent<Image>().color = Color.white;
 
