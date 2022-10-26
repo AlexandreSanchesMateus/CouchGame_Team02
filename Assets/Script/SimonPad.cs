@@ -98,7 +98,6 @@ public class SimonPad : MonoBehaviour, IInteractible
         if (isValid)
             return;
 
-        StartCoroutine(ColorRotation());
 
         /*int braqueurId = currentColorText.idBraqueur;
         int hackeurId = currentColor.idHackeur;*/
@@ -113,7 +112,6 @@ public class SimonPad : MonoBehaviour, IInteractible
             {
 
             }
-            //StartCoroutine(ColorRotation());
         }
         else
         {
@@ -122,9 +120,9 @@ public class SimonPad : MonoBehaviour, IInteractible
                 lights[i].color = Color.red;
             }
             nbValid = 0;
-            StartCoroutine(ColorRotation());
         }
 
+        StartCoroutine(ColorRotation());
 
 
     }
