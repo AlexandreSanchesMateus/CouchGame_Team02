@@ -10457,7 +10457,19 @@ MonoBehaviour:
     m_ActionId: 836062a9-c15d-426a-9d2d-02b75fb40dad
     m_ActionName: HackerController/ChangeToview2[/Keyboard/downArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6404365836932758215}
+        m_TargetAssemblyTypeName: HackerController, Assembly-CSharp
+        m_MethodName: MoveInScreen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 97f1d16b-4ed0-41a1-98bd-6b8df2be1b94
     m_ActionName: HackerController/Joystick[/XInputControllerWindows/leftStick]
   m_NeverAutoSwitchControlSchemes: 1
