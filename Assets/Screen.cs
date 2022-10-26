@@ -17,11 +17,12 @@ public class Screen : MonoBehaviour
 	public ScreenState screenState;
     [Header("référence vers le game Object du mini jeu")]
     public GameObject miniGame;
+    public Transform oldpos;
+    public Transform newpos;
 
-    
     //public IMinigame minigameInterface;
-    
-	public List<GameObject> popups;
+
+    public List<GameObject> popups;
     public List<GameObject> currentPopup = new List<GameObject>();
     private int currentPopupLife;
 	public bool focus = false;
