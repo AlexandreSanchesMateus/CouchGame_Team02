@@ -31,6 +31,8 @@ public class PlayerControllerProto2 : MonoBehaviour
     private Vector2 movementInput;
     private Vector2 rotateInput;
 
+    private Vector2 flechaction;
+
 
     private void Start()
     {
@@ -101,6 +103,9 @@ public class PlayerControllerProto2 : MonoBehaviour
     public void OnRotate(InputAction.CallbackContext context)
     {
         rotateInput = context.ReadValue<Vector2>();
+
+        if (interactibleObject != null)
+            InteractWithEnigmes();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -122,10 +127,16 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnActions(InputAction.CallbackContext context)
     {
-        if (context.performed && interactibleObject != null)
-        {
-            interactibleObject.OnActions(context.ReadValue<Vector2>());
-        }
+        flechaction = context.ReadValue<Vector2>();
+
+        if (interactibleObject != null)
+            InteractWithEnigmes();
+    }
+
+    private void InteractWithEnigmes()
+    {
+        if(interactibleObject != null)
+            interactibleObject.OnActions(flechaction, rotateInput);
     }
 
     private void OnDrawGizmos()

@@ -29,7 +29,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         Keypad.SetActive(false);
     }
 
-    public void OnActions(Vector2 action)
+    public void OnActions(Vector2 action, Vector2 joystick)
     {
         if (isVerif)
             return;
