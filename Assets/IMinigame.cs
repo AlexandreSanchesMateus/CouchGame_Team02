@@ -6,4 +6,5 @@ using UnityEngine.InputSystem;
 public interface IMinigame
 {
     public bool interact(InputAction.CallbackContext callback);
+    void Move(InputAction.CallbackContext callback);
 }

@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8151281640123018763}
+  - component: {fileID: 546870991501568744}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -128,6 +129,18 @@ Transform:
   m_Father: {fileID: 2490576432834156474}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &546870991501568744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862186251265573042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbd5bbdc8e645249bda73803252b72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4372395948075576258
 GameObject:
   m_ObjectHideFlags: 0

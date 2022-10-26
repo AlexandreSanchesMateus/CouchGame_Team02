@@ -11,4 +11,9 @@ public class MiniGame1 : MonoBehaviour,IMinigame
         Debug.Log("grosse bite");
         return true;
     }
+
+    public void Move(InputAction.CallbackContext callback)
+    {
+        //throw new System.NotImplementedException();
+    }
 }

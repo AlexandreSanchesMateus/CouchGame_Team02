@@ -24,6 +24,12 @@ public class MiniGame : MonoBehaviour, IMinigame
             return false;
         }
     }
+
+    public void Move(InputAction.CallbackContext callback)
+    {
+        //throw new System.NotImplementedException();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         

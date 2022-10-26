@@ -502,7 +502,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""c5df4827-32ad-4f46-9c95-f9ff1f616511"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone(min=0.5)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Joystick"",
                     ""isComposite"": false,

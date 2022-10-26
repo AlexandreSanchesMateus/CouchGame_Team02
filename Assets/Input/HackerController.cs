@@ -91,6 +91,26 @@ public class HackerController : MonoBehaviour
 			}
 		}
 	}
+	public void MoveInScreen(InputAction.CallbackContext callback)
+	{
+        if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+        {
+            Screen screen = hit.transform.GetComponent<Screen>();
+
+            if (screen.screenState == ScreenState.Popups)
+            {
+                screen.FightPopup();
+
+                if (screen.currentPopup.Count <= 0)
+                    lastCorout = StartCoroutine(popupDelay());
+            }
+            else if (screen.screenState == ScreenState.MiniGame)
+            {
+                screen.miniGame.GetComponent<IMinigame>().Move(callback);
+
+            }
+        }
+    }
 	public void SwitchCam(InputAction.CallbackContext callback)
 	{
 		if (callback.started)
