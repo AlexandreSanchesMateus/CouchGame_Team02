@@ -11,7 +11,7 @@ public class MiniGame : MonoBehaviour, IMinigame
     public Camera Cam;
     public int code;
     public TextMeshPro text;
-    public bool TestWin(InputAction.CallbackContext callback) 
+    public bool interact(InputAction.CallbackContext callback) 
     {
         if (isGood)
         {

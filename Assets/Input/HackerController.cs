@@ -85,7 +85,7 @@ public class HackerController : MonoBehaviour
                 }
 				else if(screen.screenState == ScreenState.MiniGame)
 				{
-					screen.GetComponent<IMinigame>().TestWin(callback);
+					screen.miniGame.GetComponent<IMinigame>().interact(callback);
 
                 }
 			}

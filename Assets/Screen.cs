@@ -14,8 +14,12 @@ public enum ScreenState
 public class Screen : MonoBehaviour
 {
 	public ScreenState screenState;
+    [Header("référence vers le game Object du mini jeu")]
+    public GameObject miniGame;
+
+    
     //public IMinigame minigameInterface;
-    public MiniGame1 game;
+    
 	public List<GameObject> popups;
     public List<GameObject> currentPopup = new List<GameObject>();
     private int currentPopupLife;
@@ -24,14 +28,7 @@ public class Screen : MonoBehaviour
     private void Start()
 	{
         
-        if (game == null)
-		{
-			gameObject.tag = "ads";  
-		}
-		else
-		{
-			gameObject.tag = "MiniGame";
-		}
+        
         currentPopupLife = Random.Range(1, 3);
 
 		screenState = ScreenState.MiniGame;

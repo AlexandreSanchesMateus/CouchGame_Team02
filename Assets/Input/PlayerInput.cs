@@ -375,6 +375,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Joystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""97f1d16b-4ed0-41a1-98bd-6b8df2be1b94"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -487,6 +496,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""ChangeToview2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5df4827-32ad-4f46-9c95-f9ff1f616511"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -536,6 +556,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
         m_HackerController_ChangeToview1 = m_HackerController.FindAction("ChangeToview1", throwIfNotFound: true);
         m_HackerController_ChangeToview2 = m_HackerController.FindAction("ChangeToview2", throwIfNotFound: true);
+        m_HackerController_Joystick = m_HackerController.FindAction("Joystick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -666,6 +687,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_HackerController_Back;
     private readonly InputAction m_HackerController_ChangeToview1;
     private readonly InputAction m_HackerController_ChangeToview2;
+    private readonly InputAction m_HackerController_Joystick;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -676,6 +698,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_HackerController_Back;
         public InputAction @ChangeToview1 => m_Wrapper.m_HackerController_ChangeToview1;
         public InputAction @ChangeToview2 => m_Wrapper.m_HackerController_ChangeToview2;
+        public InputAction @Joystick => m_Wrapper.m_HackerController_Joystick;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -703,6 +726,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeToview2.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
                 @ChangeToview2.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
                 @ChangeToview2.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
+                @Joystick.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @Joystick.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @Joystick.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -725,6 +751,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeToview2.started += instance.OnChangeToview2;
                 @ChangeToview2.performed += instance.OnChangeToview2;
                 @ChangeToview2.canceled += instance.OnChangeToview2;
+                @Joystick.started += instance.OnJoystick;
+                @Joystick.performed += instance.OnJoystick;
+                @Joystick.canceled += instance.OnJoystick;
             }
         }
     }
@@ -763,5 +792,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnChangeToview1(InputAction.CallbackContext context);
         void OnChangeToview2(InputAction.CallbackContext context);
+        void OnJoystick(InputAction.CallbackContext context);
     }
 }

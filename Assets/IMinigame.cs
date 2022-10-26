@@ -5,5 +5,5 @@ using UnityEngine.InputSystem;
 
 public interface IMinigame
 {
-    public bool TestWin(InputAction.CallbackContext callback);
+    public bool interact(InputAction.CallbackContext callback);
 }

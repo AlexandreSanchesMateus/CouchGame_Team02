@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class MiniGame1 : MonoBehaviour,IMinigame
 {
-    public bool TestWin(InputAction.CallbackContext callback)
+    
+    public bool interact(InputAction.CallbackContext callback)
     {
+        Debug.Log("grosse bite");
         return true;
     }
 }

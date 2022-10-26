@@ -48,16 +48,16 @@ public class screensholder : MonoBehaviour
             }
             float angle = i * Mathf.PI * 2f / number;
             Vector3 newPos = new Vector3(transform.position.x+ Mathf.Cos(angle) * radius, transform.position.y, transform.position.z + Mathf.Sin(angle) * radius);
-            GameObject screenGO = Instantiate(screenPrefabs, newPos, Quaternion.Euler(0,currentrot,0), transform);
+            //GameObject screenGO = Instantiate(screenPrefabs, newPos, Quaternion.Euler(0,currentrot,0), transform);
             if(i==0)
             {
                 //screenGO.GetComponent<Screen>().game = minigames[0];
             }
             else
             {
-                screenGO.GetComponent<Renderer>().material = scamAd[Random.Range(0, scamAd.Count)];
+                //screenGO.GetComponent<Renderer>().material = scamAd[Random.Range(0, scamAd.Count)];
             }
-            screens.Add(screenGO);
+            //screens.Add(screenGO);
         }
     }
     public void DoRotate(bool isposi)
