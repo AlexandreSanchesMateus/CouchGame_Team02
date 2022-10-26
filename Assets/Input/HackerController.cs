@@ -84,7 +84,10 @@ public class HackerController : MonoBehaviour
 						lastCorout = StartCoroutine(popupDelay());
                 }
 				else if(screen.screenState == ScreenState.MiniGame)
-					screen.game.TestWin(callback);
+				{
+					screen.GetComponent<IMinigame>().TestWin(callback);
+
+                }
 			}
 		}
 	}

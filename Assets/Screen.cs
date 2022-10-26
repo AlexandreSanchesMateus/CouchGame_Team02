@@ -14,15 +14,17 @@ public enum ScreenState
 public class Screen : MonoBehaviour
 {
 	public ScreenState screenState;
-	public MiniGame game;
+    //public IMinigame minigameInterface;
+    public MiniGame1 game;
 	public List<GameObject> popups;
     public List<GameObject> currentPopup = new List<GameObject>();
     private int currentPopupLife;
 	public bool focus = false;
-	
-	private void Start()
+	Sequence mySequence;
+    private void Start()
 	{
-		if (game == null)
+        
+        if (game == null)
 		{
 			gameObject.tag = "ads";  
 		}
@@ -40,7 +42,8 @@ public class Screen : MonoBehaviour
 		List<GameObject> popupsRandom = new List<GameObject>(popups);
         //Debug.Log("displaying popup");
         int n = Random.Range(2,4);
-		for (int j = 0; j < n; j++)
+        mySequence = DOTween.Sequence();
+        for (int j = 0; j < n; j++)
 		{
 			//Debug.Log(popupsRandom.Count);
 			//Debug.Log("dans le for de display");
@@ -50,13 +53,20 @@ public class Screen : MonoBehaviour
                 //Debug.Log("ça rentre?");
                 int i = Random.Range(0, popupsRandom.Count - 1);
                 popupsRandom[i].SetActive(true);
+                
+                popups[i].transform.localScale = new Vector3(0, 0, 0);
+				float scaleX = Random.Range(0.03f, 0.1f);
+                mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1,0.01f), 0.2f).SetEase(Ease.OutBounce));
+				mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
+
                 //Debug.Log("i = " + i);
                 //         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
                 currentPopup.Add(popupsRandom[i]);
                 popupsRandom.RemoveAt(i);
             }
 		}
-		screenState = ScreenState.Popups;
+        
+        screenState = ScreenState.Popups;
 	}
 	public bool FightPopup()
 	{

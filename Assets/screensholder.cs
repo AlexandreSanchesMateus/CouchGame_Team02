@@ -9,8 +9,8 @@ public class screensholder : MonoBehaviour
     public GameObject screenPrefabs;
     private float currentrot;
     private float newRot;
-      
     
+
     [Range(0,20)]
     public int number;
     
@@ -18,7 +18,7 @@ public class screensholder : MonoBehaviour
     [HideInInspector]public float rotToAdd;
 
     public List<GameObject> screens = new List<GameObject>();
-    public List<MiniGame> minigames = new List<MiniGame>();
+    //public List<MiniGame> minigames = new List<MiniGame>();
     public List<Material> scamAd = new List<Material>();
     private void OnDrawGizmosSelected()
     {
@@ -30,8 +30,6 @@ public class screensholder : MonoBehaviour
             Gizmos.color = Color.magenta;
             Gizmos.DrawSphere(newPos, 0.5f);
         }
-        
-        
     }
     private void Start()
     {
@@ -53,7 +51,7 @@ public class screensholder : MonoBehaviour
             GameObject screenGO = Instantiate(screenPrefabs, newPos, Quaternion.Euler(0,currentrot,0), transform);
             if(i==0)
             {
-                screenGO.GetComponent<Screen>().game = minigames[0];
+                //screenGO.GetComponent<Screen>().game = minigames[0];
             }
             else
             {

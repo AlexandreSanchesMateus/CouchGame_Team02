@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1367912198209013032}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.279, y: 0.155, z: 98.4}
-  m_LocalScale: {x: 0.053609975, y: 0.4078, z: 0.061357588}
+  m_LocalScale: {x: 0.03, y: 1.88, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8161986894761104263}
@@ -896,6 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea08ed88a2fcf28489436c2b548dd660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenState: 0
   game: {fileID: 0}
   popups:
   - {fileID: 1367912198209013032}
@@ -906,6 +907,8 @@ MonoBehaviour:
   - {fileID: 8601894628887799750}
   - {fileID: 5211193230933870850}
   - {fileID: 4276806413395811066}
+  currentPopup: []
+  focus: 0
 --- !u!1 &8601894628887799750
 GameObject:
   m_ObjectHideFlags: 0
