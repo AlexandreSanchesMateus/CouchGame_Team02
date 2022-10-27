@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using System.Runtime.CompilerServices;
-using UnityEngine.ProBuilder.Shapes;
 
 public class ElementPad : MonoBehaviour, IInteractible
 {
+    [SerializeField] private GameObject vcam;
 
-    [Header("Canvas")]
-    [SerializeField] private GameObject GUIhover;
-    [SerializeField] private GameObject Pad;
+    // [SerializeField] private GameObject GUIhover;
+    //[SerializeField] private GameObject Pad;
+
+    [Header("General")]
+    [SerializeField] private GameObject lockey;
     [SerializeField] private TextMeshProUGUI display;
     [SerializeField] private GameObject[] keys;
-    [SerializeField] private GameObject lockey;
-    [SerializeField] private List<Image> lights;
+
+    [Header("Led")]
+    [SerializeField] private Material redMat;
+    [SerializeField] private Material greenMat;
+    [SerializeField] private GameObject[] lights;
 
     [Header("Réponses")]
     [SerializeField] private List<Etapes> etapes;
@@ -26,22 +30,20 @@ public class ElementPad : MonoBehaviour, IInteractible
     private int idKey;
     private bool isOpen;
     private int actualEtape;
-    private bool isValid = false;
 
 
     void Start()
     {
         isOpen = false;
         idKey = 0;
-        keys[idKey].GetComponent<Image>().color = Color.grey;
-        GUIhover.SetActive(false);
-        Pad.SetActive(false);
     }
+
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        keys[idKey].GetComponent<Image>().color = Color.white;
+        if (!isOpen || action == Vector2.zero)
+            return;
 
-        if(action == Vector2.right)
+        if (action == Vector2.right)
         {
             idKey++;
             if(idKey == 4)
@@ -59,18 +61,17 @@ public class ElementPad : MonoBehaviour, IInteractible
         }
 
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
-        keys[idKey].GetComponent<Image>().color = Color.grey;
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 
     public void OnItemExit()
     {
-        GUIhover.SetActive(false);
+        GUIManager.instance.EnableUseGUI(false);
     }
 
     public void OnItemHover()
     {
-        if (!isValid)
-            GUIhover.SetActive(true);
+        GUIManager.instance.EnableUseGUI(true);
     }
 
     public void OnInteract()
@@ -78,18 +79,14 @@ public class ElementPad : MonoBehaviour, IInteractible
         int idSituation = 0;
         if (!isOpen)
         {
-            GUIhover.SetActive(false);
-            Pad.SetActive(true);
+            StartCoroutine(Delay());
+            GUIManager.instance.EnableUseGUI(false);
+            vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
             idSituation = Random.Range(0, 3);
             currentSituation = etapes[actualEtape].situations[idSituation];
             display.text = etapes[actualEtape].situations[idSituation].element.ToString();
-            return;
-        }
-
-        if (isValid)
-        {
             return;
         }
 
@@ -104,15 +101,14 @@ public class ElementPad : MonoBehaviour, IInteractible
 
         if (idKey == key)
         {
-            lights[actualEtape].color = Color.green;
+            lights[actualEtape].GetComponent<MeshRenderer>().material = greenMat;
             previousElement.Add(idKey);
             actualEtape++;
             if (actualEtape == 6)
             {
-                Destroy(lockey);
-                StartCoroutine(Delay());
+                // Destroy(lockey);
+                StartCoroutine(PanelComplet());
                 display.text = "Well done";
-                isValid = true;
                 return;
             }
         }
@@ -120,7 +116,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         {
             for(int i = actualEtape; i > -1; i--)
             {
-                lights[i].color = Color.red;
+                lights[i].GetComponent<MeshRenderer>().material = redMat;
             }
             previousElement.Clear();
             actualEtape = 0;
@@ -134,15 +130,24 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void OnReturn()
     {
         isOpen = false;
-        Pad.SetActive(false);
+        vcam.SetActive(false);
+        GUIManager.instance.EnableHand(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
+
+    private IEnumerator PanelComplet()
+    {
+        GUIManager.instance.EnableHand(false);
+        vcam.SetActive(false);
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(2);
+        PlayerControllerProto2.enablePlayerMovement = true;
+    }
+
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1);
-        PlayerControllerProto2.enablePlayerMovement = true;
-        //yield return new WaitForSeconds(1);
-        Pad.SetActive(false);
+        yield return new WaitForSeconds(2);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 
 }

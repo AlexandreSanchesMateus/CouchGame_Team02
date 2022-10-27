@@ -30,7 +30,7 @@ public class KeyCode : MonoBehaviour, IInteractible
     // Lorsque je joueur utilise l'object
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        if (isVerif || action == Vector2.zero)
+        if (!isOpen || isVerif || action == Vector2.zero)
             return;
 
         if (action == Vector2.up)
@@ -55,13 +55,13 @@ public class KeyCode : MonoBehaviour, IInteractible
     // Lorsque je joueur arrete de regarder l'object
     public void OnItemExit()
     {
-        GUIManager.instance.EnablePick_upGUI(false);
+        GUIManager.instance.EnableUseGUI(false);
     }
 
     // Lorsque je joueur regarde l'object
     public void OnItemHover()
     {
-        GUIManager.instance.EnablePick_upGUI(true);
+        GUIManager.instance.EnableUseGUI(true);
     }
 
     // Lorsque je joueur interagie avec l'object
@@ -70,7 +70,8 @@ public class KeyCode : MonoBehaviour, IInteractible
         // SI NON OUVERT : orienter caméra + désactiver input player
         if (!isOpen)
         {
-            GUIManager.instance.EnablePick_upGUI(false);
+            StartCoroutine(Delay());
+            GUIManager.instance.EnableUseGUI(false);
             // GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
             vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
@@ -103,9 +104,11 @@ public class KeyCode : MonoBehaviour, IInteractible
     public void OnReturn()
     {
         isOpen = false;
-        GUIManager.instance.EnablePick_upGUI(false);
+        GUIManager.instance.EnableUseGUI(false);
+        GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
+        StopAllCoroutines();
     }
 
     // Prépar la list d'int saisi en une chaine de caractère pour etre comparer au code de référence
@@ -158,6 +161,7 @@ public class KeyCode : MonoBehaviour, IInteractible
             gameObject.layer = 0;
             yield return new WaitForSeconds(1);
             vcam.SetActive(false);
+            GUIManager.instance.EnableHand(false);
             yield return new WaitForSeconds(2);
             PlayerControllerProto2.enablePlayerMovement = true;
         }
@@ -169,5 +173,11 @@ public class KeyCode : MonoBehaviour, IInteractible
             displayCode.text = " _ _ _ _";
             isVerif = false;
         }
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 }

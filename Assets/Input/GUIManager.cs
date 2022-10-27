@@ -30,15 +30,22 @@ public class GUIManager : MonoBehaviour
         Use.SetActive(statut);
     }
 
+    public void EnableHand(bool statut)
+    {
+        if (!statut)
+            hand.transform.localPosition = new Vector3(-1380, -400, 0);
+
+        hand.SetActive(statut);
+    }
+
     public void MoveHandWorldToScreenPosition(Vector3 worldPosition)
     {
+        if (!hand.gameObject.activeSelf)
+            hand.SetActive(true);
+
         Vector2 screenPos = PlayerCam.WorldToScreenPoint(worldPosition);
-        // Vector2 screenPos = PlayerCam.WorldToScreenPoint(worldPosition);
-        // hand.transform.DOLocalMove(screenPos, 1).SetEase(Ease.OutSine);
-        // hand.transform.localPosition = screenPos;
 
         if(RectTransformUtility.ScreenPointToLocalPointInRectangle(gameObject.GetComponent<RectTransform>(), screenPos, PlayerCam, out Vector2 local))
             hand.transform.DOLocalMove(local, 0.2f).SetEase(Ease.InSine);
-
     }
 }
