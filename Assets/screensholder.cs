@@ -62,10 +62,10 @@ public class screensholder : MonoBehaviour
 					{
 						Debug.Log("ayay");
 						mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, 77), 0.2f));
-						mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.2f));
+						mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.3f).SetEase(Ease.OutBounce));
 
 					}
-					mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => { CanRotate = true; }));
+					mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).OnComplete(() => { CanRotate = true; }));
 				}
 			}
 			else
@@ -82,10 +82,10 @@ public class screensholder : MonoBehaviour
                     {
                         Debug.Log("ayay");
                         mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, -77), 0.2f));
-                        mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.2f));
+                        mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.3f).SetEase(Ease.OutBounce));
 
                     }
-                    mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => { CanRotate = true; }));
+                    mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).OnComplete(() => { CanRotate = true; }));
                 }
 
             }
