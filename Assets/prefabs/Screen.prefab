@@ -1110,14 +1110,14 @@ MonoBehaviour:
   oldpos: {fileID: 0}
   newpos: {fileID: 0}
   popups:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7716683265010218860}
+  - {fileID: 4828389660134665830}
+  - {fileID: 730567768521540547}
+  - {fileID: 6118899146744127745}
+  - {fileID: 6757504776294385608}
+  - {fileID: 8065109130312585212}
+  - {fileID: 1220769231390980240}
+  - {fileID: 2006260261799046912}
   currentPopup: []
   focus: 0
 --- !u!1001 &5490380378556605159

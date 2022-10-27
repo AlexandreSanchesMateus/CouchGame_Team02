@@ -53,13 +53,41 @@ public class screensholder : MonoBehaviour
 				int next;
 				for (int i = 0; i < screens.Count; i++)
 				{
-                    next = i + 1;
-                    if (next > screens.Count - 1)
+					next = i + 1;
+					if (next > screens.Count - 1)
+					{
+						next = 0;
+					}
+					if (screens[next].position == screenPos[0].position)
+					{
+						Debug.Log("ayay");
+						mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, 77), 0.2f));
+						mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.2f));
+
+					}
+					mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => { CanRotate = true; }));
+				}
+			}
+			else
+			{
+                int next;
+                for (int i = 0; i < screens.Count; i++)
+                {
+                    next = i - 1;
+                    if (next < 0)
                     {
-                        next = 0;
+                        next = screens.Count - 1;
                     }
-                    mySequence.Insert(0.4f, screens[i].DOMove(screens[next].position, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => { CanRotate = true; }));
+                    if (screens[next].position == screenPos[0].position)
+                    {
+                        Debug.Log("ayay");
+                        mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, -77), 0.2f));
+                        mySequence.Insert(0.2f, screens[i].DORotate(new Vector3(0, 189, 0), 0.2f));
+
+                    }
+                    mySequence.Insert(0, screens[i].DOMove(screens[next].position, 0.4f).SetEase(Ease.OutBounce).OnComplete(() => { CanRotate = true; }));
                 }
+
             }
         }
 	}
