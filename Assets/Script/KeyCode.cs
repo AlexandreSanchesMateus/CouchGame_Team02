@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 using TMPro;
 
 public class KeyCode : MonoBehaviour, IInteractible
@@ -13,6 +14,7 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private GameObject[] keys;
     [SerializeField] private string goodCode;
     [SerializeField] private GameObject door;
+    [SerializeField] private GameObject camera;
 
     private List<int> currentCode = new List<int>();
     private int idKey;
@@ -25,6 +27,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         isOpen = false;
         idKey = 0;
         keys[idKey].GetComponent<Image>().color = Color.red;
+        camera.SetActive(false);
         GUIhover.SetActive(false);
         Keypad.SetActive(false);
     }
@@ -73,6 +76,7 @@ public class KeyCode : MonoBehaviour, IInteractible
             GUIhover.SetActive(false);
             Keypad.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
+            camera.SetActive(true);
             isOpen = true;
         }
         else
@@ -97,6 +101,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         isOpen = false;
         GUIhover.SetActive(false);
         Keypad.SetActive(false);
+        camera.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
 
@@ -155,6 +160,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         yield return new WaitForSeconds(1) ;
         PlayerControllerProto2.enablePlayerMovement = true;
         //yield return new WaitForSeconds(1);
+        camera.SetActive(false);
         Keypad.SetActive(false);
     }
 }
