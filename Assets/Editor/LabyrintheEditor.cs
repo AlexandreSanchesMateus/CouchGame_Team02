@@ -29,13 +29,15 @@ public class LabyrintheEditor : Editor
         GUILayout.Space(5);
         GUILayout.Label("Grid Settings");
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Grid Size");
-        Labyrinthe.gridSize = EditorGUILayout.IntField(Labyrinthe.gridSize);
         GUILayout.EndHorizontal();
         if(GUILayout.Button("Grid's wall Settings"))
         {
             LabyrintheWallEditor.InitWindow();
         }
         GUILayout.Space(10);
+
+        GUILayout.Label("Current labyrinthe :");
+        GUILayout.Label("Total size : ");
+        GUILayout.Label("Total of slot : " + Labyrinthe.grid.Count);
     }
 }

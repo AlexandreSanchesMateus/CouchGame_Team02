@@ -7,116 +7,155 @@ public class LabyrintheWallEditor : EditorWindow
 {
     public GUISkin customSkin;
 
-    private static List<Labyrinthe.Slot> editorGrid = new List<Labyrinthe.Slot>();
+    private static List<Slot> editorGrid = new List<Slot>();
+    private static int editorGridSizeX;
+    private static int editorGridSizeY;
+
+    private static int editorPlayerPosId = -1;
+    private static int editorLabyrinthEndID = -1;
+
+    private static int Xsize;
+    private static int Ysize;
+
+    private bool isSetingStartPos = false;
+    private bool isSetingEndPos = false;
 
     public static void InitWindow()
     {
         LabyrintheWallEditor window = GetWindow<LabyrintheWallEditor>();
         window.titleContent = new GUIContent("Labyrinthe Wall");
-        window.maxSize = new Vector2(600, 600);
-        window.minSize = window.maxSize;
-        if(Labyrinthe.grid.Count == 0)
+        window.minSize = new Vector2(800, 630);
+        
+        if(Labyrinthe.grid.Count != 0)
         {
-            editorGrid.Clear();
-            for (int i = 0; i < (int)Mathf.Pow(Labyrinthe.gridSize, 2); i++)
-            {
-                editorGrid.Add(new Labyrinthe.Slot());
-            }
+            editorGrid = new List<Slot>(Labyrinthe.grid);
+            editorGridSizeX = Labyrinthe.gridSizeX;
+            editorGridSizeY = Labyrinthe.gridSizeY;
         }
+        else
+        {
+            editorGrid = new List<Slot>();
+            editorGridSizeX = 7;
+            editorGridSizeY = 6;
+
+            for (int i = 0; i < editorGridSizeX * editorGridSizeY; i++)
+                editorGrid.Add(new Slot());
+        }
+
+        Xsize = editorGridSizeX;
+        Ysize = editorGridSizeY;
+
         window.Show();
     }
 
     private void OnGUI()
     {
         GUI.skin = customSkin;
-        GUILayout.Space(20);
 
-        GUILayout.Label("Colors indicator :");
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Gris -> BLOCK", GUILayout.ExpandWidth(true));
-        GUILayout.Label("Rouge -> HACKER", GUILayout.ExpandWidth(true));
-        GUILayout.Label("Bleu -> ROBBER", GUILayout.ExpandWidth(true));
-        GUILayout.Label("Vert -> BOTH", GUILayout.ExpandWidth(true));
-        GUILayout.Label("Violet -> EITHER", GUILayout.ExpandWidth(true));
-        GUILayout.EndHorizontal();
 
+
+        // ---------- ACTION SECTION ---------- //
+
+        GUILayout.BeginVertical("window", GUILayout.Width(150));
+
+        // RESIZE FUNCTION
+        GUILayout.Label("Grid Size X");
+        Xsize = EditorGUILayout.IntField(Xsize);
+        GUILayout.Label("Grid Size Y");
+        Ysize = EditorGUILayout.IntField(Ysize);
+
+        if (GUILayout.Button("Resize"))
+        {
+            editorGridSizeX = Xsize;
+            editorGridSizeY = Ysize;
+
+            editorGrid.Clear();
+            for (int i = 0; i < editorGridSizeX * editorGridSizeY; i++)
+                editorGrid.Add(new Slot());
+        }
+        GUILayout.Space(5);
+
+        // SET THE PLAYER POS OR SET THE LABYRINTH END
+        if (GUILayout.Button("Set Start Pos"))
+        {
+            isSetingStartPos = !isSetingStartPos;
+            isSetingEndPos = false;
+        }
+        if (GUILayout.Button("Set End Pos"))
+        {
+            isSetingEndPos = !isSetingEndPos;
+            isSetingStartPos = false;
+        }
+
+        // INFORMATIONS
         GUILayout.Space(10);
-        GUILayout.BeginHorizontal("window", GUILayout.ExpandHeight(true));
-        
+        GUILayout.Label("BLOCK : prevent the player to get out of the grid. Do not restart the labyrinth.", "BLOCK");
+        GUILayout.Label("HACKER : only the hacker can pass through this wall. Otherwise, the labyrinth restart.", "HACKER");
+        GUILayout.Label("ROBBER : only the robber can pass through this wall. Otherwise, the labyrinth restart.", "ROBBER");
+        GUILayout.Label("BOTH : the hacker and the robber can pass through.", "BOTH");
+        GUILayout.Label("EITHER : none of the players can pass through. Restart the labyrinth went trigger.", "EITHER");
 
-        GUILayout.BeginVertical();
-        int value = 0;
-        for (int i = 0; i < Labyrinthe.gridSize; i++)
+        GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Save Labyrinthe"))
+        {
+            Labyrinthe.grid = new List<Slot>(editorGrid);
+            Labyrinthe.gridSizeX = editorGridSizeX;
+            Labyrinthe.gridSizeY = editorGridSizeY;
+            Debug.Log("Labyrinthe save succesfully");
+        }
+
+        GUILayout.EndVertical();
+
+        // ---------- GRID SECTION ---------- //
+
+        GUILayout.BeginVertical("window", GUILayout.ExpandHeight(true));
+        for (int y = 0; y < editorGridSizeY; y++)
         {
             GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
             GUILayout.Space(10);
-            for (int y = 0; y < Labyrinthe.gridSize; y++)
+            for (int x = 0; x < editorGridSizeX; x++)
             {
-                GUILayout.BeginVertical(GUILayout.ExpandWidth(false));
-                GUILayout.Box("", GUILayout.Width(50), GUILayout.Height(50));
-                if (GUILayout.Button("", editorGrid[i + y].bottomWall.ToString(), GUILayout.Width(50), GUILayout.Height(10)))
+                int id = y * editorGridSizeX + x;
+
+                // SET THE PLAYER POS OR SET THE LABYRINTH END
+                if (isSetingStartPos || isSetingEndPos)
                 {
-                    editorGrid[0] = IncrementAccess(editorGrid[i + y], false);
-                    Debug.Log("Ligne : " + i + " Colone : " + y + "Valeur : " + (y - 1) * Labyrinthe.gridSize + i);
-                    //Debug.Log(editorGrid[i + y].rightWall.ToString() + " " + editorGrid[i + y].bottomWall.ToString());
+                    if (GUILayout.Button("", "setpos", GUILayout.Width(50), GUILayout.Height(50)))
+                        Debug.Log("Set position to " + id);
                 }
-                GUILayout.EndVertical();
-                if(GUILayout.Button("", editorGrid[i + y].rightWall.ToString(), GUILayout.Width(10), GUILayout.Height(50)))
+                // SET THE WALL OF THE LABYRINTH
+                else
                 {
-                    editorGrid[0] = IncrementAccess(editorGrid[i + y], true);
-                    Debug.Log("Ligne : " + i + " Colone : " + y + "Valeur : " + value);
-                    //Debug.Log(editorGrid[i + y].rightWall.ToString() + " " + editorGrid[i + y].bottomWall.ToString());
+
+                    GUILayout.BeginVertical(GUILayout.ExpandWidth(false));
+
+                    // IMAGE DE LA CASE
+                    GUILayout.Box("", GUILayout.Width(50), GUILayout.Height(50));
+
+                    // BOUTON DU MUR DU DESSOUS
+                    if (y != editorGridSizeY - 1)
+                    {
+                        if (GUILayout.Button("", editorGrid[id].bottomWall.ToString(), GUILayout.Width(50), GUILayout.Height(10)))
+                            editorGrid[id].IncrementAccess(false);
+                    }
+
+                    GUILayout.EndVertical();
+
+                    // BOUTON DU MUR DE DROITE
+                    if (x != editorGridSizeX - 1)
+                    {
+                        if (GUILayout.Button("", editorGrid[id].rightWall.ToString(), GUILayout.Width(10), GUILayout.Height(50)))
+                            editorGrid[id].IncrementAccess(true);
+
+                    }
                 }
-                value ++;
             }
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
         }
         GUILayout.EndVertical();
 
-
         GUILayout.EndHorizontal();
-        if (GUILayout.Button("Save"))
-        {
-            
-        }
     }
-
-    public Labyrinthe.Slot IncrementAccess(Labyrinthe.Slot source, bool rightWall)
-    {
-        Labyrinthe.Slot toReturn = new Labyrinthe.Slot(source);
-
-        if(rightWall)
-            toReturn.rightWall = (Labyrinthe.ACCESS)((source.rightWall.GetHashCode() + 1) % 5);
-        else
-            toReturn.bottomWall = (Labyrinthe.ACCESS)((source.bottomWall.GetHashCode() + 1) % 5);
-
-        return toReturn;
-    }
-
-    /*private GUIStyle GetGUIStyle(Labyrinthe.ACCESS access)
-    {
-        GUIStyle toReturn = new GUIStyle(GUI.skin.button);
-
-        switch (access)
-        {
-            case Labyrinthe.ACCESS.BLOCK:
-                toReturn.normal.textColor = Color.grey;
-                break;
-            case Labyrinthe.ACCESS.HACKER:
-                toReturn.normal.textColor = Color.grey;
-                break;
-            case Labyrinthe.ACCESS.ROBBER:
-                toReturn.normal.textColor = Color.blue;
-                break;
-            case Labyrinthe.ACCESS.BOTH:
-                toReturn.normal.textColor = Color.green;
-                break;
-            case Labyrinthe.ACCESS.EITHER:
-                toReturn.normal.textColor = Color.red;
-                break;
-        }
-
-        return toReturn;
-    }*/
 }
