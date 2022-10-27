@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class Disck : MonoBehaviour, IInteractible
 {
+    // [SerializeField] private GameObject GUIhover;
+    // [SerializeField] private GameObject disck;
 
-    [SerializeField] private GameObject GUIhover;
-    [SerializeField] private GameObject disck;
-    [SerializeField] private Image spinPart;
-    [SerializeField] private Image colorPart;
+    [SerializeField] private GameObject vcam;
+
+    [SerializeField] private GameObject spinPart;
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private Material greenMat;
 
     [Header ("Accessibility")]
     [SerializeField] private CodeSection[] combination;
@@ -26,7 +29,7 @@ public class Disck : MonoBehaviour, IInteractible
 
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        if (joystick.magnitude < 0.7)
+        if (!isOpen || joystick.magnitude < 0.7)
         {
             init = false;
             return;
@@ -72,17 +75,15 @@ public class Disck : MonoBehaviour, IInteractible
     {
         if (!isOpen)
         {
-            GUIhover.SetActive(false);
-            disck.SetActive(true);
+            GUIManager.instance.EnableUseGUI(false);
+            vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
         }
         else
         {
             combinationSelected.Add(new CodeSection(rotationDisck, angle));
-
             bool pass = true;
-
             if (combinationSelected.Count <= combination.Length + 1)
             {
                 for (int i = 0; i < combinationSelected.Count; i++)
@@ -108,7 +109,8 @@ public class Disck : MonoBehaviour, IInteractible
             if (pass)
             {
                 Debug.Log("You Pass");
-                colorPart.color = Color.green;
+                indicator.GetComponent<MeshRenderer>().material = greenMat;
+                StartCoroutine(PanelComplet());
             }
             else
             {
@@ -123,19 +125,19 @@ public class Disck : MonoBehaviour, IInteractible
 
     public void OnItemExit()
     {
-        GUIhover.SetActive(false);
+        GUIManager.instance.EnableUseGUI(false);
     }
 
     public void OnItemHover()
     {
-        GUIhover.SetActive(true);
+        GUIManager.instance.EnableUseGUI(true);
     }
 
     public void OnReturn()
     {
         isOpen = false;
-        GUIhover.SetActive(false);
-        disck.SetActive(false);
+        GUIManager.instance.EnableUseGUI(false);
+        vcam.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
 
@@ -157,5 +159,13 @@ public class Disck : MonoBehaviour, IInteractible
         UNKNOWN,
         CLOCKWISE,
         COUNTER_CLOCKWISE
+    }
+
+    private IEnumerator PanelComplet()
+    {
+        vcam.SetActive(false);
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(2);
+        PlayerControllerProto2.enablePlayerMovement = true;
     }
 }

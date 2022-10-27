@@ -9,14 +9,25 @@ using UnityEngine.UI;
 public class SimonPad : MonoBehaviour, IInteractible
 {
 
+    [SerializeField] private GameObject vcam;
+
     [Header("Canvas")]
-    [SerializeField] private GameObject GUIhover;
-    [SerializeField] private GameObject Pad;
+    /* [SerializeField] private GameObject GUIhover;
+    [SerializeField] private GameObject Pad;*/
+
+
     [SerializeField] private TextMeshProUGUI display;
+
     [SerializeField] private GameObject[] keys;
-    [SerializeField] private List<Image> lights;
-    [SerializeField] private Sprite unselected;
-    [SerializeField] private Sprite selected;
+
+    //[SerializeField] private List<Image> lights;
+    [SerializeField] private List<GameObject> lights;
+    [SerializeField] private Material redMat;
+    [SerializeField] private Material greenMat;
+
+
+    /*[SerializeField] private Sprite unselected;
+    [SerializeField] private Sprite selected;*/
 
 
     [Header("Correspondance Editor")]
@@ -30,7 +41,6 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private int idKey;
     private bool isOpen;
-    private bool isValid;
     private int nbValid;
     private int idColor;
 
@@ -39,14 +49,17 @@ public class SimonPad : MonoBehaviour, IInteractible
         isOpen = false;
         idKey = 0;
         nbValid = 0;
-        keys[idKey].GetComponent<Image>().sprite = selected;
-        GUIhover.SetActive(false);
-        Pad.SetActive(false);
+        // keys[idKey].GetComponent<Image>().sprite = selected;
+        // GUIhover.SetActive(false);
+        // Pad.SetActive(false);
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        keys[idKey].GetComponent<Image>().sprite = unselected;
+        if (!isOpen || action == Vector2.zero)
+            return;
+
+        // keys[idKey].GetComponent<Image>().sprite = unselected;
 
         if (action == Vector2.right)
         {
@@ -67,22 +80,25 @@ public class SimonPad : MonoBehaviour, IInteractible
 
 
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
-        keys[idKey].GetComponent<Image>().sprite = selected;
-
+        // keys[idKey].GetComponent<Image>().sprite = selected;
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 
-    private static void OnActionsHacker()
+    /*private static void OnActionsHacker()
     {
 
-    }
+    }*/
 
     public void OnInteract()
     {
         if (!isOpen)
         {
             idColor = 0;
-            GUIhover.SetActive(false);
-            Pad.SetActive(true);
+            // GUIhover.SetActive(false);
+            GUIManager.instance.EnableUseGUI(false);
+            // Pad.SetActive(true);
+            StartCoroutine(Delay());
+            vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
             idColor = Random.Range(0, colors.Length - 1);
@@ -95,10 +111,6 @@ public class SimonPad : MonoBehaviour, IInteractible
             return;
         }
 
-        if (isValid)
-            return;
-
-
         /*int braqueurId = currentColorText.idBraqueur;
         int hackeurId = currentColor.idHackeur;*/
 
@@ -106,43 +118,46 @@ public class SimonPad : MonoBehaviour, IInteractible
         if (idKey == currentColorText.idBraqueur)
         {
             Debug.Log("Bon");
-            lights[nbValid].color = Color.green;
+            // lights[nbValid].color = Color.green;
+            lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
             nbValid++;
             if (nbValid == 3)
             {
-
+                StartCoroutine(PanelComplet());
             }
         }
         else
         {
             for (int i = nbValid; i > -1; i--)
             {
-                lights[i].color = Color.red;
+                // lights[i].color = Color.red;
+                lights[nbValid].GetComponent<MeshRenderer>().material = redMat;
             }
             nbValid = 0;
         }
 
         StartCoroutine(ColorRotation());
-
-
     }
 
     public void OnItemExit()
     {
-        GUIhover.SetActive(false);
+        GUIManager.instance.EnableUseGUI(false);
+        // GUIhover.SetActive(false);
     }
 
     public void OnItemHover()
     {
-        if (!isValid)
-            GUIhover.SetActive(true);
+        GUIManager.instance.EnableUseGUI(true);
+        // GUIhover.SetActive(true);
     }
 
     public void OnReturn()
     {
         isOpen = false;
-        Pad.SetActive(false);
+        // Pad.SetActive(false);
+        vcam.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
+        GUIManager.instance.EnableHand(false);
     }
 
     private Color ChooseTextColor(ColorSimon color)
@@ -215,7 +230,20 @@ public class SimonPad : MonoBehaviour, IInteractible
 
         Debug.Log(currentColorText.idBraqueur);
         Debug.Log(currentColor.idBraqueur);
+    }
 
-        
+    private IEnumerator PanelComplet()
+    {
+        GUIManager.instance.EnableHand(false);
+        vcam.SetActive(false);
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(2);
+        PlayerControllerProto2.enablePlayerMovement = true;
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 }
