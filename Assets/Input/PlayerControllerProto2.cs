@@ -129,7 +129,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         flechaction = context.ReadValue<Vector2>();
 
-        if (interactibleObject != null)
+        if (context.performed && interactibleObject != null)
             InteractWithEnigmes();
     }
 

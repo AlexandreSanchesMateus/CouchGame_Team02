@@ -6,10 +6,12 @@ using TMPro;
 
 public class KeyCode : MonoBehaviour, IInteractible
 {
+    [SerializeField] private GameObject vcam;
+
     [Header("Canvas")]
-    [SerializeField] private GameObject GUIhover;
-    [SerializeField] private GameObject Keypad;
     [SerializeField] private TextMeshProUGUI displayCode;
+
+    [Header("Code")]
     [SerializeField] private GameObject[] keys;
     [SerializeField] private string goodCode;
     [SerializeField] private GameObject door;
@@ -19,32 +21,26 @@ public class KeyCode : MonoBehaviour, IInteractible
     private bool isOpen;
     private bool isVerif = false;
 
-
     void Start()
     {
         isOpen = false;
         idKey = 0;
-        keys[idKey].GetComponent<Image>().color = Color.red;
-        GUIhover.SetActive(false);
-        Keypad.SetActive(false);
     }
 
+    // Lorsque je joueur utilise l'object
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        if (isVerif)
+        if (isVerif || action == Vector2.zero)
             return;
-
-        keys[idKey].GetComponent<Image>().color = Color.white;
 
         if (action == Vector2.up)
         {
-            idKey -= 3;
+            if(idKey - 3 >= 0)
+                idKey -= 3;
         }
         else if (action == Vector2.down)
         {
-            if (idKey == 0)
-                idKey += 2;
-            else
+            if (idKey + 3 < keys.Length)
                 idKey += 3;
         }
         else if (action == Vector2.right)
@@ -53,53 +49,66 @@ public class KeyCode : MonoBehaviour, IInteractible
             idKey--;
 
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
-        keys[idKey].GetComponent<Image>().color = Color.red;
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
 
+    // Lorsque je joueur arrete de regarder l'object
     public void OnItemExit()
     {
-        GUIhover.SetActive(false);
+        GUIManager.instance.EnablePick_upGUI(false);
     }
 
+    // Lorsque je joueur regarde l'object
     public void OnItemHover()
     {
-        GUIhover.SetActive(true);
+        GUIManager.instance.EnablePick_upGUI(true);
     }
 
+    // Lorsque je joueur interagie avec l'object
     public void OnInteract()
     {
+        // SI NON OUVERT : orienter caméra + désactiver input player
         if (!isOpen)
         {
-            GUIhover.SetActive(false);
-            Keypad.SetActive(true);
+            GUIManager.instance.EnablePick_upGUI(false);
+            // GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+            vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
         }
+        // SI DEJA OUVERT : appuyer sur les touche
         else
         {
-            if(currentCode.Count < 3)
+            switch (idKey)
             {
-                currentCode.Add(idKey);
-                displayCode.text = DisplayCode();
-            }
-            else
-            {
-                currentCode.Add(idKey);
-                displayCode.text = DisplayCode();
-                StartCoroutine(Verification());
-                
+                case 9:
+                    StartCoroutine(Verification());
+                    break;
+                case 11:
+                    currentCode.Clear();
+                    displayCode.text = " _ _ _ _";
+                    break;
+                default:
+                    if(currentCode.Count < 4)
+                    {
+                        currentCode.Add(KeyToInt(idKey));
+                        displayCode.text = DisplayCode();
+                    }
+                    break;
             }
         }
     }
 
+    // Lorsque le joueur revient en arrière
     public void OnReturn()
     {
         isOpen = false;
-        GUIhover.SetActive(false);
-        Keypad.SetActive(false);
+        GUIManager.instance.EnablePick_upGUI(false);
+        vcam.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
 
+    // Prépar la list d'int saisi en une chaine de caractère pour etre comparer au code de référence
     private string ListToString(List<int> list)
     {
         string toReturn = "";
@@ -109,6 +118,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         return toReturn;
     }
 
+    // Convertie la liste int en string. Ajoute " _" s'il y a moins de 4 éléments dans la liste
     private string DisplayCode()
     {
         string toDisplay = "";
@@ -126,21 +136,32 @@ public class KeyCode : MonoBehaviour, IInteractible
         return toDisplay;
     }
 
+    // Converti l'id key en le chiffre réel du keycode
+    // Ex : idKey = 0 correspond au nombre 1 du paver numérique
+    private int KeyToInt(int id)
+    {
+        if (id == 10)
+            return 0;
+        return id + 1;
+    }
+
+    // Vérification du code saisi et de du code de référence
     private IEnumerator Verification() 
     {
         isVerif = true;
         yield return new WaitForSeconds(1);
-        Debug.Log("V�rification de : " + ListToString(currentCode) + " " + goodCode);
+
+        // CODE BON
         if (ListToString(currentCode) == goodCode)
         {
-            Destroy(door);
-            StartCoroutine(Delay());
-            Debug.Log("Pass");
-            foreach (GameObject key in keys)
-                key.GetComponent<Image>().color = Color.green;
             displayCode.text = " G O O D";
-
+            gameObject.layer = 0;
+            yield return new WaitForSeconds(1);
+            vcam.SetActive(false);
+            yield return new WaitForSeconds(2);
+            PlayerControllerProto2.enablePlayerMovement = true;
         }
+        // CODE MAUVAIS
         else
         {
             Debug.Log("Don't pass");
@@ -148,13 +169,5 @@ public class KeyCode : MonoBehaviour, IInteractible
             displayCode.text = " _ _ _ _";
             isVerif = false;
         }
-        
-    }
-    private IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(1) ;
-        PlayerControllerProto2.enablePlayerMovement = true;
-        //yield return new WaitForSeconds(1);
-        Keypad.SetActive(false);
     }
 }
