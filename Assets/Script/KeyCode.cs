@@ -159,6 +159,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         {
             displayCode.text = " G O O D";
             gameObject.layer = 0;
+            Destroy(door);
             yield return new WaitForSeconds(1);
             vcam.SetActive(false);
             GUIManager.instance.EnableHand(false);

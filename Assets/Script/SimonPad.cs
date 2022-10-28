@@ -11,6 +11,7 @@ public class SimonPad : MonoBehaviour, IInteractible
     public static SimonPad instance;
 
     [SerializeField] private GameObject vcam;
+    [SerializeField] private GameObject door;
 
     [Header("Canvas")]
     /* [SerializeField] private GameObject GUIhover;
@@ -256,6 +257,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
+        Destroy(door);
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
         gameObject.layer = 0;
