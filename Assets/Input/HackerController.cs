@@ -100,17 +100,9 @@ public class HackerController : MonoBehaviour
         {
             Screen screen = hit.transform.GetComponent<Screen>();
 
-            if (screen.screenState == ScreenState.Popups)
+            if (screen.screenState == ScreenState.MiniGame)
             {
-                screen.FightPopup();
-
-                if (screen.currentPopup.Count <= 0)
-                    lastCorout = StartCoroutine(popupDelay());
-            }
-            else if (screen.screenState == ScreenState.MiniGame)
-            {
-                screen.miniGame.GetComponent<IMinigame>().Move(callback);
-
+				screen.miniGame.GetComponent<IMinigame>().Move(callback);
             }
         }
     }

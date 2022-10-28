@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class SimonPad : MonoBehaviour, IInteractible
 {
+    public static SimonPad instance;
 
     [SerializeField] private GameObject vcam;
 
@@ -39,15 +40,23 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     //public static Vector2 hacker { set { hacker = value; OnActionsHacker();  } }
 
-    private int idKey;
+    public int hackeurId;
+    public bool braqueurPlay, hackeurPlay;
+
+    private int braqueurId;
     private bool isOpen;
     private int nbValid;
     private int idColor;
 
     void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+
         isOpen = false;
-        idKey = 0;
+        braqueurId = 0;
         nbValid = 0;
         // keys[idKey].GetComponent<Image>().sprite = selected;
         // GUIhover.SetActive(false);
@@ -63,31 +72,59 @@ public class SimonPad : MonoBehaviour, IInteractible
 
         if (action == Vector2.right)
         {
-            idKey++;
-            if (idKey == colors.Length)
+            braqueurId++;
+            if (braqueurId == colors.Length)
             {
-                idKey = 0;
+                braqueurId = 0;
             }
         }
         else if (action == Vector2.left)
         {
-            idKey--;
-            if (idKey < 0)
+            braqueurId--;
+            if (braqueurId < 0)
             {
-                idKey = colors.Length - 1;
+                braqueurId = colors.Length - 1;
             }
         }
 
 
-        idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
+        braqueurId = Mathf.Clamp(braqueurId, 0, keys.Length - 1);
         // keys[idKey].GetComponent<Image>().sprite = selected;
-        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
     }
 
-    /*private static void OnActionsHacker()
+    public void CheckPlayerEntry()
     {
+        if(braqueurPlay && hackeurPlay)
+        {
+            if (hackeurId == currentColor.idHackeur && braqueurId == currentColorText.idBraqueur)
+            {
+                Debug.Log("Bon");
+                // lights[nbValid].color = Color.green;
+                lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
+                nbValid++;
+                if (nbValid == 3)
+                {
+                    StartCoroutine(PanelComplet());
+                }
+            }
+            else
+            {
+                for (int i = nbValid; i > -1; i--)
+                {
+                    // lights[i].color = Color.red;
+                    lights[nbValid].GetComponent<MeshRenderer>().material = redMat;
+                }
+                nbValid = 0;
 
-    }*/
+                
+            }
+            braqueurPlay = false;
+            hackeurPlay = false;
+
+            StartCoroutine(ColorRotation());
+        }
+    }
 
     public void OnInteract()
     {
@@ -111,32 +148,10 @@ public class SimonPad : MonoBehaviour, IInteractible
             return;
         }
 
-        /*int braqueurId = currentColorText.idBraqueur;
-        int hackeurId = currentColor.idHackeur;*/
-
+        braqueurPlay = true;
+        CheckPlayerEntry();
         //if(idKeyHackeur == hackeurColor && idKeyBraqueur == braqueurColor)
-        if (idKey == currentColorText.idBraqueur)
-        {
-            Debug.Log("Bon");
-            // lights[nbValid].color = Color.green;
-            lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
-            nbValid++;
-            if (nbValid == 3)
-            {
-                StartCoroutine(PanelComplet());
-            }
-        }
-        else
-        {
-            for (int i = nbValid; i > -1; i--)
-            {
-                // lights[i].color = Color.red;
-                lights[nbValid].GetComponent<MeshRenderer>().material = redMat;
-            }
-            nbValid = 0;
-        }
 
-        StartCoroutine(ColorRotation());
     }
 
     public void OnItemExit()
@@ -244,6 +259,6 @@ public class SimonPad : MonoBehaviour, IInteractible
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(2);
-        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
     }
 }

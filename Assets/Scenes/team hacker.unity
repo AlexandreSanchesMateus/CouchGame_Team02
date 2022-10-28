@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,6 +174,14 @@ PrefabInstance:
       propertyPath: miniGame
       value: 
       objectReference: {fileID: 1817609402}
+    - target: {fileID: 377380546561988684, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d7fd9eb2edd2a824681ce3ee13491c84, type: 2}
+    - target: {fileID: 4783648399012633586, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: miniGame
+      value: 
+      objectReference: {fileID: 873202110}
     - target: {fileID: 5714506912276178415, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -32.60104
@@ -240,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Keyboard
+      value: Gamepad
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.size
@@ -260,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Interact
+      value: MoveInScreen
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2192,8 +2200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2e9ac2fa132b644a03d3984ecdcd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUIhover: {fileID: 1991185277}
-  Keypad: {fileID: 996666081}
+  vcam: {fileID: 0}
   displayCode: {fileID: 397446839}
   keys:
   - {fileID: 400682523}
@@ -5684,6 +5691,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1503543890164957174, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_TagString
+      value: MiniGame2
+      objectReference: {fileID: 0}
     - target: {fileID: 2490576432834156474, guid: db57755365553804c91f44faac2e5b2b, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -5732,9 +5743,25 @@ PrefabInstance:
       propertyPath: m_TargetTexture
       value: 
       objectReference: {fileID: 8400000, guid: 71b6194ea5b484542986efc1a7fd68e2, type: 2}
+    - target: {fileID: 5237674562679874697, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_TagString
+      value: MiniGame2
+      objectReference: {fileID: 0}
     - target: {fileID: 5917864922972750614, guid: db57755365553804c91f44faac2e5b2b, type: 3}
       propertyPath: m_Name
       value: Minigame 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042329161198910458, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_TagString
+      value: MiniGame2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732723012989525822, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_TagString
+      value: MiniGame2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9042676378937401015, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_TagString
+      value: MiniGame2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db57755365553804c91f44faac2e5b2b, type: 3}
