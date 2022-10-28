@@ -41,12 +41,17 @@ public class LabyrintheEditor : Editor
         GUILayout.EndHorizontal();
         if(GUILayout.Button("Grid's wall Settings"))
         {
-            LabyrintheWallEditor.InitWindow();
+            LabyrintheWallEditor.InitWindow(LabyrinthManager.labyrinth);
         }
         GUILayout.Space(10);
 
-        GUILayout.Label("Current labyrinthe :");
-/*        GUILayout.Label("Total size : ");
-        GUILayout.Label("Total of slot : " + LabyrinthManager.labyrinth.Count);*/
+        if (LabyrinthManager.labyrinth)
+        {
+            GUILayout.Label("Current labyrinthe :");
+            GUILayout.Label("Total size : " + LabyrinthManager.labyrinth.gridSizeX + " x " + LabyrinthManager.labyrinth.gridSizeY);
+            GUILayout.Label("Total of slot : " + LabyrinthManager.labyrinth.grid.Count);
+        }
+        else
+            GUILayout.Label("--- No labyrinthe saved ---");
     }
 }
