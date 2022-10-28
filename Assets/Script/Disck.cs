@@ -66,7 +66,7 @@ public class Disck : MonoBehaviour, IInteractible
         if (angle < 0)
             angle += 360;
 
-        spinPart.transform.rotation = Quaternion.Euler(0, 180, angle);
+        spinPart.transform.rotation = Quaternion.Euler(angle, 270, 270);
 
         lastJoystickAngle = stickRotationInDeg;
     }
@@ -117,7 +117,7 @@ public class Disck : MonoBehaviour, IInteractible
                 Debug.Log("You don't pass");
                 angle = 0;
                 rotationDisck = ROTATION.UNKNOWN;
-                spinPart.transform.rotation = Quaternion.Euler(0, 180, angle);
+                spinPart.transform.rotation = Quaternion.Euler(angle, 270, 270);
                 combinationSelected.Clear();
             }
         }
