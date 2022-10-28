@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using System.IO;
 
 public class LabyrintheWallEditor : EditorWindow
 {
@@ -66,7 +67,7 @@ public class LabyrintheWallEditor : EditorWindow
         GUILayout.Label("Grid Size Y");
         Ysize = EditorGUILayout.IntField(Ysize);
 
-        if (GUILayout.Button("Resize"))
+        if (GUILayout.Button("Resize") && (Xsize != editorGridSizeX || Ysize != editorGridSizeY) && EditorUtility.DisplayDialog("Warning", "This grid will be rezise to " + Xsize + " by " + Ysize + " .The old grid will be deleted.\n\nThis action can not be undo", "Yes, overwrite the data", "Cancel"))
         {
             editorGridSizeX = Xsize;
             editorGridSizeY = Ysize;
@@ -98,6 +99,8 @@ public class LabyrintheWallEditor : EditorWindow
         GUILayout.Label("EITHER : none of the players can pass through. Restart the labyrinth went trigger.", "EITHER");
 
         GUILayout.FlexibleSpace();
+
+        // SAVING FUNCTION
         if (GUILayout.Button("Save Labyrinthe"))
         {
 
@@ -113,7 +116,7 @@ public class LabyrintheWallEditor : EditorWindow
                 LabyrinthManager.labyrinth.grid = new List<Slot>(editorGrid);
 
                 LabyrinthManager.labyrinth.idStartLabyrinth = editorLabyrinthStartId;
-                LabyrinthManager.labyrinth.idStartLabyrinth = editorLabyrinthEndID;
+                LabyrinthManager.labyrinth.idEndLabyrinth = editorLabyrinthEndID;
             }
             else
             {
@@ -122,12 +125,42 @@ public class LabyrintheWallEditor : EditorWindow
                 try
                 {
                     string relativePath = path.Substring(path.IndexOf("Assets/"));
-                    Debug.Log(relativePath);
+
+                    /* DirectoryInfo info = new DirectoryInfo(path);
+                     FileInfo[] fileInfo = info.GetFiles();
+
+                     bool exist = false;
+                     foreach (FileInfo file in fileInfo)
+                     {
+                         if(file.Name == "labyrinth.asset")
+                             ex
+                     }*/
+
+                    string assetName = "/labyrinth.asset";
+                    if (!File.Exists(path + assetName) && !EditorUtility.DisplayDialog("", "A ScrLabyrinth file exist on the selected file. Do you want to overrwite the file or create a new one ?\n\nThis action can not be undo", "Yes, overrwrite the file", "No, create one"))
+                    {
+                        assetName = "/labyrinth" + 1 + ".asset";
+                    }
 
                     ScrLabyrinth libAsset = ScriptableObject.CreateInstance<ScrLabyrinth>();
-                    AssetDatabase.CreateAsset(libAsset, relativePath + "/test.asset");
+
+                    if (editorLabyrinthStartId != -1)
+                        libAsset.idPlayerSlot = editorLabyrinthStartId;
+                    else
+                        libAsset.idPlayerSlot = 0;
+
+                    libAsset.gridSizeX = editorGridSizeX;
+                    libAsset.gridSizeY = editorGridSizeY;
+                    libAsset.grid = new List<Slot>(editorGrid);
+
+                    libAsset.idStartLabyrinth = editorLabyrinthStartId;
+                    libAsset.idEndLabyrinth = editorLabyrinthEndID;
+
+                    AssetDatabase.CreateAsset(libAsset, relativePath + assetName);
                     AssetDatabase.SaveAssets();
 
+                    if (EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
+                        LabyrinthManager.labyrinth = libAsset;
                 }
                 catch (ArgumentOutOfRangeException)
                 {
