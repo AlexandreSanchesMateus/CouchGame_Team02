@@ -25,8 +25,13 @@ public class LabyrintheEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("labirinthe");
+        GUILayout.Label("labyrinth GUI");
         myObject.labirinthe = (GameObject)EditorGUILayout.ObjectField(myObject.GUIhover, typeof(GameObject), true);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("labyrinth");
+        LabyrinthManager.labyrinth = (ScrLabyrinth)EditorGUILayout.ObjectField(LabyrinthManager.labyrinth, typeof(ScrLabyrinth), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);

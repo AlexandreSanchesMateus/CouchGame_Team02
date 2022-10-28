@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class LabyrintheWallEditor : EditorWindow
 {
@@ -11,7 +12,7 @@ public class LabyrintheWallEditor : EditorWindow
     private static int editorGridSizeX;
     private static int editorGridSizeY;
 
-    private static int editorPlayerPosId = -1;
+    private static int editorLabyrinthStartId = -1;
     private static int editorLabyrinthEndID = -1;
 
     private static int Xsize;
@@ -26,11 +27,11 @@ public class LabyrintheWallEditor : EditorWindow
         window.titleContent = new GUIContent("Labyrinthe Wall");
         window.minSize = new Vector2(800, 630);
         
-        if(Labyrinthe.grid.Count != 0)
+        if(LabyrinthManager.labyrinth != null)
         {
-            editorGrid = new List<Slot>(Labyrinthe.grid);
-            editorGridSizeX = Labyrinthe.gridSizeX;
-            editorGridSizeY = Labyrinthe.gridSizeY;
+            editorGrid = new List<Slot>(LabyrinthManager.labyrinth.grid);
+            editorGridSizeX = LabyrinthManager.labyrinth.gridSizeX;
+            editorGridSizeY = LabyrinthManager.labyrinth.gridSizeY;
         }
         else
         {
@@ -99,10 +100,40 @@ public class LabyrintheWallEditor : EditorWindow
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Save Labyrinthe"))
         {
-            Labyrinthe.grid = new List<Slot>(editorGrid);
-            Labyrinthe.gridSizeX = editorGridSizeX;
-            Labyrinthe.gridSizeY = editorGridSizeY;
-            Debug.Log("Labyrinthe save succesfully");
+
+            if(LabyrinthManager.labyrinth != null)
+            {
+                if (editorLabyrinthStartId != -1)
+                    LabyrinthManager.labyrinth.idPlayerSlot = editorLabyrinthStartId;
+                else
+                    LabyrinthManager.labyrinth.idPlayerSlot = 0;
+
+                LabyrinthManager.labyrinth.gridSizeX = editorGridSizeX;
+                LabyrinthManager.labyrinth.gridSizeY = editorGridSizeY;
+                LabyrinthManager.labyrinth.grid = new List<Slot>(editorGrid);
+
+                LabyrinthManager.labyrinth.idStartLabyrinth = editorLabyrinthStartId;
+                LabyrinthManager.labyrinth.idStartLabyrinth = editorLabyrinthEndID;
+            }
+            else
+            {
+                string path = EditorUtility.OpenFolderPanel("Saving current labyrinth", "", "");
+
+                try
+                {
+                    string relativePath = path.Substring(path.IndexOf("Assets/"));
+                    Debug.Log(relativePath);
+
+                    ScrLabyrinth libAsset = ScriptableObject.CreateInstance<ScrLabyrinth>();
+                    AssetDatabase.CreateAsset(libAsset, relativePath + "/test.asset");
+                    AssetDatabase.SaveAssets();
+
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    EditorUtility.DisplayDialog("Error - An error has occurred !", "The asset could not be saved at : " + path + "\n\nThe referenced path may not be complete or not in the 'Assets/' project file", "Ok");
+                }
+            }
         }
 
         GUILayout.EndVertical();
@@ -121,8 +152,17 @@ public class LabyrintheWallEditor : EditorWindow
                 // SET THE PLAYER POS OR SET THE LABYRINTH END
                 if (isSetingStartPos || isSetingEndPos)
                 {
-                    if (GUILayout.Button("", "setpos", GUILayout.Width(50), GUILayout.Height(50)))
-                        Debug.Log("Set position to " + id);
+                    if (id == editorLabyrinthStartId)
+                        GUILayout.Box("S", GUILayout.Width(50), GUILayout.Height(50));
+                    else if (id == editorLabyrinthEndID)
+                        GUILayout.Box("E", GUILayout.Width(50), GUILayout.Height(50));
+                    else if (GUILayout.Button("", "box", GUILayout.Width(50), GUILayout.Height(50)))
+                    {
+                        if (isSetingStartPos)
+                            editorLabyrinthStartId = id;
+                        else if (isSetingEndPos)
+                            editorLabyrinthEndID = id;
+                    }
                 }
                 // SET THE WALL OF THE LABYRINTH
                 else
@@ -131,7 +171,12 @@ public class LabyrintheWallEditor : EditorWindow
                     GUILayout.BeginVertical(GUILayout.ExpandWidth(false));
 
                     // IMAGE DE LA CASE
-                    GUILayout.Box("", GUILayout.Width(50), GUILayout.Height(50));
+                    string indicator = "";
+                    if (id == editorLabyrinthStartId)
+                        indicator = "S";
+                    else if (id == editorLabyrinthEndID)
+                        indicator = "E";
+                    GUILayout.Box(indicator, GUILayout.Width(50), GUILayout.Height(50));
 
                     // BOUTON DU MUR DU DESSOUS
                     if (y != editorGridSizeY - 1)
