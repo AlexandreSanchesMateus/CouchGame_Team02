@@ -8,7 +8,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 	public float timeRemaining, timeValue = 90f;
-	public TextMeshProUGUI timerText;
+	public TextMeshPro timerText;
 	public GameObject gameOverScreen;
 
 	private bool timerIsRunning = false;

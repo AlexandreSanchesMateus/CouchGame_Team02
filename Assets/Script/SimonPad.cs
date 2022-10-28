@@ -103,17 +103,17 @@ public class SimonPad : MonoBehaviour, IInteractible
                 // lights[nbValid].color = Color.green;
                 lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
                 nbValid++;
-                if (nbValid == 3)
+                if (nbValid == 4)
                 {
                     StartCoroutine(PanelComplet());
                 }
             }
             else
             {
-                for (int i = nbValid; i > -1; i--)
+                for (int i = nbValid-1; i > -1; i--)
                 {
                     // lights[i].color = Color.red;
-                    lights[nbValid].GetComponent<MeshRenderer>().material = redMat;
+                    lights[i].GetComponent<MeshRenderer>().material = redMat;
                 }
                 nbValid = 0;
 
@@ -145,6 +145,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
             display.text = currentColorText.color.ToString();
             display.color = ChooseTextColor(currentColor);
+
             return;
         }
 
@@ -169,6 +170,12 @@ public class SimonPad : MonoBehaviour, IInteractible
     public void OnReturn()
     {
         isOpen = false;
+        for (int i = nbValid - 1; i > -1; i--)
+        {
+            // lights[i].color = Color.red;
+            lights[i].GetComponent<MeshRenderer>().material = redMat;
+        }
+        nbValid = 0;
         // Pad.SetActive(false);
         vcam.SetActive(false);
         PlayerControllerProto2.enablePlayerMovement = true;
