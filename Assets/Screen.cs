@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UIElements;
 
 public enum ScreenState
 {
@@ -16,11 +17,12 @@ public class Screen : MonoBehaviour
 	public ScreenState screenState;
     [Header("référence vers le game Object du mini jeu")]
     public GameObject miniGame;
+    public Transform oldpos;
+    public Transform newpos;
 
-    
     //public IMinigame minigameInterface;
-    
-	public List<GameObject> popups;
+
+    public List<GameObject> popups;
     public List<GameObject> currentPopup = new List<GameObject>();
     private int currentPopupLife;
 	public bool focus = false;
@@ -60,6 +62,7 @@ public class Screen : MonoBehaviour
                 //         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
                 currentPopup.Add(popupsRandom[i]);
                 popupsRandom.RemoveAt(i);
+				HackerController.instance.CamShake();
             }
 		}
         
@@ -74,7 +77,7 @@ public class Screen : MonoBehaviour
 			currentPopupLife--;
 			if (currentPopupLife <= 0)
 			{
-				currentPopup[0].SetActive(false);
+                StartCoroutine(destroyPopup(currentPopup[0]));
 				currentPopup.RemoveAt(0);
 				currentPopupLife = Random.Range(1, 3);
 			}
@@ -86,6 +89,13 @@ public class Screen : MonoBehaviour
 		screenState = ScreenState.MiniGame;
 		return false;
 	}
+    IEnumerator destroyPopup(GameObject popup)
+    {
+        mySequence = DOTween.Sequence();
+        mySequence.Append(popup.transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
+        //mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
+        yield return new WaitForSeconds(0.2f);
+        popup.SetActive(false);
+    }
 
-	
 }
