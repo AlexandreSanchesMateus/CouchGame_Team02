@@ -149,8 +149,8 @@ public class HackerController : MonoBehaviour
 
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
-
-		if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
+        Debug.Log("screen = " + hit.transform.name);
+        if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
 			scr.displayPopUp();
 	}
 	public void CamShake()
