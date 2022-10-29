@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 177c8497e76153e4781d038e9dc982fc, type: 3}
-  m_Name: labyrinth
+  m_Name: bite
   m_EditorClassIdentifier: 
-  idPlayerSlot: 31
-  gridSizeX: 7
-  gridSizeY: 6
-  idStartLabyrinth: 31
-  idEndLabyrinth: 1
+  idPlayerSlot: 0
+  gridSizeX: 5
+  gridSizeY: 5
+  idStartLabyrinth: -1
+  idEndLabyrinth: -1

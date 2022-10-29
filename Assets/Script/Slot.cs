@@ -16,6 +16,18 @@ public class Slot
         EITHER
     }
 
+    public Slot(Slot source)
+    {
+        this.rightWall = source.rightWall;
+        this.bottomWall = source.bottomWall;
+    }
+
+    public Slot()
+    {
+        rightWall = ACCESS.BLOCK;
+        bottomWall = ACCESS.BLOCK;
+    }
+
     public void IncrementAccess(bool isRightwall)
     {
         if (isRightwall)

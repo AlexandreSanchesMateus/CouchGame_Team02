@@ -24,36 +24,33 @@ public class LabyrintheWallEditor : EditorWindow
     private bool isSetingStartPos = false;
     private bool isSetingEndPos = false;
 
-    private string assetName = "new_labyrinth";
-    private static string nameScriptable = "";
+    private static string assetName = "new_labyrinth";
 
-    public static void InitWindow(ScrLabyrinth obj = null)
+    public static void InitWindow(ScrLabyrinth source = null)
     {
         LabyrintheWallEditor window = GetWindow<LabyrintheWallEditor>();
         window.titleContent = new GUIContent("Labyrinthe Wall");
         window.minSize = new Vector2(800, 650);
 
         
-        if(obj != null)
+        if(source != null)
         {
-            myScrLabyrinth = obj;
+            myScrLabyrinth = source;
+            assetName = source.name;
 
-            nameScriptable = " " + myScrLabyrinth.name;
-            editorGrid = new List<Slot>(myScrLabyrinth.grid);
+            editorGrid = new List<Slot>();
+            foreach (Slot cell in source.grid)
+                editorGrid.Add(new Slot(cell));
 
-            editorGridSizeX = myScrLabyrinth.gridSizeX;
-            editorGridSizeY = myScrLabyrinth.gridSizeY;
+            editorGridSizeX = source.gridSizeX;
+            editorGridSizeY = source.gridSizeY;
 
-            editorLabyrinthStartID = myScrLabyrinth.idStartLabyrinth;
-            editorLabyrinthEndID = myScrLabyrinth.idEndLabyrinth;
-
-            Debug.Log("Init");
-            Debug.Log(myScrLabyrinth.grid.Count);
-            Debug.Log(nameScriptable);
+            editorLabyrinthStartID = source.idStartLabyrinth;
+            editorLabyrinthEndID = source.idEndLabyrinth;
         }
         else
         {
-            editorGrid = new List<Slot>();
+            editorGrid.Clear();
             editorGridSizeX = 7;
             editorGridSizeY = 6;
 
@@ -84,8 +81,8 @@ public class LabyrintheWallEditor : EditorWindow
         // RESIZE FUNCTION
         GUILayout.Label("Grid Size (X , Y)");
         GUILayout.BeginHorizontal();
-        Xsize = EditorGUILayout.IntField(Xsize);
-        Ysize = EditorGUILayout.IntField(Ysize);
+        Xsize = Mathf.Clamp(EditorGUILayout.IntField(Xsize), 0, 15);
+        Ysize = Mathf.Clamp(EditorGUILayout.IntField(Ysize), 0, 15);
         GUILayout.EndHorizontal();
 
         if (GUILayout.Button("Resize") && (Xsize != editorGridSizeX || Ysize != editorGridSizeY) && EditorUtility.DisplayDialog("Warning", "This grid will be rezise to " + Xsize + " by " + Ysize + " .The old grid will be deleted.\n\nThis action can not be undo", "Yes, overwrite the data", "Cancel"))
@@ -127,38 +124,32 @@ public class LabyrintheWallEditor : EditorWindow
         // LOAD FUNCTION
         if(GUILayout.Button("Open file"))
         {
+            isSetingStartPos = false;
+            isSetingEndPos = false;
+
             string path = EditorUtility.OpenFilePanel("Open file", "", "asset");
             try
             {
                 ScrLabyrinth file = (ScrLabyrinth)AssetDatabase.LoadAssetAtPath(path.Substring(path.IndexOf("Assets/")), typeof(ScrLabyrinth));
 
-                //Debug.Log(path);
-                //Debug.Log(path.Substring(path.IndexOf("Assets/")));
-                //Debug.Log(AssetDatabase.GetAssetPath(myScrLabyrinth));
-                // Debug.Log(path.Substring(path.IndexOf('/')));
-                //Debug.Log(file.name);
-
-                //nameScriptable = " " + AssetDatabase.GetAssetPath(myScrLabyrinth).Substring('/');
-
                 if (file)
-                {
-                    Debug.Log("fichier ouvet");
                     InitWindow(file);
-                }
                 else
-                    //Debug.Log("fichier refusé");
                     throw new InvalidCastException();
             }
             catch (Exception errorCode)
             {
-                EditorUtility.DisplayDialog("Can not open file", "File could not be open : " + path + "\n\nError code : " + errorCode, "Ok");
+                EditorUtility.DisplayDialog("Can not open file", "File could not be open. The file need to be located in the Assets folder and of type 'ScrLabyrinth'. " + path + "\n\nError code : " + errorCode.Message, "Ok");
             }
         }
 
         // SAVING FUNCTION
-        if (GUILayout.Button("Save" + nameScriptable))
+        if (GUILayout.Button("Save " + assetName))
         {
-            if(myScrLabyrinth != null)
+            isSetingStartPos = false;
+            isSetingEndPos = false;
+
+            if (myScrLabyrinth != null)
             {
                 if (editorLabyrinthStartID != -1)
                     myScrLabyrinth.idPlayerSlot = editorLabyrinthStartID;
@@ -171,6 +162,9 @@ public class LabyrintheWallEditor : EditorWindow
 
                 myScrLabyrinth.idStartLabyrinth = editorLabyrinthStartID;
                 myScrLabyrinth.idEndLabyrinth = editorLabyrinthEndID;
+
+                if (myScrLabyrinth != LabyrinthManager.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
+                    LabyrinthManager.labyrinth = myScrLabyrinth;
             }
             else
             {
@@ -187,12 +181,12 @@ public class LabyrintheWallEditor : EditorWindow
                         {
                             libAsset = (ScrLabyrinth)AssetDatabase.LoadAssetAtPath(relativePath + "/" + assetName + ".asset", typeof(ScrLabyrinth));
                             SetLabyrinthData(ref libAsset);
-                            Debug.Log("asset override");
+                            Debug.Log("Asset overwrite : " + path + "/" + assetName + ".asset");
                         }
                     }
                     else
                     {
-                        Debug.Log("asset created");
+                        Debug.Log("Asset created : " + path + "/" + assetName + ".asset");
                         libAsset = ScriptableObject.CreateInstance<ScrLabyrinth>();
                         SetLabyrinthData(ref libAsset);
                         AssetDatabase.CreateAsset(libAsset, relativePath + "/" + assetName + ".asset");
@@ -207,7 +201,10 @@ public class LabyrintheWallEditor : EditorWindow
         }
 
         if (myScrLabyrinth == null)
+        {
+            GUILayout.Label("Asset name");
             assetName = GUILayout.TextField(assetName);
+        }
 
         GUILayout.EndVertical();
 
@@ -240,7 +237,6 @@ public class LabyrintheWallEditor : EditorWindow
                 // SET THE WALL OF THE LABYRINTH
                 else
                 {
-
                     GUILayout.BeginVertical(GUILayout.ExpandWidth(false));
 
                     // IMAGE DE LA CASE
@@ -286,10 +282,15 @@ public class LabyrintheWallEditor : EditorWindow
 
         toApply.gridSizeX = editorGridSizeX;
         toApply.gridSizeY = editorGridSizeY;
-        toApply.grid = new List<Slot>(editorGrid);
+
+        toApply.grid = new List<Slot>();
+        foreach (Slot cell in editorGrid)
+            toApply.grid.Add(new Slot(cell));
 
         toApply.idStartLabyrinth = editorLabyrinthStartID;
         toApply.idEndLabyrinth = editorLabyrinthEndID;
+
+        myScrLabyrinth = toApply;
 
         if (toApply != LabyrinthManager.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
             LabyrinthManager.labyrinth = toApply;

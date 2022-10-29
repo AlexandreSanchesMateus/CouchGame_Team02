@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 177c8497e76153e4781d038e9dc982fc, type: 3}
-  m_Name: new_labyrinth
+  m_Name: mhre
   m_EditorClassIdentifier: 
-  idPlayerSlot: 62
-  gridSizeX: 10
-  gridSizeY: 10
-  idStartLabyrinth: 62
-  idEndLabyrinth: 16
+  idPlayerSlot: 0
+  gridSizeX: 9
+  gridSizeY: 9
+  idStartLabyrinth: -1
+  idEndLabyrinth: -1
