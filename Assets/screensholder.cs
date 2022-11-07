@@ -18,27 +18,31 @@ public class screensholder : MonoBehaviour
 	public List<Transform> screens = new List<Transform>();
 	//public List<MiniGame> minigames = new List<MiniGame>();
 	public List<Material> scamAd = new List<Material>();
-	public List<Transform> screenPos = new List<Transform>();
+	private GameObject firstScreen = null;
 	
 	public bool CanRotate;
-
+    
 	public Vector3 frontScreen;
 
 	private void Start()
 	{
 		CanRotate = true;
-        Sequence turnONSequence = DOTween.Sequence();
+        
         foreach (Transform item in transform)
 		{
 			if (item.tag == "Screen")
 			{
 				screens.Add(item);
-				TurnOnScreen(turnONSequence,item);
-				GameObject go = new GameObject("empty");
-				go.transform.position = item.transform.position;
-				go.transform.rotation = item.transform.rotation;
-				screenPos.Add(go.transform);
-			}
+                if (firstScreen == null)
+                {
+					TurnOnScreen(true, item);
+
+                    firstScreen = new GameObject("empty");
+                    firstScreen.transform.position = item.transform.position;
+                    firstScreen.transform.rotation = item.transform.rotation;
+                }
+
+            }
 		}
 		Debug.Log(screens.Count);
 
@@ -61,7 +65,7 @@ public class screensholder : MonoBehaviour
 					{
 						next = 0;
 					}
-					if (screens[next].position == screenPos[0].position)
+					if (screens[next].position == firstScreen.transform.position)
 					{
 						Debug.Log("ayay");
 						mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, 77), 0.2f));
@@ -81,7 +85,7 @@ public class screensholder : MonoBehaviour
 					{
 						next = screens.Count - 1;
 					}
-					if (screens[next].position == screenPos[0].position)
+					if (screens[next].position == firstScreen.transform.position)
 					{
 						Debug.Log("ayay");
 						mySequence.Insert(0, screens[i].DORotate(new Vector3(-12, 189, -77), 0.2f));
@@ -93,12 +97,33 @@ public class screensholder : MonoBehaviour
 			}
 		}
 	}
-	public void TurnOnScreen(Sequence turnONSequence, Transform item)
-	{
-        
-        turnONSequence.Insert(0, item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f));
-		turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
-		turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
+	public void TurnOnScreen(bool onlyFirstScreen, Transform firstScreen)
+    {
+        Sequence turnONSequence = DOTween.Sequence();
+
+		if (onlyFirstScreen)
+		{
+            firstScreen.GetChild(0).gameObject.SetActive(true);
+            turnONSequence.Insert(0, firstScreen.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f));
+            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
+            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
+        }
+		else
+		{
+			foreach (Transform item in transform)
+			{
+				if (item.tag == "Screen")
+				{
+                    if(item != firstScreen)
+					{
+                        item.GetChild(0).gameObject.SetActive(true);
+                        turnONSequence.Insert(0, item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f));
+						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
+						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
+					}
+				}
+			}
+		}
 	}
 }
 

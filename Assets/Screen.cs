@@ -4,12 +4,15 @@ using UnityEditor;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public enum ScreenState
 {
 	MiniGame,
 	Popups,
-	Update
+	Update,
+    Hack,
+    Setup
 };
 
 public class Screen : MonoBehaviour
@@ -27,10 +30,17 @@ public class Screen : MonoBehaviour
     private int currentPopupLife;
 	public bool focus = false;
 	Sequence mySequence;
+
+    private static int[] code = new int[4] { 1, 2, 3, 4 };
+    private int[] currentCode = new int[4];
+    private int codeIndex = 0;
+
+
     private void Start()
 	{
-        
-        
+        transform.GetChild(0).localScale = new Vector3(transform.GetChild(0).localScale.x, 0f, transform.GetChild(0).localScale.z);
+        transform.GetChild(0).gameObject.SetActive(false);
+
         currentPopupLife = Random.Range(1, 3);
 
 		screenState = ScreenState.MiniGame;
@@ -44,15 +54,8 @@ public class Screen : MonoBehaviour
         mySequence = DOTween.Sequence();
         for (int j = 0; j < n; j++)
 		{
-			//Debug.Log(popupsRandom.Count);
-			//Debug.Log("dans le for de display");
-
-                //Debug.Log("dans la condition qui display");
-                //Debug.Log("ça rentre?");
                 int i = Random.Range(0, popupsRandom.Count - 1);
                 popupsRandom[i].SetActive(true);
-                
-                //popups[i].transform.localScale = new Vector3(0, 0, 0);
 				
                 mySequence.Insert(0,popups[i].transform.DOScale(new Vector3(0, 0, 0), 0.1f));
                 float scaleX = Random.Range(0.03f, 0.1f);
@@ -117,6 +120,43 @@ public class Screen : MonoBehaviour
         //mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
         yield return new WaitForSeconds(0.2f);
         popup.SetActive(false);
+    }
+
+    public bool UnlockScreen(InputAction.CallbackContext callback)
+    {
+
+        switch (callback.action.name)
+        {
+            case "West":
+                currentCode[codeIndex] = 1;
+                break;
+            case "North":
+                currentCode[codeIndex] = 2;
+                break;
+            case "East":
+                currentCode[codeIndex] = 3;
+                break;
+            case "South":
+                currentCode[codeIndex] = 4;
+                break;
+
+            default:
+                break;
+        }
+        codeIndex++;
+
+        if(codeIndex >= 4)
+        {
+            if (code == currentCode)
+            {
+                Debug.Log("screen unlocked");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
 }
