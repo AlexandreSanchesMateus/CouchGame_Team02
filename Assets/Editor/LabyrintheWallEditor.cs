@@ -153,8 +153,6 @@ public class LabyrintheWallEditor : EditorWindow
             {
                 if (editorLabyrinthStartID != -1)
                     myScrLabyrinth.idPlayerSlot = editorLabyrinthStartID;
-                else
-                    myScrLabyrinth.idPlayerSlot = 0;
 
                 myScrLabyrinth.gridSizeX = editorGridSizeX;
                 myScrLabyrinth.gridSizeY = editorGridSizeY;
@@ -277,8 +275,6 @@ public class LabyrintheWallEditor : EditorWindow
     {
         if (editorLabyrinthStartID != -1)
             toApply.idPlayerSlot = editorLabyrinthStartID;
-        else
-            toApply.idPlayerSlot = 0;
 
         toApply.gridSizeX = editorGridSizeX;
         toApply.gridSizeY = editorGridSizeY;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Slot
 {
     public ACCESS rightWall;
@@ -22,6 +23,7 @@ public class Slot
         this.bottomWall = source.bottomWall;
     }
 
+    [SerializeField]
     public Slot()
     {
         rightWall = ACCESS.BLOCK;

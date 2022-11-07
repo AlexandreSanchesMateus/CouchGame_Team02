@@ -17,20 +17,10 @@ public class LabyrintheEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        GUILayout.Label("GUI Settings");
+        GUILayout.Label("Ref Labyrinthe");
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("GUIhover");
-        myObject.GUIhover = (GameObject)EditorGUILayout.ObjectField(myObject.GUIhover, typeof(GameObject), true);
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("labyrinth GUI");
-        myObject.labirinthe = (GameObject)EditorGUILayout.ObjectField(myObject.GUIhover, typeof(GameObject), true);
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("labyrinth");
+        GUILayout.Label("Labyrinthe");
         LabyrinthManager.labyrinth = (ScrLabyrinth)EditorGUILayout.ObjectField(LabyrinthManager.labyrinth, typeof(ScrLabyrinth), true);
         GUILayout.EndHorizontal();
 
