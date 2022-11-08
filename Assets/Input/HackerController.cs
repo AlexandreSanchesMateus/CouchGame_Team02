@@ -19,6 +19,7 @@ public class HackerController : MonoBehaviour
 
 	private Transform originalCamTransform;
 
+	public GameObject setUp;
 
 	private void Start()
 	{
@@ -39,6 +40,8 @@ public class HackerController : MonoBehaviour
 		{
 			Screen screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
+			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
+			screen.GetComponent<Screen>().DisplayCode();
         }
     }
 	private void Update()
@@ -72,9 +75,7 @@ public class HackerController : MonoBehaviour
 	}
 
 	public void Interact(InputAction.CallbackContext callback)
-	{
-		Debug.Log(callback.action.name);
-        
+	{        
 		if (callback.started)
 		{
 			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
@@ -105,10 +106,10 @@ public class HackerController : MonoBehaviour
 					case ScreenState.Hack:
 						break;
 					case ScreenState.Setup:
-                        
+						
 						if (screen.UnlockScreen(callback))
 						{
-                            GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+							GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
                             screen.screenState = ScreenState.MiniGame;
                             lastCorout = StartCoroutine(popupDelay());
 						}

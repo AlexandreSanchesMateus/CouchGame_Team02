@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using static UnityEditor.Progress;
+using System;
 //using Unity.VisualScripting;
 
 public class screensholder : MonoBehaviour
@@ -103,8 +104,8 @@ public class screensholder : MonoBehaviour
 
 		if (onlyFirstScreen)
 		{
-            firstScreen.GetChild(0).gameObject.SetActive(true);
-            turnONSequence.Insert(0, firstScreen.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f));
+            
+            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).OnComplete(() => { firstScreen.GetChild(0).gameObject.SetActive(true); }));
             turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
             turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
         }
@@ -116,8 +117,7 @@ public class screensholder : MonoBehaviour
 				{
                     if(item != firstScreen)
 					{
-                        item.GetChild(0).gameObject.SetActive(true);
-                        turnONSequence.Insert(0, item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f));
+                        turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).OnComplete(() => { item.GetChild(0).gameObject.SetActive(true); }));
 						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
 						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
 					}

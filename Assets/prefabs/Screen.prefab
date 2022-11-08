@@ -1219,8 +1219,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screenState: 0
   miniGame: {fileID: 0}
-  oldpos: {fileID: 0}
-  newpos: {fileID: 0}
   popups:
   - {fileID: 7716683265010218860}
   - {fileID: 4828389660134665830}
@@ -1232,6 +1230,9 @@ MonoBehaviour:
   - {fileID: 2006260261799046912}
   currentPopup: []
   focus: 0
+  gameMaterial: {fileID: 0}
+  SetupMatrial: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+  setUp: {fileID: 5949478323534050586, guid: f1dbfb0344a808d42815b3ba74eefb0e, type: 3}
 --- !u!1001 &5490380378556605159
 PrefabInstance:
   m_ObjectHideFlags: 0
