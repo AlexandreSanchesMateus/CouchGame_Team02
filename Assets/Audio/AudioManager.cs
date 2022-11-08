@@ -17,18 +17,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
     }
 
-    private void Start()
-    {
-        for (int i = 0; i < this.transform.childCount; i++)
-        {
-            speakers.Add(this.transform.GetChild(i).GetComponent<AudioSource>());
-        }
-    }
-
-    public void PlayAudioOnSpeaker(AudioClip clip)
+    /*public void PlayAudioOnSpeaker(AudioClip clip)
     {
         foreach(AudioSource source in speakers)
         {
@@ -39,14 +34,24 @@ public class AudioManager : MonoBehaviour
     public void PlayAudioOnPlayer(AudioClip clip)
     {
         playerAudioSource.PlayOneShot(clip);
+    }*/
+
+
+    public static float ParseToDebit0(float value)
+    {
+        float parse = Mathf.Lerp(-80, 00, Mathf.Clamp01(value));
+        return parse;
     }
 
-    private void Update()
+    public static float ParseToDebit20(float value)
     {
-        if (Input.GetKeyDown(UnityEngine.KeyCode.A))
-        {
-            Debug.Log("je suis tout puissant !!!!!!!!!!!!!!!!");
-            PlayAudioOnSpeaker(clip);
-        }
+        float parse = Mathf.Lerp(-80, 20, Mathf.Clamp01(value));
+        return parse;
+    }
+
+    public static float ParseToDebitCustom(float value, float min = -80, float max = 20)
+    {
+        float parse = Mathf.Lerp(min, max, Mathf.Clamp01(value));
+        return parse;
     }
 }
