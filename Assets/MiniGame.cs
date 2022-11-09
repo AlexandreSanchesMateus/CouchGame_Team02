@@ -11,6 +11,14 @@ public class MiniGame : MonoBehaviour, IMinigame
     public Camera Cam;
     public int code;
     public TextMeshPro text;
+
+    public MiniGame1_slots[] allSlots = new MiniGame1_slots[9];
+    [SerializeField] private int codePosition; // de 0 à 3, la position que l'on verra sur le bureau
+    [SerializeField] private GameObject textDeskMananger;
+    void Start()
+    {
+        codePosition = Random.Range(0, 3); 
+    }
     public bool interact(InputAction.CallbackContext callback) 
     {
         if (isGood)
