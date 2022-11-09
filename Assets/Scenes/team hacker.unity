@@ -134,6 +134,34 @@ PrefabInstance:
       propertyPath: miniGame
       value: 
       objectReference: {fileID: 873202110}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.93750983
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.056711707
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.342583
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.022271851
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 5.225
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -40.358
+      objectReference: {fileID: 0}
+    - target: {fileID: 680054962, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -4.643
+      objectReference: {fileID: 0}
     - target: {fileID: 857429323, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5720005
@@ -390,8 +418,35 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 648976372, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+    - {fileID: 8845140337999798377, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+--- !u!1 &22607163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 680054961, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
+  m_PrefabInstance: {fileID: 22607162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &22607164
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22607163}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7b1bc7b33788d0140a4dc34a5169fb6a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &26639611
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2104,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1785903575, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
   m_PrefabInstance: {fileID: 22607162}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &648976372
+--- !u!114 &648976371
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5808,6 +5863,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 26639612, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1503543890164957174, guid: db57755365553804c91f44faac2e5b2b, type: 3}
       propertyPath: m_TagString
       value: MiniGame2
