@@ -341,15 +341,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""West"",
-                    ""type"": ""Value"",
-                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
-                    ""expectedControlType"": ""Digital"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Back"",
                     ""type"": ""Button"",
                     ""id"": ""3a237247-2a82-47e3-97fa-e61b1d396780"",
@@ -363,6 +354,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""97f1d16b-4ed0-41a1-98bd-6b8df2be1b94"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""West"",
+                    ""type"": ""Value"",
+                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
+                    ""expectedControlType"": ""Digital"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -442,28 +442,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""West"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2819381e-7f98-4265-8fdc-a014b1456b82"",
-                    ""path"": ""<Keyboard>/numpad4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""West"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""181787ee-c1b1-42c9-a5d3-2bb5deaa3644"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
@@ -489,20 +467,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""c5df4827-32ad-4f46-9c95-f9ff1f616511"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.5)"",
+                    ""processors"": ""StickDeadzone(min=0.125)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Joystick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""West"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -571,6 +538,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""North"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2819381e-7f98-4265-8fdc-a014b1456b82"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -616,9 +616,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
         m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
         m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
-        m_HackerController_West = m_HackerController.FindAction("West", throwIfNotFound: true);
         m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
         m_HackerController_Joystick = m_HackerController.FindAction("Joystick", throwIfNotFound: true);
+        m_HackerController_West = m_HackerController.FindAction("West", throwIfNotFound: true);
         m_HackerController_South = m_HackerController.FindAction("South", throwIfNotFound: true);
         m_HackerController_East = m_HackerController.FindAction("East", throwIfNotFound: true);
         m_HackerController_North = m_HackerController.FindAction("North", throwIfNotFound: true);
@@ -748,9 +748,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
     private readonly InputAction m_HackerController_Increment;
     private readonly InputAction m_HackerController_Decrement;
-    private readonly InputAction m_HackerController_West;
     private readonly InputAction m_HackerController_Back;
     private readonly InputAction m_HackerController_Joystick;
+    private readonly InputAction m_HackerController_West;
     private readonly InputAction m_HackerController_South;
     private readonly InputAction m_HackerController_East;
     private readonly InputAction m_HackerController_North;
@@ -760,9 +760,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
         public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
-        public InputAction @West => m_Wrapper.m_HackerController_West;
         public InputAction @Back => m_Wrapper.m_HackerController_Back;
         public InputAction @Joystick => m_Wrapper.m_HackerController_Joystick;
+        public InputAction @West => m_Wrapper.m_HackerController_West;
         public InputAction @South => m_Wrapper.m_HackerController_South;
         public InputAction @East => m_Wrapper.m_HackerController_East;
         public InputAction @North => m_Wrapper.m_HackerController_North;
@@ -781,15 +781,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
-                @West.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
-                @West.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
-                @West.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
                 @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Joystick.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
                 @Joystick.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
                 @Joystick.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @West.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
+                @West.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
+                @West.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
                 @South.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
                 @South.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
                 @South.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
@@ -809,15 +809,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started += instance.OnDecrement;
                 @Decrement.performed += instance.OnDecrement;
                 @Decrement.canceled += instance.OnDecrement;
-                @West.started += instance.OnWest;
-                @West.performed += instance.OnWest;
-                @West.canceled += instance.OnWest;
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
                 @Joystick.started += instance.OnJoystick;
                 @Joystick.performed += instance.OnJoystick;
                 @Joystick.canceled += instance.OnJoystick;
+                @West.started += instance.OnWest;
+                @West.performed += instance.OnWest;
+                @West.canceled += instance.OnWest;
                 @South.started += instance.OnSouth;
                 @South.performed += instance.OnSouth;
                 @South.canceled += instance.OnSouth;
@@ -861,9 +861,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnIncrement(InputAction.CallbackContext context);
         void OnDecrement(InputAction.CallbackContext context);
-        void OnWest(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnJoystick(InputAction.CallbackContext context);
+        void OnWest(InputAction.CallbackContext context);
         void OnSouth(InputAction.CallbackContext context);
         void OnEast(InputAction.CallbackContext context);
         void OnNorth(InputAction.CallbackContext context);
