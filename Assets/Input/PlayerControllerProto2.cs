@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControllerProto2 : MonoBehaviour
@@ -25,17 +23,20 @@ public class PlayerControllerProto2 : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private bool enablePlayerMovement = true;
+    public static bool enablePlayerMovement { get; set; }
     private IInteractible interactibleObject;
 
     private Vector2 movementInput;
     private Vector2 rotateInput;
+
+    private Vector2 flechaction;
 
 
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+        enablePlayerMovement = true;
     }
 
     void Update()
@@ -100,14 +101,16 @@ public class PlayerControllerProto2 : MonoBehaviour
     public void OnRotate(InputAction.CallbackContext context)
     {
         rotateInput = context.ReadValue<Vector2>();
+
+        if (interactibleObject != null)
+            InteractWithEnigmes();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed && interactibleObject != null)
         {
-            interactibleObject.OnIteract();
-            enablePlayerMovement = false;
+            interactibleObject.OnInteract();
         }
     }
 
@@ -116,17 +119,22 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (context.performed && interactibleObject != null)
         {
             interactibleObject.OnReturn();
-            enablePlayerMovement = true;
             interactibleObject = null;
         }
     }
 
     public void OnActions(InputAction.CallbackContext context)
     {
+        flechaction = context.ReadValue<Vector2>();
+
         if (context.performed && interactibleObject != null)
-        {
-            interactibleObject.OnActions(context.ReadValue<Vector2>());
-        }
+            InteractWithEnigmes();
+    }
+
+    private void InteractWithEnigmes()
+    {
+        if(interactibleObject != null)
+            interactibleObject.OnActions(flechaction, rotateInput);
     }
 
     private void OnDrawGizmos()

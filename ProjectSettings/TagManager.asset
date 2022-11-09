@@ -7,6 +7,8 @@ TagManager:
   - cube
   - MiniGame
   - ads
+  - Screen
+  - MiniGame2
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - Interactible
   - Water
   - UI
-  - 
-  - 
+  - Robber
+  - Hacker
   - 
   - 
   - 

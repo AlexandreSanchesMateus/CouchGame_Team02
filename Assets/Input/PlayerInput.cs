@@ -357,6 +357,33 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeToview1"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff01ffb2-a1ff-4561-ab4b-a23d574f19c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeToview2"",
+                    ""type"": ""Button"",
+                    ""id"": ""836062a9-c15d-426a-9d2d-02b75fb40dad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Joystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""97f1d16b-4ed0-41a1-98bd-6b8df2be1b94"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -447,6 +474,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfd8b5ba-7e2c-42bd-8cb3-be3b31fd6f53"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ChangeToview1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27e50abe-074c-4281-895c-8d0ed0349ef2"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ChangeToview2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5df4827-32ad-4f46-9c95-f9ff1f616511"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone(min=0.5)"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -494,6 +554,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
         m_HackerController_Interact1 = m_HackerController.FindAction("Interact1", throwIfNotFound: true);
         m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
+        m_HackerController_ChangeToview1 = m_HackerController.FindAction("ChangeToview1", throwIfNotFound: true);
+        m_HackerController_ChangeToview2 = m_HackerController.FindAction("ChangeToview2", throwIfNotFound: true);
+        m_HackerController_Joystick = m_HackerController.FindAction("Joystick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -622,6 +685,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_HackerController_Decrement;
     private readonly InputAction m_HackerController_Interact1;
     private readonly InputAction m_HackerController_Back;
+    private readonly InputAction m_HackerController_ChangeToview1;
+    private readonly InputAction m_HackerController_ChangeToview2;
+    private readonly InputAction m_HackerController_Joystick;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -630,6 +696,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
         public InputAction @Interact1 => m_Wrapper.m_HackerController_Interact1;
         public InputAction @Back => m_Wrapper.m_HackerController_Back;
+        public InputAction @ChangeToview1 => m_Wrapper.m_HackerController_ChangeToview1;
+        public InputAction @ChangeToview2 => m_Wrapper.m_HackerController_ChangeToview2;
+        public InputAction @Joystick => m_Wrapper.m_HackerController_Joystick;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -651,6 +720,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
+                @ChangeToview1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
+                @ChangeToview1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
+                @ChangeToview1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
+                @ChangeToview2.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
+                @ChangeToview2.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
+                @ChangeToview2.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
+                @Joystick.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @Joystick.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @Joystick.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -667,6 +745,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @ChangeToview1.started += instance.OnChangeToview1;
+                @ChangeToview1.performed += instance.OnChangeToview1;
+                @ChangeToview1.canceled += instance.OnChangeToview1;
+                @ChangeToview2.started += instance.OnChangeToview2;
+                @ChangeToview2.performed += instance.OnChangeToview2;
+                @ChangeToview2.canceled += instance.OnChangeToview2;
+                @Joystick.started += instance.OnJoystick;
+                @Joystick.performed += instance.OnJoystick;
+                @Joystick.canceled += instance.OnJoystick;
             }
         }
     }
@@ -703,5 +790,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDecrement(InputAction.CallbackContext context);
         void OnInteract1(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnChangeToview1(InputAction.CallbackContext context);
+        void OnChangeToview2(InputAction.CallbackContext context);
+        void OnJoystick(InputAction.CallbackContext context);
     }
 }

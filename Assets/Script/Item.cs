@@ -6,7 +6,7 @@ public class Item : MonoBehaviour, IInteractible
 {
     [SerializeField] private GameObject GUI;
 
-    public void OnActions(Vector2 action)
+    public void OnActions(Vector2 action, Vector2 joystick)
     {
         throw new System.NotImplementedException();
     }
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour, IInteractible
         GUI.SetActive(true);
     }
 
-    public void OnIteract()
+    public void OnInteract()
     {
         Destroy(gameObject);
     }

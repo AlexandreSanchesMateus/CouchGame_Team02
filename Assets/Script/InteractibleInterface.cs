@@ -6,7 +6,7 @@ public interface IInteractible
 {
     public void OnItemHover();
     public void OnItemExit();
-    public void OnIteract();
+    public void OnInteract();
     public void OnReturn();
-    public void OnActions(Vector2 action);
+    public void OnActions(Vector2 action, Vector2 joystick);
 }

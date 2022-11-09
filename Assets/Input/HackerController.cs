@@ -3,93 +3,153 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
+using DG.Tweening;
+using Cinemachine;
 
 public class HackerController : MonoBehaviour
 {
-    public GameObject MiniGamescreens;
-    
-    public GameObject curentDisplayedScreen;
-    public MiniGame focusedMinigame;
-    public bool isInFrontOfMiniGame;
-    
-    public bool isFocused;
-    
-    public static HackerController instance;
-    private void Update()
-    {
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 2, Color.yellow);
-    }
-    void Start()
-    {
-        //singleton
+	public GameObject MiniGamescreens;
+	public float rotToAdd;
+	public float currentRot;
+	private bool canInteract=true;
+	public static HackerController instance;
+	public CinemachineVirtualCamera cam1,cam2;
+	private RaycastHit hit;
+	private Coroutine lastCorout;
+
+	private Transform originalCamTransform;
+
+
+	private void Start()
+	{
+        originalCamTransform = cam1.transform;
+
         if (instance == null)
         {
-            instance = this;
+			instance = this;
         }
         else
         {
-            Destroy(gameObject);
-        }
-    }
-    public void Increment(InputAction.CallbackContext callback)
-    {
-        if(callback.started)
-        {
-        Debug.Log("Increment");
-        MiniGamescreens.transform.Rotate(0, MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
+			Destroy(this);
         }
 
+		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
+		currentRot = 0;
+
+		lastCorout = StartCoroutine(popupDelay());
     }
-    public void Decrement(InputAction.CallbackContext callback)
-    {
-        if (callback.started)
+	private void Update()
+	{
+		Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
+		//if (popupCoFinished)
+		//{
+		//	popupCoFinished = false;
+		//	StartCoroutine(popupDelay());
+		//}
+
+	}
+	
+	public void Increment(InputAction.CallbackContext callback)
+	{
+		if(callback.started&&canInteract)
+		{
+		//Debug.Log("Increment");
+			MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
+        }
+
+		StopCoroutine(lastCorout);
+		lastCorout = StartCoroutine(popupDelay());
+	}
+	public void Decrement(InputAction.CallbackContext callback)
+	{
+		if (callback.started&&canInteract)
+		{
+			//Debug.Log("decrement");
+			MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
+        }
+
+		StopCoroutine(lastCorout);
+		lastCorout = StartCoroutine(popupDelay());
+	}
+	public void Interact(InputAction.CallbackContext callback)
+	{
+		if (callback.started)
+		{
+			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+			{
+				Screen screen = hit.transform.GetComponent<Screen>();
+
+				if (screen.screenState == ScreenState.Popups)
+                {
+					screen.FightPopup();
+
+					if (screen.currentPopup.Count <= 0)
+						lastCorout = StartCoroutine(popupDelay());
+                }
+				else if(screen.screenState == ScreenState.MiniGame)
+				{
+					screen.miniGame.GetComponent<IMinigame>().interact(callback);
+
+                }
+			}
+		}
+	}
+	public void MoveInScreen(InputAction.CallbackContext callback)
+	{
+        if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
         {
-            Debug.Log("Increment");
-            MiniGamescreens.transform.Rotate(0, -MiniGamescreens.GetComponent<screensholder>().rotToAdd, 0);
-        } 
-    }
-    public void Interact(InputAction.CallbackContext callback)
-    {
-        Debug.Log("Interact");
-        MiniGame mg;
-        RaycastHit hit;
-        Screen sc;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 2, out hit))
-        {
-            if (hit.transform.tag=="MiniGame")
+            Screen screen = hit.transform.GetComponent<Screen>();
+
+            if (screen.screenState == ScreenState.MiniGame)
             {
-                Debug.Log("is a game");
-                    sc = hit.transform.GetComponent<Screen>();
-                    mg = hit.transform.GetComponent<Screen>().game;
-                    
-
-                    if (mg.TestWin())
-                    {
-                        Debug.Log("win");
-                    }
-                    else
-                    {
-                        Debug.Log("nop");
-                    }
-
-            }
-            else
-            {
-                Debug.Log("not game");
+				screen.miniGame.GetComponent<IMinigame>().Move(callback);
             }
         }
-        else
-        {
-           
-        }
-        Debug.Log(hit.transform.tag);
-
     }
-    public void Back(InputAction.CallbackContext callback)
+	public void SwitchCam(InputAction.CallbackContext callback)
+	{
+		if (callback.started)
+		{
+			if (cam1.Priority == 10)
+			{
+				cam1.Priority = 0;
+				cam2.Priority = 10;
+			}
+			else
+			{
+				cam1.Priority = 10;
+				cam2.Priority = 0;
+			}
+		}
+	}
+    
+	public void Back(InputAction.CallbackContext callback)
+	{
+		Debug.Log("Back");
+	}
+    //IEnumerator Wait()
+    //{
+    //	canInteract = false;
+    //	yield return new WaitForSeconds(2);
+    //	canInteract = true;
+    //	Debug.Log("Stuck in ads");
+    //}
+
+    IEnumerator popupDelay()
     {
-        Debug.Log("Back");
+		yield return new WaitForSeconds(Random.Range(5f, 10f));
+
+		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
+		Screen scr = hit.transform.GetComponent<Screen>();
+        Debug.Log("screen = " + hit.transform.name);
+        if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
+			scr.displayPopUp();
+	}
+	public void CamShake()
+	{
+        Sequence newSequence = DOTween.Sequence();
+        newSequence.Append(cam1.transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true));
+        newSequence.Append(cam1.transform.DOMove(originalCamTransform.position, 0.2f));
     }
-    //rotate MiniGamescreens from 90 degrees on axe y
-
-
 }
+

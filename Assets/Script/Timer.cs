@@ -8,7 +8,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 	public float timeRemaining, timeValue = 90f;
-	public TextMeshProUGUI timerText;
+	public TextMeshPro timerText;
 	public GameObject gameOverScreen;
 
 	private bool timerIsRunning = false;
@@ -50,7 +50,7 @@ public class Timer : MonoBehaviour
 		float secondes = timeToDisplay % 60;
 		float milliseconds = (timeToDisplay % 1) * 1000;
 
-		timerText.text = string.Format("{0:00} : {1:00} : {2:000}", minutes, secondes, milliseconds);
+		timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, secondes, milliseconds);
 	}
 
 	public void DisplayGameOver()
