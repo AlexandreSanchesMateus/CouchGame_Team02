@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioSpeaker : MonoBehaviour
 {
+    public static AudioSpeaker instance;
+
     [Header("Timer")]
     [SerializeField] private Speaker[] speaker;
     [Header("Timer")]
@@ -14,6 +16,11 @@ public class AudioSpeaker : MonoBehaviour
     [SerializeField] private AudioClip accelerateFasterClip;
 
     [Header("Alarme")]
+    [SerializeField] private AudioClip softAlarmClip;
+    [SerializeField] private AudioClip mediumAlarmClip;
+    [SerializeField] private AudioClip hardAlarmClip;
+    private int intensiteAlarm;
+
 
     private bool isAccelerate = false;
     private bool isAccelerateFaster = false;
@@ -21,7 +28,10 @@ public class AudioSpeaker : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         speaker = this.GetComponentsInChildren<Speaker>();
+        intensiteAlarm = 0;
 
         StartCoroutine(ApplyNewClipTimer(starterClip, false, 0));
         StartCoroutine(ApplyNewClipTimer(baseClip, true, starterClip.length));
@@ -43,6 +53,27 @@ public class AudioSpeaker : MonoBehaviour
         }
     }
 
+    public void LaunchAlarm()
+    {
+
+        Debug.Log("Launch Alarm");
+        if(intensiteAlarm == 0)
+        {
+            ApplyNewClipAlarm(softAlarmClip);
+            intensiteAlarm++;
+        }
+        else if(intensiteAlarm == 1)
+        {
+            ApplyNewClipAlarm(mediumAlarmClip);
+            intensiteAlarm++;
+        }
+        else if (intensiteAlarm == 2)
+        {
+            ApplyNewClipAlarm(mediumAlarmClip);
+            intensiteAlarm++;
+        }
+    }
+
     private IEnumerator ApplyNewClipTimer(AudioClip clip, bool looped, float wait)
     {
         yield return new WaitForSeconds(wait);
@@ -51,6 +82,16 @@ public class AudioSpeaker : MonoBehaviour
             actualSpeaker.timerSource.loop = looped;
             actualSpeaker.timerSource.clip = clip;
             actualSpeaker.timerSource.Play();
+        }
+    }
+
+    private void ApplyNewClipAlarm(AudioClip clip)
+    {
+        foreach (Speaker actualSpeaker in speaker)
+        {
+            actualSpeaker.alarmSource.loop = true;
+            actualSpeaker.alarmSource.clip = clip;
+            actualSpeaker.alarmSource.Play();
         }
     }
 }

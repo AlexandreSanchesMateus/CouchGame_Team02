@@ -5,5 +5,5 @@ using UnityEngine;
 public class Speaker : MonoBehaviour
 {
     public AudioSource timerSource;
-    public AudioSource alarmeSource;
+    public AudioSource alarmSource;
 }
