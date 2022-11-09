@@ -53,7 +53,6 @@ Shader "Hidden/Shader/GrayScale"
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
         float3 sourceColor = SAMPLE_TEXTURE2D_X(_MainTex, s_linear_clamp_sampler, input.texcoord).xyz;
-
         // Apply greyscale effect
         float3 color = lerp(sourceColor, Luminance(sourceColor), _Intensity);
 
