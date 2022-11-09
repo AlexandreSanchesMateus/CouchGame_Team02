@@ -16,6 +16,16 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private string goodCode;
     [SerializeField] private GameObject door;
 
+    [Header("Auio")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip enterClip;
+    [SerializeField] private AudioClip outClip;
+    [SerializeField] private AudioClip hoverClip;
+    [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip validClip;
+    [SerializeField] private AudioClip wrongClip;
+
+
     private List<int> currentCode = new List<int>();
     private int idKey;
     private bool isOpen;
@@ -25,6 +35,8 @@ public class KeyCode : MonoBehaviour, IInteractible
     {
         isOpen = false;
         idKey = 0;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = enterClip;
     }
 
     // Lorsque je joueur utilise l'object
@@ -48,6 +60,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         else if (action == Vector2.left)
             idKey--;
 
+        PlayAudio(hoverClip);
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
@@ -67,9 +80,11 @@ public class KeyCode : MonoBehaviour, IInteractible
     // Lorsque je joueur interagie avec l'object
     public void OnInteract()
     {
+        
         // SI NON OUVERT : orienter caméra + désactiver input player
         if (!isOpen)
         {
+            PlayAudio(enterClip);
             StartCoroutine(Delay());
             GUIManager.instance.EnableUseGUI(false);
             // GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
@@ -80,6 +95,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         // SI DEJA OUVERT : appuyer sur les touche
         else
         {
+            PlayAudio(inputClip);
             switch (idKey)
             {
                 case 9:
@@ -100,9 +116,11 @@ public class KeyCode : MonoBehaviour, IInteractible
         }
     }
 
-    // Lorsque le joueur revient en arrière
+    // Lo
+    // rsque le joueur revient en arrière
     public void OnReturn()
     {
+        PlayAudio(outClip);
         isOpen = false;
         GUIManager.instance.EnableUseGUI(false);
         GUIManager.instance.EnableHand(false);
@@ -157,18 +175,21 @@ public class KeyCode : MonoBehaviour, IInteractible
         // CODE BON
         if (ListToString(currentCode) == goodCode)
         {
+            PlayAudio(validClip);
             displayCode.text = " G O O D";
             gameObject.layer = 0;
             Destroy(door);
             yield return new WaitForSeconds(1);
             vcam.SetActive(false);
             GUIManager.instance.EnableHand(false);
+            AudioSpeaker.instance.LaunchAlarm();
             yield return new WaitForSeconds(2);
             PlayerControllerProto2.enablePlayerMovement = true;
         }
         // CODE MAUVAIS
         else
         {
+            PlayAudio(wrongClip);
             Debug.Log("Don't pass");
             currentCode.Clear();
             displayCode.text = " _ _ _ _";
@@ -176,6 +197,11 @@ public class KeyCode : MonoBehaviour, IInteractible
         }
     }
 
+    private void PlayAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(2);

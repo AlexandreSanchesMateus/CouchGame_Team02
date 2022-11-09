@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,8 @@ public class PlayerControllerProto2 : MonoBehaviour
     private float startPosY;
     private float timer;
 
+    [Header("Audio")]
+    [SerializeField] private List<AudioClip> walk;
 
     private CharacterController controller;
     private float xRotation;
@@ -39,6 +42,9 @@ public class PlayerControllerProto2 : MonoBehaviour
     private Vector2 rotateInput;
 
     private Vector2 flechaction;
+
+    private float previousSin;
+    private bool walked;
 
 
     private void Start()
@@ -121,6 +127,9 @@ public class PlayerControllerProto2 : MonoBehaviour
             Debug.Log(movementInput.x + movementInput.y);
             timer += Time.deltaTime * _frequency;
             cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, startPosY + Mathf.Sin(timer) * _amplitude, cameraObj.transform.localPosition.z);
+            AudioOnWalk();
+            previousSin = Mathf.Sin(timer);
+            
         }
         else if (cameraObj.transform.localPosition.y != startPosY)
             ResetPosition();
@@ -177,6 +186,20 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         if(interactibleObject != null)
             interactibleObject.OnActions(flechaction, rotateInput);
+    }
+
+    private void AudioOnWalk()
+    {
+        if (previousSin < Mathf.Sin(timer) && !walked)
+        {
+            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count - 1)];
+            GetComponent<AudioSource>().Play();
+            walked = true;
+        }
+        else if(previousSin > Mathf.Sin(timer))
+        {
+            walked = false;
+        }
     }
 
     private void OnDrawGizmos()
