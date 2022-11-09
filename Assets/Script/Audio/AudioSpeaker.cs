@@ -5,41 +5,52 @@ using UnityEngine;
 public class AudioSpeaker : MonoBehaviour
 {
     [Header("Timer")]
-    [SerializeField] private AudioSource[] audioSource;
+    [SerializeField] private Speaker[] speaker;
+    [Header("Timer")]
     [SerializeField] private AudioClip starterClip;
     [SerializeField] private AudioClip warningClip;
     [SerializeField] private AudioClip baseClip;
     [SerializeField] private AudioClip accelerateClip;
+    [SerializeField] private AudioClip accelerateFasterClip;
+
+    [Header("Alarme")]
 
     private bool isAccelerate = false;
+    private bool isAccelerateFaster = false;
 
 
     private void Start()
     {
-        audioSource = this.GetComponentsInChildren<AudioSource>();
+        speaker = this.GetComponentsInChildren<Speaker>();
 
-        StartCoroutine(ApplyNewClip(starterClip, false, 0));
-        StartCoroutine(ApplyNewClip(baseClip, true, starterClip.length));
+        StartCoroutine(ApplyNewClipTimer(starterClip, false, 0));
+        StartCoroutine(ApplyNewClipTimer(baseClip, true, starterClip.length));
     }
 
     private void Update()
     {
         if(Mathf.Round(Timer.instance.timeRemaining) == 119 && !isAccelerate)
         {
-            StartCoroutine(ApplyNewClip(warningClip, false, 0));
-            StartCoroutine(ApplyNewClip(accelerateClip, true, warningClip.length));
+            StartCoroutine(ApplyNewClipTimer(warningClip, false, 0));
+            StartCoroutine(ApplyNewClipTimer(accelerateClip, true, warningClip.length));
+            isAccelerate = true;
+        }
+        else if(Mathf.Round(Timer.instance.timeRemaining) == 59 && !isAccelerateFaster)
+        {
+            StartCoroutine(ApplyNewClipTimer(warningClip, false, 0));
+            StartCoroutine(ApplyNewClipTimer(accelerateClip, true, warningClip.length));
             isAccelerate = true;
         }
     }
 
-    private IEnumerator ApplyNewClip(AudioClip clip, bool looped, float wait)
+    private IEnumerator ApplyNewClipTimer(AudioClip clip, bool looped, float wait)
     {
         yield return new WaitForSeconds(wait);
-        foreach (AudioSource audioSource in audioSource)
+        foreach (Speaker actualSpeaker in speaker)
         { 
-            audioSource.loop = looped;
-            audioSource.clip = clip;
-            audioSource.Play();
+            actualSpeaker.timerSource.loop = looped;
+            actualSpeaker.timerSource.clip = clip;
+            actualSpeaker.timerSource.Play();
         }
     }
 }

@@ -22,6 +22,9 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip outClip;
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip validClip;
+    [SerializeField] private AudioClip wrongClip;
+
 
     private List<int> currentCode = new List<int>();
     private int idKey;
@@ -172,6 +175,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         // CODE BON
         if (ListToString(currentCode) == goodCode)
         {
+            PlayAudio(validClip);
             displayCode.text = " G O O D";
             gameObject.layer = 0;
             Destroy(door);
@@ -184,6 +188,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         // CODE MAUVAIS
         else
         {
+            PlayAudio(wrongClip);
             Debug.Log("Don't pass");
             currentCode.Clear();
             displayCode.text = " _ _ _ _";

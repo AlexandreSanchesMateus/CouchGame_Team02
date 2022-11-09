@@ -27,8 +27,8 @@ public class PlayerControllerProto2 : MonoBehaviour
     private float startPosY;
     private float timer;
 
-    
-
+    [Header("Audio")]
+    [SerializeField] private List<AudioClip> walk;
 
     private CharacterController controller;
     private float xRotation;
@@ -192,6 +192,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
+            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count - 1)];
             GetComponent<AudioSource>().Play();
             walked = true;
         }
