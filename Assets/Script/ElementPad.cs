@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ElementPad : MonoBehaviour, IInteractible
 {
+    public static ElementPad instance;
     [SerializeField] private GameObject vcam;
 
     // [SerializeField] private GameObject GUIhover;
@@ -27,15 +28,25 @@ public class ElementPad : MonoBehaviour, IInteractible
     private Situation currentSituation;
 
     private List<int> previousElement = new List<int>();
-    private int idKey;
-    private bool isOpen;
+    private int idKeyBraq, key;
+    public int idKeyHacker;
+    private bool braqHavePlayed, isOpen;
+    public bool hackHavePlayed;
     private int actualEtape;
 
+    [SerializeField] private float time;
+    private Coroutine corout;
+    private bool timerIsRunning = false;
 
     void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+
         isOpen = false;
-        idKey = 0;
+        idKeyBraq = 0;
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
@@ -43,25 +54,25 @@ public class ElementPad : MonoBehaviour, IInteractible
         if (!isOpen || action == Vector2.zero)
             return;
 
-        if (action == Vector2.right)
+        if (action.x > 0)
         {
-            idKey++;
-            if(idKey == 4)
+            idKeyBraq++;
+            if(idKeyBraq == 4)
             {
-                idKey = 0;
+                idKeyBraq = 0;
             }
         }
-        else if(action == Vector2.left)
+        else if(action.x < 0)
         {
-            idKey--;
-            if(idKey < 0)
+            idKeyBraq--;
+            if(idKeyBraq < 0)
             {
-                idKey = 3;
+                idKeyBraq = 3;
             }
         }
 
-        idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
-        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+        /*idKeyBraq = Mathf.Clamp(idKeyBraq, 0, keys.Length - 1);*/
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
     }
 
     public void OnItemExit()
@@ -76,55 +87,28 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnInteract()
     {
-        int idSituation = 0;
         if (!isOpen)
         {
+            braqHavePlayed = false;
+            hackHavePlayed = false;
+
             StartCoroutine(Delay());
             GUIManager.instance.EnableUseGUI(false);
             vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
-            idSituation = Random.Range(0, 3);
-            currentSituation = etapes[actualEtape].situations[idSituation];
-            display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+
+            UpdateSituationAndKey();
             return;
         }
 
         // SI changement GD
         // currentSituation = etapes[actualEtape].situations[Random.Range(0, etapes[actualEtape].situations.Length - 1)];
-        int key = currentSituation.goodkey;
 
-        if(currentSituation.goodkey < 0)
-        {
-            key = previousElement[Mathf.Abs(currentSituation.goodkey) - 1];
-        }
-
-        if (idKey == key)
-        {
-            lights[actualEtape].GetComponent<MeshRenderer>().material = greenMat;
-            previousElement.Add(idKey);
-            actualEtape++;
-            if (actualEtape == 6)
-            {
-                // Destroy(lockey);
-                StartCoroutine(PanelComplet());
-                display.text = "Well done";
-                return;
-            }
-        }
-        else
-        {
-            for(int i = actualEtape; i > -1; i--)
-            {
-                lights[i].GetComponent<MeshRenderer>().material = redMat;
-            }
-            previousElement.Clear();
-            actualEtape = 0;
-        }
+        braqHavePlayed = true;
+        CheckInput();
         
-        idSituation = Random.Range(0, 3);
-        currentSituation = etapes[actualEtape].situations[idSituation];
-        display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+        
     }
 
     public void OnReturn()
@@ -147,7 +131,70 @@ public class ElementPad : MonoBehaviour, IInteractible
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(2);
-        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+        GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
     }
 
+    public void UpdateSituationAndKey()
+    {
+        //Set situation
+        int idSituation = Random.Range(0, 3);
+        currentSituation = etapes[actualEtape].situations[idSituation];
+        display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+
+        //Set goodkey
+        key = currentSituation.goodkey;
+
+        if (currentSituation.goodkey < 0)
+        {
+            key = previousElement[Mathf.Abs(currentSituation.goodkey) - 1];
+        }
+    }
+
+    public void CheckInput(bool autoLoose = false)
+    {
+        
+        if(braqHavePlayed && hackHavePlayed || autoLoose)
+        {
+            StopCoroutine(corout);
+            if (idKeyBraq == key && idKeyHacker == key && !autoLoose)
+            {
+                lights[actualEtape].GetComponent<MeshRenderer>().material = greenMat;
+                previousElement.Add(key);
+                actualEtape++;
+                if (actualEtape == 6)
+                {
+                    // Destroy(lockey);
+                    StartCoroutine(PanelComplet());
+                    display.text = "Well done";
+                    return;
+                }
+            }
+            else
+            {
+                for (int i = actualEtape; i > -1; i--)
+                {
+                    lights[i].GetComponent<MeshRenderer>().material = redMat;
+                }
+                previousElement.Clear();
+                actualEtape = 0;
+            }
+
+            braqHavePlayed = false;
+            hackHavePlayed = false;
+
+            UpdateSituationAndKey();
+        }
+        else if(braqHavePlayed || hackHavePlayed)
+        {
+            if(!timerIsRunning)
+                corout = StartCoroutine(cooldown());
+        }
+    }
+    IEnumerator cooldown()
+    {
+        timerIsRunning = true;
+        yield return new WaitForSeconds(time);
+        CheckInput(true);
+        timerIsRunning = false;
+    }
 }

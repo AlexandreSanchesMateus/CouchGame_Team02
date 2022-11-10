@@ -7,6 +7,8 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+	public static Timer instance { get; private set; }
+
 	public float timeRemaining, timeValue = 90f;
 	public TextMeshPro timerText;
 	public GameObject gameOverScreen;
@@ -15,6 +17,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+		instance = this;
 		timeRemaining = timeValue;
 		timerIsRunning = true;
     }

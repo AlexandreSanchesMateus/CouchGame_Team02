@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,14 +14,25 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float sensitivity = 30f;
+
     [Header("Interact Option")]
     [SerializeField] private float radius;
     [SerializeField] private float range;
     [SerializeField] private LayerMask layer;
 
-    private float xRotation;
+    [Header("Headbob Option")]
+    [SerializeField] bool enableHeadbob;
+    [SerializeField, Range(0, 0.1f)] private float _amplitude = 0.015f;
+    [SerializeField, Range(0, 30)] private float _frequency = 10.0f;
+    private float startPosY;
+    private float timer;
+
+    [Header("Audio")]
+    [SerializeField] private List<AudioClip> walk;
 
     private CharacterController controller;
+    private float xRotation;
+
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     public static bool enablePlayerMovement { get; set; }
@@ -31,16 +43,23 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     private Vector2 flechaction;
 
+    private float previousSin;
+    private bool walked;
+
 
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        startPosY = cameraObj.transform.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         enablePlayerMovement = true;
     }
 
     void Update()
     {
+        if (enableHeadbob)
+            HeadbobHandle();
+
         // Désactivation des mouvement
         if (!enablePlayerMovement)
             return;
@@ -74,6 +93,8 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         Vector3 move = transform.rotation * new Vector3(movementInput.x, 0, movementInput.y);
         controller.Move(move * Time.deltaTime * playerSpeed);
+        
+        
 
         // Souris Horitale
         transform.Rotate(Vector3.up * (rotateInput.x * sensitivity * Time.deltaTime));
@@ -91,6 +112,36 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void HeadbobHandle()
+    {
+        if (!controller.isGrounded)
+        {
+            ResetPosition();
+            return;
+        }
+
+        if (Mathf.Abs(movementInput.x) > 0.02f || Mathf.Abs(movementInput.y) > 0.02f)
+        {
+            Debug.Log(movementInput.x + movementInput.y);
+            timer += Time.deltaTime * _frequency;
+            cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, startPosY + Mathf.Sin(timer) * _amplitude, cameraObj.transform.localPosition.z);
+            AudioOnWalk();
+            previousSin = Mathf.Sin(timer);
+            
+        }
+        else if (cameraObj.transform.localPosition.y != startPosY)
+            ResetPosition();
+    }
+
+    private void ResetPosition()
+    {
+        if (cameraObj.transform.localPosition.y == startPosY)
+            return;
+
+        cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, Mathf.Lerp(cameraObj.transform.localPosition.y, startPosY, Time.time * 0.01f), cameraObj.transform.localPosition.z);
+        timer = 0;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -135,6 +186,20 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         if(interactibleObject != null)
             interactibleObject.OnActions(flechaction, rotateInput);
+    }
+
+    private void AudioOnWalk()
+    {
+        if (previousSin < Mathf.Sin(timer) && !walked)
+        {
+            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count - 1)];
+            GetComponent<AudioSource>().Play();
+            walked = true;
+        }
+        else if(previousSin > Mathf.Sin(timer))
+        {
+            walked = false;
+        }
     }
 
     private void OnDrawGizmos()
