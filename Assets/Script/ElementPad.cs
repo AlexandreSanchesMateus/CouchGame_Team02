@@ -153,10 +153,11 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void CheckInput(bool autoLoose = false)
     {
         
-        if(braqHavePlayed && hackHavePlayed || autoLoose)
+        if((braqHavePlayed && hackHavePlayed) || autoLoose)
         {
-            StopCoroutine(corout);
-            if (idKeyBraq == key && idKeyHacker == key && !autoLoose)
+            
+
+            if ((idKeyBraq == key && idKeyHacker == key) && !autoLoose)
             {
                 lights[actualEtape].GetComponent<MeshRenderer>().material = greenMat;
                 previousElement.Add(key);
@@ -178,13 +179,14 @@ public class ElementPad : MonoBehaviour, IInteractible
                 previousElement.Clear();
                 actualEtape = 0;
             }
-
             braqHavePlayed = false;
             hackHavePlayed = false;
 
+            StopCoroutine(corout);
             UpdateSituationAndKey();
         }
-        else if(braqHavePlayed || hackHavePlayed)
+
+        if(braqHavePlayed || hackHavePlayed)
         {
             if(!timerIsRunning)
                 corout = StartCoroutine(cooldown());
@@ -194,7 +196,7 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         timerIsRunning = true;
         yield return new WaitForSeconds(time);
-        CheckInput(true);
         timerIsRunning = false;
+        CheckInput(true);
     }
 }
