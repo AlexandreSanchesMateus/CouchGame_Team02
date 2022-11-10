@@ -127,8 +127,8 @@ public class PlayerControllerProto2 : MonoBehaviour
             Debug.Log(movementInput.x + movementInput.y);
             timer += Time.deltaTime * _frequency;
             cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, startPosY + Mathf.Sin(timer) * _amplitude, cameraObj.transform.localPosition.z);
-            AudioOnWalk();
-            previousSin = Mathf.Sin(timer);
+            //AudioOnWalk();
+            //previousSin = Mathf.Sin(timer);
             
         }
         else if (cameraObj.transform.localPosition.y != startPosY)
@@ -188,7 +188,7 @@ public class PlayerControllerProto2 : MonoBehaviour
             interactibleObject.OnActions(flechaction, rotateInput);
     }
 
-    private void AudioOnWalk()
+    /*private void AudioOnWalk()
     {
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
@@ -200,7 +200,7 @@ public class PlayerControllerProto2 : MonoBehaviour
         {
             walked = false;
         }
-    }
+    }*/
 
     private void OnDrawGizmos()
     {

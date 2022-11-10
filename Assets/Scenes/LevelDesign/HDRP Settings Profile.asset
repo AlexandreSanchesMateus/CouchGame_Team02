@@ -148,8 +148,8 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.21413574
-          value: 0.75303024
+          time: 0.20726359
+          value: 0.75436234
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -211,9 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bbf6ee51c9e3e47863282d8107911e, type: 3}
   m_Name: GrayScale
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   intensity:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
