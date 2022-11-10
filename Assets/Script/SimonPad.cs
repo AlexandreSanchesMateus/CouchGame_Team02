@@ -257,6 +257,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
+        AudioSpeaker.instance.AlarmIntensite();
         Destroy(door);
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using DG.Tweening;
 
 public class Timer : MonoBehaviour
 {
@@ -58,6 +58,7 @@ public class Timer : MonoBehaviour
 
 	public void DisplayGameOver()
     {
+		AudioSpeaker.instance.PauseAudio();
 		Time.timeScale = 0;
 		gameOverScreen.SetActive(true);
 		Cursor.lockState = CursorLockMode.Confined;
