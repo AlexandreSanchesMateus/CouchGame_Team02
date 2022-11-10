@@ -267,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857429322}
   m_LocalRotation: {x: 0.056711707, y: -0.342583, z: -0.022271851, w: 0.93750983}
-  m_LocalPosition: {x: 1.5720062, y: 0.20899664, z: 1.0859995}
+  m_LocalPosition: {x: 1.572001, y: 0.20899664, z: 1.0859995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1136,26 +1136,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6404365836932758215}
         m_TargetAssemblyTypeName: HackerController, Assembly-CSharp
-        m_MethodName: SwitchCam
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ff01ffb2-a1ff-4561-ab4b-a23d574f19c8
-    m_ActionName: HackerController/ChangeToview1[/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 836062a9-c15d-426a-9d2d-02b75fb40dad
-    m_ActionName: HackerController/ChangeToview2[/Keyboard/downArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6404365836932758215}
-        m_TargetAssemblyTypeName: HackerController, Assembly-CSharp
         m_MethodName: Interact
         m_Mode: 0
         m_Arguments:
@@ -1168,6 +1148,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 97f1d16b-4ed0-41a1-98bd-6b8df2be1b94
     m_ActionName: HackerController/Joystick[/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 38dae59b-5ff6-4938-8578-3ea9b2d093da
+    m_ActionName: HackerController/South[/Keyboard/numpad2,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e2ee71c-8cfa-4914-920b-2e72fe8a3a45
+    m_ActionName: HackerController/East[/Keyboard/numpad6,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77f4cd99-15c2-4a80-9936-7444d677d70e
+    m_ActionName: HackerController/North[/Keyboard/numpad8,/XInputControllerWindows/buttonNorth]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: HackerController
@@ -1190,6 +1182,7 @@ MonoBehaviour:
   currentRot: 0
   cam1: {fileID: 680054963}
   cam2: {fileID: 515651585}
+  setUp: {fileID: 0}
 --- !u!1 &6404365837669256636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,7 +1240,6 @@ MonoBehaviour:
   scamAd:
   - {fileID: 2100000, guid: 2c37eb704b3d8184eb18d5bfe07352f7, type: 2}
   - {fileID: 2100000, guid: 2ae738d13fd323944ae1be06a01cc9cb, type: 2}
-  screenPos: []
   CanRotate: 0
   frontScreen: {x: 0, y: 0, z: 0}
 --- !u!1 &8417781316701170356
@@ -1430,6 +1422,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6404365837669256637}
     m_Modifications:
+    - target: {fileID: 3898820482742014005, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cd7a205ffcc3d23488345c729038d6a7, type: 2}
     - target: {fileID: 4096566511372713302, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1486,6 +1482,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8161986894761104267, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: miniGame
+      value: 
+      objectReference: {fileID: 5949478323534050586, guid: ac853491263be2f4b9efd69de01e578b, type: 3}
     m_RemovedComponents:
     - {fileID: 8204542322124540332, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}

@@ -341,36 +341,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact1"",
-                    ""type"": ""Button"",
-                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Back"",
                     ""type"": ""Button"",
                     ""id"": ""3a237247-2a82-47e3-97fa-e61b1d396780"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChangeToview1"",
-                    ""type"": ""Button"",
-                    ""id"": ""ff01ffb2-a1ff-4561-ab4b-a23d574f19c8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChangeToview2"",
-                    ""type"": ""Button"",
-                    ""id"": ""836062a9-c15d-426a-9d2d-02b75fb40dad"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -384,6 +357,42 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""West"",
+                    ""type"": ""Value"",
+                    ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
+                    ""expectedControlType"": ""Digital"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""South"",
+                    ""type"": ""Button"",
+                    ""id"": ""38dae59b-5ff6-4938-8578-3ea9b2d093da"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""East"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e2ee71c-8cfa-4914-920b-2e72fe8a3a45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""North"",
+                    ""type"": ""Button"",
+                    ""id"": ""77f4cd99-15c2-4a80-9936-7444d677d70e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -433,28 +442,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Interact1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""181787ee-c1b1-42c9-a5d3-2bb5deaa3644"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
@@ -477,34 +464,111 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cfd8b5ba-7e2c-42bd-8cb3-be3b31fd6f53"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""ChangeToview1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""27e50abe-074c-4281-895c-8d0ed0349ef2"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""ChangeToview2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c5df4827-32ad-4f46-9c95-f9ff1f616511"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.5)"",
+                    ""processors"": ""StickDeadzone(min=0.125)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28535de7-f1b2-4beb-b233-d24df516ab81"",
+                    ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""South"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a703e949-a77e-47ff-a82d-83d3ca8eb720"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""South"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d552d6ac-1b32-4a12-b141-71ccf46475c4"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""East"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd000bc3-c78e-41f9-a29c-c20366c148f1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""East"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c176a470-70a2-448d-ade1-6772e612a2e8"",
+                    ""path"": ""<Keyboard>/numpad8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""North"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00b1e048-fc0e-4030-8457-1febea3a026c"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""North"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a273b02-9331-456e-a56c-60214b56ecd2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2819381e-7f98-4265-8fdc-a014b1456b82"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63608382-2334-4d3c-b17e-7a005768494c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""West"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -552,11 +616,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
         m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
         m_HackerController_Decrement = m_HackerController.FindAction("Decrement", throwIfNotFound: true);
-        m_HackerController_Interact1 = m_HackerController.FindAction("Interact1", throwIfNotFound: true);
         m_HackerController_Back = m_HackerController.FindAction("Back", throwIfNotFound: true);
-        m_HackerController_ChangeToview1 = m_HackerController.FindAction("ChangeToview1", throwIfNotFound: true);
-        m_HackerController_ChangeToview2 = m_HackerController.FindAction("ChangeToview2", throwIfNotFound: true);
         m_HackerController_Joystick = m_HackerController.FindAction("Joystick", throwIfNotFound: true);
+        m_HackerController_West = m_HackerController.FindAction("West", throwIfNotFound: true);
+        m_HackerController_South = m_HackerController.FindAction("South", throwIfNotFound: true);
+        m_HackerController_East = m_HackerController.FindAction("East", throwIfNotFound: true);
+        m_HackerController_North = m_HackerController.FindAction("North", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -683,22 +748,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IHackerControllerActions m_HackerControllerActionsCallbackInterface;
     private readonly InputAction m_HackerController_Increment;
     private readonly InputAction m_HackerController_Decrement;
-    private readonly InputAction m_HackerController_Interact1;
     private readonly InputAction m_HackerController_Back;
-    private readonly InputAction m_HackerController_ChangeToview1;
-    private readonly InputAction m_HackerController_ChangeToview2;
     private readonly InputAction m_HackerController_Joystick;
+    private readonly InputAction m_HackerController_West;
+    private readonly InputAction m_HackerController_South;
+    private readonly InputAction m_HackerController_East;
+    private readonly InputAction m_HackerController_North;
     public struct HackerControllerActions
     {
         private @PlayerInput m_Wrapper;
         public HackerControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Increment => m_Wrapper.m_HackerController_Increment;
         public InputAction @Decrement => m_Wrapper.m_HackerController_Decrement;
-        public InputAction @Interact1 => m_Wrapper.m_HackerController_Interact1;
         public InputAction @Back => m_Wrapper.m_HackerController_Back;
-        public InputAction @ChangeToview1 => m_Wrapper.m_HackerController_ChangeToview1;
-        public InputAction @ChangeToview2 => m_Wrapper.m_HackerController_ChangeToview2;
         public InputAction @Joystick => m_Wrapper.m_HackerController_Joystick;
+        public InputAction @West => m_Wrapper.m_HackerController_West;
+        public InputAction @South => m_Wrapper.m_HackerController_South;
+        public InputAction @East => m_Wrapper.m_HackerController_East;
+        public InputAction @North => m_Wrapper.m_HackerController_North;
         public InputActionMap Get() { return m_Wrapper.m_HackerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -714,21 +781,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
                 @Decrement.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnDecrement;
-                @Interact1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
-                @Interact1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
-                @Interact1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnInteract1;
                 @Back.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnBack;
-                @ChangeToview1.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
-                @ChangeToview1.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
-                @ChangeToview1.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview1;
-                @ChangeToview2.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
-                @ChangeToview2.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
-                @ChangeToview2.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnChangeToview2;
                 @Joystick.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
                 @Joystick.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
                 @Joystick.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnJoystick;
+                @West.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
+                @West.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
+                @West.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnWest;
+                @South.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
+                @South.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
+                @South.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnSouth;
+                @East.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnEast;
+                @East.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnEast;
+                @East.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnEast;
+                @North.started -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnNorth;
+                @North.performed -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnNorth;
+                @North.canceled -= m_Wrapper.m_HackerControllerActionsCallbackInterface.OnNorth;
             }
             m_Wrapper.m_HackerControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -739,21 +809,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Decrement.started += instance.OnDecrement;
                 @Decrement.performed += instance.OnDecrement;
                 @Decrement.canceled += instance.OnDecrement;
-                @Interact1.started += instance.OnInteract1;
-                @Interact1.performed += instance.OnInteract1;
-                @Interact1.canceled += instance.OnInteract1;
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
-                @ChangeToview1.started += instance.OnChangeToview1;
-                @ChangeToview1.performed += instance.OnChangeToview1;
-                @ChangeToview1.canceled += instance.OnChangeToview1;
-                @ChangeToview2.started += instance.OnChangeToview2;
-                @ChangeToview2.performed += instance.OnChangeToview2;
-                @ChangeToview2.canceled += instance.OnChangeToview2;
                 @Joystick.started += instance.OnJoystick;
                 @Joystick.performed += instance.OnJoystick;
                 @Joystick.canceled += instance.OnJoystick;
+                @West.started += instance.OnWest;
+                @West.performed += instance.OnWest;
+                @West.canceled += instance.OnWest;
+                @South.started += instance.OnSouth;
+                @South.performed += instance.OnSouth;
+                @South.canceled += instance.OnSouth;
+                @East.started += instance.OnEast;
+                @East.performed += instance.OnEast;
+                @East.canceled += instance.OnEast;
+                @North.started += instance.OnNorth;
+                @North.performed += instance.OnNorth;
+                @North.canceled += instance.OnNorth;
             }
         }
     }
@@ -788,10 +861,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnIncrement(InputAction.CallbackContext context);
         void OnDecrement(InputAction.CallbackContext context);
-        void OnInteract1(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
-        void OnChangeToview1(InputAction.CallbackContext context);
-        void OnChangeToview2(InputAction.CallbackContext context);
         void OnJoystick(InputAction.CallbackContext context);
+        void OnWest(InputAction.CallbackContext context);
+        void OnSouth(InputAction.CallbackContext context);
+        void OnEast(InputAction.CallbackContext context);
+        void OnNorth(InputAction.CallbackContext context);
     }
 }

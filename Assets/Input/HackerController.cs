@@ -19,6 +19,7 @@ public class HackerController : MonoBehaviour
 
 	private Transform originalCamTransform;
 
+	public GameObject setUp;
 
 	private void Start()
 	{
@@ -35,17 +36,18 @@ public class HackerController : MonoBehaviour
 
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
-
-		lastCorout = StartCoroutine(popupDelay());
+		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+		{
+			Screen screen = hit.transform.GetComponent<Screen>();
+			screen.screenState = ScreenState.Setup;
+			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
+			screen.GetComponent<Screen>().DisplayCode();
+        }
     }
 	private void Update()
 	{
 		Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
-		//if (popupCoFinished)
-		//{
-		//	popupCoFinished = false;
-		//	StartCoroutine(popupDelay());
-		//}
+		
 
 	}
 	
@@ -71,30 +73,56 @@ public class HackerController : MonoBehaviour
 		StopCoroutine(lastCorout);
 		lastCorout = StartCoroutine(popupDelay());
 	}
+
 	public void Interact(InputAction.CallbackContext callback)
-	{
+	{        
 		if (callback.started)
 		{
 			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
 			{
 				Screen screen = hit.transform.GetComponent<Screen>();
 
-				if (screen.screenState == ScreenState.Popups)
-                {
-					screen.FightPopup();
-
-					if (screen.currentPopup.Count <= 0)
-						lastCorout = StartCoroutine(popupDelay());
-                }
-				else if(screen.screenState == ScreenState.MiniGame)
+				switch (screen.screenState)
 				{
-					screen.miniGame.GetComponent<IMinigame>().interact(callback);
+					case ScreenState.MiniGame:
+                        
+                        screen.miniGame.GetComponent<IMinigame>().interact(callback);
+                        
+                        break;
+					case ScreenState.Popups:
+                        
+                        if (callback.action.name == "West")
+                        {
+                            screen.FightPopup();
 
-                }
+                            if (screen.currentPopup.Count <= 0)
+                                lastCorout = StartCoroutine(popupDelay());
+                        }
+                        
+                        break;
+                        
+					case ScreenState.Update:
+						break;
+					case ScreenState.Hack:
+						break;
+					case ScreenState.Setup:
+						
+						if (screen.UnlockScreen(callback))
+						{
+							GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+                            screen.screenState = ScreenState.MiniGame;
+                            lastCorout = StartCoroutine(popupDelay());
+						}
+                        break;
+                        
+					default:
+						break;
+				}
 			}
 		}
 	}
-	public void MoveInScreen(InputAction.CallbackContext callback)
+
+    public void MoveInScreen(InputAction.CallbackContext callback)
 	{
         if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
         {
