@@ -31,7 +31,7 @@ public class Minigame3 : MonoBehaviour , IMinigame
 	public void Move(InputAction.CallbackContext callback)
 	{
 		Vector2 val = callback.ReadValue<Vector2>();
-
+		Debug.Log("here");
 		if (callback.started && val.x != 0)
         {
 			Debug.Log(val.x);
