@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerSource: {fileID: 75744731114784225}
-  alarmSource: {fileID: 0}
+  alarmSource: {fileID: 75744731114784224}
 --- !u!82 &75744731114784225
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.442234
+  MinDistance: 1.2882752
   MaxDistance: 50
   Pan2D: 0
   rolloffMode: 2

@@ -53,7 +53,7 @@ public class AudioSpeaker : MonoBehaviour
         }
     }
 
-    public void LaunchAlarm()
+    public void AlarmIntensite()
     {
 
         Debug.Log("Launch Alarm");
@@ -92,6 +92,15 @@ public class AudioSpeaker : MonoBehaviour
             actualSpeaker.alarmSource.loop = true;
             actualSpeaker.alarmSource.clip = clip;
             actualSpeaker.alarmSource.Play();
+        }
+    }
+
+    public void PauseAudio()
+    {
+        foreach (Speaker actualSpeaker in speaker)
+        {
+            actualSpeaker.timerSource.Pause();
+            actualSpeaker.alarmSource.Pause();
         }
     }
 }

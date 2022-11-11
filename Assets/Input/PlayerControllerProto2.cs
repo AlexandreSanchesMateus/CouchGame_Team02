@@ -122,9 +122,9 @@ public class PlayerControllerProto2 : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(movementInput.x) > 0.02f || Mathf.Abs(movementInput.y) > 0.02f)
+        if (Mathf.Abs(movementInput.x) > 0.02f && enablePlayerMovement || Mathf.Abs(movementInput.y) > 0.02f && enablePlayerMovement)
         {
-            Debug.Log(movementInput.x + movementInput.y);
+            //Debug.Log(movementInput.x + movementInput.y);
             timer += Time.deltaTime * _frequency;
             cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, startPosY + Mathf.Sin(timer) * _amplitude, cameraObj.transform.localPosition.z);
             AudioOnWalk();
