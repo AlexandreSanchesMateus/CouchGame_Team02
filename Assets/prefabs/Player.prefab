@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303596517}
   m_LocalRotation: {x: -0.014589635, y: -0.09363056, z: 0.016932923, w: -0.9953561}
-  m_LocalPosition: {x: 135.58546, y: 9.812222, z: 48.59491}
+  m_LocalPosition: {x: 140.16547, y: -1.2177792, z: 10.56391}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -802,7 +802,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,16 +947,20 @@ MonoBehaviour:
     m_ActionName: FPSController/Actions[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ff01ffb2-a1ff-4561-ab4b-a23d574f19c8
-    m_ActionName: HackerController/ChangeToview1[/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 836062a9-c15d-426a-9d2d-02b75fb40dad
-    m_ActionName: HackerController/ChangeToview2[/Keyboard/downArrow]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 97f1d16b-4ed0-41a1-98bd-6b8df2be1b94
     m_ActionName: HackerController/Joystick
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 38dae59b-5ff6-4938-8578-3ea9b2d093da
+    m_ActionName: HackerController/South[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e2ee71c-8cfa-4914-920b-2e72fe8a3a45
+    m_ActionName: HackerController/East[/Keyboard/numpad6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77f4cd99-15c2-4a80-9936-7444d677d70e
+    m_ActionName: HackerController/North[/Keyboard/numpad8]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: FPSController

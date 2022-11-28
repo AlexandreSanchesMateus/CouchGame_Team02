@@ -902,6 +902,7 @@ GameObject:
   - component: {fileID: 8161986894761104260}
   - component: {fileID: 8161986894761104261}
   - component: {fileID: 8161986894761104262}
+  - component: {fileID: 8036318441249347312}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Screen
@@ -988,6 +989,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.052459, z: 0.99999976}
   m_Center: {x: 0, y: -1.1553701, z: 0}
+--- !u!114 &8036318441249347312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8161986894761104256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea08ed88a2fcf28489436c2b548dd660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenState: 0
+  miniGame: {fileID: 0}
+  popups:
+  - {fileID: 7716683265010218860}
+  - {fileID: 4828389660134665830}
+  - {fileID: 730567768521540547}
+  - {fileID: 6118899146744127745}
+  - {fileID: 6757504776294385608}
+  - {fileID: 8065109130312585212}
+  - {fileID: 1220769231390980240}
+  - {fileID: 2006260261799046912}
+  currentPopup: []
+  focus: 0
+  gameMaterial: {fileID: 0}
+  SetupMatrial: {fileID: 0}
 --- !u!1001 &5490380378556605159
 PrefabInstance:
   m_ObjectHideFlags: 0
