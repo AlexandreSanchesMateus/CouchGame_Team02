@@ -182,6 +182,6 @@ public class Screen : MonoBehaviour
             toDisplay += " ";
         }
 
-        HackerController.instance.setUp.transform.GetComponent<TextMeshPro>().text = toDisplay;
+        HackerController.instance.setUp.transform.GetComponentInChildren<TextMeshPro>().text = toDisplay;
     }
 }
