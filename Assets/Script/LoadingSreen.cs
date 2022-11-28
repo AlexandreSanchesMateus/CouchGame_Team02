@@ -43,5 +43,5 @@ public class LoadingSreen : MonoBehaviour, IMinigame
             canInteract = false;
         }
     }
-    public void Move(InputAction.CallbackContext callback) { }s
+    public void Move(InputAction.CallbackContext callback) { }
 }
