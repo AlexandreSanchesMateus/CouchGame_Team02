@@ -185,12 +185,23 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     public void OnReturn(InputAction.CallbackContext context)
     {
-        if (context.performed && interactibleObject != null)
+        if (!haveSomthingInHand)
         {
-            interactibleObject.GetComponent<IInteractible>().OnReturn();
-            interactibleObject = null;
-            haveSomthingInHand = false;
+            if (context.performed && interactibleObject != null)
+                interactibleObject.GetComponent<IInteractible>().OnReturn();
+            else
+                return;
         }
+        else
+        {
+            if (context.canceled && interactibleObject != null)
+                interactibleObject.GetComponent<IInteractible>().OnReturn();
+            else
+                return;
+        }
+
+        interactibleObject = null;
+        haveSomthingInHand = false;
     }
 
     public void OnActions(InputAction.CallbackContext context)
@@ -199,6 +210,22 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         if (context.performed && interactibleObject != null)
             InteractWithEnigmes();
+    }
+
+    public void OnSwitchInteraction(InputAction.CallbackContext context)
+    {
+        if(haveSomthingInHand && context.performed && interactibleObject != null)
+        {
+            interactibleObject.GetComponent<IInteractible>().OnRightShoulder();
+        }
+    }
+
+    public void OnHoldReturnButton(InputAction.CallbackContext context)
+    {
+        if (haveSomthingInHand && context.performed && interactibleObject != null)
+        {
+            interactibleObject.GetComponent<IInteractible>().OnHoldReturn();
+        }
     }
 
     private void InteractWithEnigmes()

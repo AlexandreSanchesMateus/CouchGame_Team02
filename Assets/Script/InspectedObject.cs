@@ -6,6 +6,9 @@ using DG.Tweening;
 public class InspectedObject : MonoBehaviour , IInteractible
 {
     [SerializeField] private bool canBeInspected = true;
+    [SerializeField] private float defaultThrowForce = 100;
+    [SerializeField] private float deltaHardThrow = 400;
+    [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 0.5f;
 
     private Rigidbody rb;
     private BoxCollider boxCollider;
@@ -14,23 +17,33 @@ public class InspectedObject : MonoBehaviour , IInteractible
     Sequence PickUpSequence;
 
     private bool isInHand = false;
+    private bool inspectMode = false;
+    private float throwForce;
 
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         boxCollider = gameObject.GetComponent<BoxCollider>();
         startParent = gameObject.transform.parent;
+        throwForce = defaultThrowForce;
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
     {
-        
+        if (!isInHand || !inspectMode)
+            return;
+
+        gameObject.transform.Rotate(joystick.y * turnSensibitive, 0, joystick.x * turnSensibitive);
     }
 
     public void OnInteract()
     {
         if (isInHand)
             return;
+
+        inspectMode = false;
+        GUIManager.instance.EnablePick_upGUI(false);
+        throwForce = defaultThrowForce;
 
         // Attach (move to transform parent)
         gameObject.transform.SetParent(PlayerControllerProto2.instance.hand);
@@ -60,6 +73,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
 
     public void OnReturn()
     {
+        PlayerControllerProto2.enablePlayerMovement = true;
+
         if (!PickUpSequence.IsComplete())
             PickUpSequence.Kill();
 
@@ -69,9 +84,28 @@ public class InspectedObject : MonoBehaviour , IInteractible
         boxCollider.enabled = true;
         // enable rigidbody
         rb.useGravity = true;
-        rb.AddForce(PlayerControllerProto2.instance.cameraObj.transform.forward * 100);
-        rb.AddRelativeTorque(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100));
+        rb.AddForce(PlayerControllerProto2.instance.cameraObj.transform.forward * throwForce);
+        rb.AddRelativeTorque(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50));
 
         isInHand = false;
+    }
+
+    public void OnRightShoulder()
+    {
+        if (!canBeInspected)
+            return;
+
+        inspectMode = !inspectMode;
+
+        if(inspectMode)
+            PlayerControllerProto2.enablePlayerMovement = false;
+        else
+            PlayerControllerProto2.enablePlayerMovement = true;
+
+    }
+
+    public void OnHoldReturn()
+    {
+        throwForce += deltaHardThrow;
     }
 }
