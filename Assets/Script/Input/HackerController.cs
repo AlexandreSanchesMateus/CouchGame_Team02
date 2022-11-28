@@ -81,7 +81,6 @@ public class HackerController : MonoBehaviour
 			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
 			{
 				Screen screen = hit.transform.GetComponent<Screen>();
-
 				switch (screen.screenState)
 				{
 					case ScreenState.MiniGame:
@@ -98,9 +97,7 @@ public class HackerController : MonoBehaviour
                             if (screen.currentPopup.Count <= 0)
                                 lastCorout = StartCoroutine(popupDelay());
                         }
-                        
-                        break;
-                        
+						break;                        
 					case ScreenState.Update:
 						break;
 					case ScreenState.Hack:
@@ -114,14 +111,13 @@ public class HackerController : MonoBehaviour
                             lastCorout = StartCoroutine(popupDelay());
 						}
                         break;
-                        
 					default:
 						break;
 				}
 			}
 		}
 	}
-
+	//Input du joysitck
     public void MoveInScreen(InputAction.CallbackContext callback)
 	{
         if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
@@ -166,7 +162,6 @@ public class HackerController : MonoBehaviour
     IEnumerator popupDelay()
     {
 		yield return new WaitForSeconds(Random.Range(5f, 10f));
-
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
         Debug.Log("screen = " + hit.transform.name);
