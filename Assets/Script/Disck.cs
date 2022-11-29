@@ -168,4 +168,8 @@ public class Disck : MonoBehaviour, IInteractible
         yield return new WaitForSeconds(2);
         PlayerControllerProto2.enablePlayerMovement = true;
     }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }
