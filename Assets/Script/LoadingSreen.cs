@@ -19,7 +19,7 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     }
     public bool interact(InputAction.CallbackContext callback)
     {
-        if (canInteract) 
+        if (canInteract&& callback.action.name=="West") 
             return true;
         else
             return false;
