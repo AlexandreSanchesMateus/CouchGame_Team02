@@ -190,9 +190,12 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     private void AudioOnWalk()
     {
+        if (walk.Count == 0)
+            return;
+
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
-            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count - 1)];
+            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
             GetComponent<AudioSource>().Play();
             walked = true;
         }
