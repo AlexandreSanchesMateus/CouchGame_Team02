@@ -149,6 +149,7 @@ public class Screen : MonoBehaviour
 		Debug.Log(codeToUnlock[0]+" "+ codeToUnlock[1] + " " + codeToUnlock[2] + " " + codeToUnlock[3]);
 		currentCode = new List<string>();
 		codeIndex = 0;
+		HackerController.instance.setUp.transform.GetChild(2).GetComponent<TextMeshPro>().text = code[0] + "." + code[1] + "." + code[2] + "." + code[3];
 	}
 
 	public bool UnlockScreen(InputAction.CallbackContext callback)
@@ -180,8 +181,6 @@ public class Screen : MonoBehaviour
 			codeIndex = 0;
 			if (codeToUnlock.SequenceEqual(currentCode))
 			{
-				Debug.Log("screen unlocked");
-				transform.GetChild(0).GetComponent<MeshRenderer>().material = gameMaterial;
 				return true;
 			}
 			currentCode = new List<string>();
@@ -205,7 +204,7 @@ public class Screen : MonoBehaviour
 			toDisplay += " ";
 		}
 
-		HackerController.instance.setUp.transform.GetComponentInChildren<TextMeshPro>().text = toDisplay;
+		HackerController.instance.setUp.transform.GetChild(1).GetComponent<TextMeshPro>().text = toDisplay;
 	}
 
 	public List<string> TranslateCode(List<int> codeToTrans)

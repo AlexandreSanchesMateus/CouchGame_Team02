@@ -20,6 +20,7 @@ public class HackerController : MonoBehaviour
 	private Transform originalCamTransform;
 
 	public GameObject setUp;
+	private bool locked;
 
 	private void Start()
 	{
@@ -42,6 +43,7 @@ public class HackerController : MonoBehaviour
 			screen.screenState = ScreenState.Setup;
 			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
 			screen.LockScreen();
+			locked = true;
 			screen.GetComponent<Screen>().DisplayCode();
         }
     }
@@ -104,13 +106,16 @@ public class HackerController : MonoBehaviour
 					case ScreenState.Hack:
 						break;
 					case ScreenState.Setup:
-						
-						if (screen.UnlockScreen(callback))
-						{
-							GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
-                            screen.screenState = ScreenState.MiniGame;
-                            lastCorout = StartCoroutine(popupDelay());
-						}
+
+                        if (locked)
+                        {
+							if (screen.UnlockScreen(callback))
+							{
+								GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+								StartCoroutine(EndSetup(screen));
+								lastCorout = StartCoroutine(popupDelay());
+							}
+                        }
                         break;
 					default:
 						break;
@@ -168,6 +173,14 @@ public class HackerController : MonoBehaviour
         Debug.Log("screen = " + hit.transform.name);
         if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
 			scr.displayPopUp();
+	}
+
+	IEnumerator EndSetup(Screen screen)
+    {
+		locked = false;
+		yield return new WaitForSeconds(2f);
+		screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
+		screen.screenState = ScreenState.MiniGame;
 	}
 	public void CamShake()
 	{
