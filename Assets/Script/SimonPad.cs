@@ -258,7 +258,10 @@ public class SimonPad : MonoBehaviour, IInteractible
     private IEnumerator PanelComplet()
     {
         AudioSpeaker.instance.AlarmIntensite();
-        Destroy(door);
+
+        //Destroy(door);
+        EnigmeManager.instance.SuccessSimon();
+
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
         gameObject.layer = 0;
