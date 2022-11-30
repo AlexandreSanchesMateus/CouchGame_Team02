@@ -132,9 +132,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 730567768521540547}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.3, y: 0.38, z: 49.6}
-  m_LocalScale: {x: 0.022809973, y: 0.17351075, z: 0.026106426}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.2999989, y: 0.38, z: 49.60002}
+  m_LocalScale: {x: 0.022809973, y: 0.17351072, z: 0.026106426}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1504899624752763229}
@@ -426,9 +426,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4828389660134665830}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.199, y: -0.119, z: 59}
-  m_LocalScale: {x: 0.053609975, y: 0.4078, z: 0.061357588}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.19900097, y: -0.11899996, z: 59.000015}
+  m_LocalScale: {x: 0.053609967, y: 0.4077999, z: 0.06135758}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1504899624752763229}
@@ -524,9 +524,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6118899146744127745}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.287, y: -0.223, z: 49.6}
-  m_LocalScale: {x: 0.031076308, y: 0.23639105, z: 0.035567395}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.28699914, y: -0.22300005, z: 49.60002}
+  m_LocalScale: {x: 0.031076308, y: 0.23639104, z: 0.03556739}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1504899624752763229}
@@ -622,9 +622,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6757504776294385608}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.098, y: 0.357, z: 59}
-  m_LocalScale: {x: 0.053609975, y: 0.4078, z: 0.061357588}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.097999945, y: 0.357, z: 59.000015}
+  m_LocalScale: {x: 0.053609967, y: 0.4077999, z: 0.06135758}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1504899624752763229}
@@ -720,9 +720,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7716683265010218860}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.279, y: 0.155, z: 98.4}
-  m_LocalScale: {x: 0.03, y: 1.88, z: 0.1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.2790035, y: 0.15499985, z: 98.400024}
+  m_LocalScale: {x: 0.029999996, y: 1.8799999, z: 0.10000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1504899624752763229}
@@ -902,6 +902,7 @@ GameObject:
   - component: {fileID: 8161986894761104260}
   - component: {fileID: 8161986894761104261}
   - component: {fileID: 8161986894761104262}
+  - component: {fileID: 8036318441249347312}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Screen
@@ -988,6 +989,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.052459, z: 0.99999976}
   m_Center: {x: 0, y: -1.1553701, z: 0}
+--- !u!114 &8036318441249347312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8161986894761104256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea08ed88a2fcf28489436c2b548dd660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenState: 0
+  miniGame: {fileID: 0}
+  popups:
+  - {fileID: 7716683265010218860}
+  - {fileID: 4828389660134665830}
+  - {fileID: 730567768521540547}
+  - {fileID: 6118899146744127745}
+  - {fileID: 6757504776294385608}
+  - {fileID: 8065109130312585212}
+  - {fileID: 1220769231390980240}
+  - {fileID: 2006260261799046912}
+  currentPopup: []
+  focus: 0
+  gameMaterial: {fileID: 0}
+  SetupMatrial: {fileID: 0}
 --- !u!1001 &5490380378556605159
 PrefabInstance:
   m_ObjectHideFlags: 0
