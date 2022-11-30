@@ -360,9 +360,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""West"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""65d73bc4-8a79-4e28-bff9-9b294ebb0f1a"",
-                    ""expectedControlType"": ""Digital"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
