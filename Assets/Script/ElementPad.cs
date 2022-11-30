@@ -199,4 +199,8 @@ public class ElementPad : MonoBehaviour, IInteractible
         timerIsRunning = false;
         CheckInput(true);
     }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }

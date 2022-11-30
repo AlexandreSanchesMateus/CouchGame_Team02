@@ -6,19 +6,16 @@ public class Item : MonoBehaviour, IInteractible
 {
     [SerializeField] private GameObject GUI;
 
-    public void OnActions(Vector2 action, Vector2 joystick)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnActions(Vector2 action, Vector2 joystick) { }
 
     public void OnItemExit()
     {
-        GUI.SetActive(false);
+        GUIManager.instance.EnablePick_upGUI(false);
     }
 
     public void OnItemHover()
     {
-        GUI.SetActive(true);
+        GUIManager.instance.EnablePick_upGUI(true);
     }
 
     public void OnInteract()
@@ -26,8 +23,9 @@ public class Item : MonoBehaviour, IInteractible
         Destroy(gameObject);
     }
 
-    public void OnReturn()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnReturn() { }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }

@@ -207,4 +207,8 @@ public class KeyCode : MonoBehaviour, IInteractible
         yield return new WaitForSeconds(2);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }
