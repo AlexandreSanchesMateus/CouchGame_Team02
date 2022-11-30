@@ -12191,7 +12191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Keyboard
+      value: Gamepad
       objectReference: {fileID: 0}
     - target: {fileID: 6404365836932758219, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -19893,6 +19893,30 @@ PrefabInstance:
     - target: {fileID: 3967165018163310192, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: c3253168-a7d5-4a50-b6de-96c9e739f8ae
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
+      value: 14c8aa83-1982-46c0-87ee-92ed12063ecf
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: FPSController/SwitchInspectionMode[/Keyboard/r]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
+      value: FPSController/Hold[/Keyboard/f]
       objectReference: {fileID: 0}
     - target: {fileID: 7265244348561793698, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: m_Layer
