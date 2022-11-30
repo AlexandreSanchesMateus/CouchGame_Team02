@@ -7,8 +7,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControllerProto2 : MonoBehaviour
 {
+    public static PlayerControllerProto2 instance { get; private set; }
 
-    [SerializeField] private GameObject cameraObj;
+    public GameObject cameraObj;
 
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
@@ -19,6 +20,8 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float range;
     [SerializeField] private LayerMask layer;
+    public Transform hand;
+    private bool haveSomthingInHand = false;
 
     [Header("Headbob Option")]
     [SerializeField] bool enableHeadbob;
@@ -36,7 +39,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     public static bool enablePlayerMovement { get; set; }
-    private IInteractible interactibleObject;
+    private GameObject interactibleObject;
 
     private Vector2 movementInput;
     private Vector2 rotateInput;
@@ -46,6 +49,14 @@ public class PlayerControllerProto2 : MonoBehaviour
     private float previousSin;
     private bool walked;
 
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -70,31 +81,35 @@ public class PlayerControllerProto2 : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        RaycastHit info;
-        if (Physics.SphereCast(cameraObj.transform.position, radius, cameraObj.transform.forward, out info, range, layer))
+        // Grab
+        if (!haveSomthingInHand)
         {
-            Debug.DrawLine(cameraObj.transform.position, info.transform.position, Color.green);
-            if (interactibleObject == null && info.transform.TryGetComponent<IInteractible>(out interactibleObject))
+            // Interaction Raycast
+            RaycastHit info;
+            if (Physics.SphereCast(cameraObj.transform.position, radius, cameraObj.transform.forward, out info, range, layer))
             {
-                Debug.Log("HOVER");
-                interactibleObject.OnItemHover();
+                Debug.DrawLine(cameraObj.transform.position, info.transform.position, Color.green);
+                if (interactibleObject == null && info.transform.TryGetComponent<IInteractible>(out IInteractible interactibleScript))
+                {
+                    interactibleObject = info.transform.gameObject;
+                    interactibleScript.OnItemHover();
+                }
             }
-        }
-        else
-        {
-            Debug.DrawLine(cameraObj.transform.position, cameraObj.transform.position + (cameraObj.transform.forward * range), Color.black);
-            if (interactibleObject != null)
+            else
             {
-                Debug.Log("EXIT");
-                interactibleObject.OnItemExit();
-                interactibleObject = null;
+                Debug.DrawLine(cameraObj.transform.position, cameraObj.transform.position + (cameraObj.transform.forward * range), Color.black);
+                if (interactibleObject != null)
+                {
+                    interactibleObject.GetComponent<IInteractible>().OnItemExit();
+                    interactibleObject = null;
+                }
             }
         }
 
         Vector3 move = transform.rotation * new Vector3(movementInput.x, 0, movementInput.y);
         controller.Move(move * Time.deltaTime * playerSpeed);
-        
-        
+
+
 
         // Souris Horitale
         transform.Rotate(Vector3.up * (rotateInput.x * sensitivity * Time.deltaTime));
@@ -161,17 +176,32 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         if (context.performed && interactibleObject != null)
         {
-            interactibleObject.OnInteract();
+            interactibleObject.GetComponent<IInteractible>().OnInteract();
+
+            if (interactibleObject.GetComponent<InspectedObject>() != null)
+                haveSomthingInHand = true;
         }
     }
 
     public void OnReturn(InputAction.CallbackContext context)
     {
-        if (context.performed && interactibleObject != null)
+        if (!haveSomthingInHand)
         {
-            interactibleObject.OnReturn();
-            interactibleObject = null;
+            if (context.performed && interactibleObject != null)
+                interactibleObject.GetComponent<IInteractible>().OnReturn();
+            else
+                return;
         }
+        else
+        {
+            if (context.canceled && interactibleObject != null)
+                interactibleObject.GetComponent<IInteractible>().OnReturn();
+            else
+                return;
+        }
+
+        interactibleObject = null;
+        haveSomthingInHand = false;
     }
 
     public void OnActions(InputAction.CallbackContext context)
@@ -182,17 +212,36 @@ public class PlayerControllerProto2 : MonoBehaviour
             InteractWithEnigmes();
     }
 
+    public void OnSwitchInteraction(InputAction.CallbackContext context)
+    {
+        if(haveSomthingInHand && context.performed && interactibleObject != null)
+        {
+            interactibleObject.GetComponent<IInteractible>().OnRightShoulder();
+        }
+    }
+
+    public void OnHoldReturnButton(InputAction.CallbackContext context)
+    {
+        if (haveSomthingInHand && context.performed && interactibleObject != null)
+        {
+            interactibleObject.GetComponent<IInteractible>().OnHoldReturn();
+        }
+    }
+
     private void InteractWithEnigmes()
     {
         if(interactibleObject != null)
-            interactibleObject.OnActions(flechaction, rotateInput);
+            interactibleObject.GetComponent<IInteractible>().OnActions(flechaction, rotateInput);
     }
 
     private void AudioOnWalk()
     {
+        if (walk.Count == 0)
+            return;
+
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
-            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count - 1)];
+            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
             GetComponent<AudioSource>().Play();
             walked = true;
         }
