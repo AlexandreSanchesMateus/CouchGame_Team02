@@ -10,6 +10,7 @@ public class LabyrintheWallEditor : EditorWindow
     public GUISkin customSkin;
 
     private static ScrLabyrinth myScrLabyrinth;
+    private static LabyrinthManager target;
 
     private static List<Slot> editorGrid = new List<Slot>();
     private static int editorGridSizeX;
@@ -26,11 +27,14 @@ public class LabyrintheWallEditor : EditorWindow
 
     private static string assetName = "new_labyrinth";
 
-    public static void InitWindow(ScrLabyrinth source = null)
+    public static void InitWindow(ScrLabyrinth source = null, LabyrinthManager labyrinthManager = null)
     {
         LabyrintheWallEditor window = GetWindow<LabyrintheWallEditor>();
         window.titleContent = new GUIContent("Labyrinthe Wall");
         window.minSize = new Vector2(800, 650);
+
+        if (labyrinthManager)
+            target = labyrinthManager;
 
         
         if(source != null)
@@ -161,8 +165,8 @@ public class LabyrintheWallEditor : EditorWindow
                 myScrLabyrinth.idStartLabyrinth = editorLabyrinthStartID;
                 myScrLabyrinth.idEndLabyrinth = editorLabyrinthEndID;
 
-                if (myScrLabyrinth != LabyrinthManager.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
-                    LabyrinthManager.labyrinth = myScrLabyrinth;
+                if (myScrLabyrinth != target.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
+                    target.labyrinth = myScrLabyrinth;
             }
             else
             {
@@ -288,7 +292,7 @@ public class LabyrintheWallEditor : EditorWindow
 
         myScrLabyrinth = toApply;
 
-        if (toApply != LabyrinthManager.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
-            LabyrinthManager.labyrinth = toApply;
+        if (toApply != target.labyrinth && EditorUtility.DisplayDialog("Asset saved succesfully", "Do you want to set the manager with the data that have just been saved ?", "Yes", "Cancel"))
+            target.labyrinth = toApply;
     }
 }

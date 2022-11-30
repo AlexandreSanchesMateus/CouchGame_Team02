@@ -17,11 +17,29 @@ public class LabyrintheEditor : Editor
 
     public override void OnInspectorGUI()
     {
+
+        GUILayout.Label("Generale Settings");
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Virtual Cam");
+        myObject.vcam = (GameObject)EditorGUILayout.ObjectField(myObject.vcam, typeof(GameObject), true);
+        GUILayout.EndHorizontal();
+        
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Parent slot");
+        myObject.chestParent = (Transform)EditorGUILayout.ObjectField(myObject.chestParent, typeof(Transform), true);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("king");
+        myObject.king = (GameObject)EditorGUILayout.ObjectField(myObject.king, typeof(GameObject), true);
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(20);
         GUILayout.Label("Ref Labyrinthe");
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Labyrinthe");
-        LabyrinthManager.labyrinth = (ScrLabyrinth)EditorGUILayout.ObjectField(LabyrinthManager.labyrinth, typeof(ScrLabyrinth), true);
+        myObject.labyrinth = (ScrLabyrinth)EditorGUILayout.ObjectField(myObject.labyrinth, typeof(ScrLabyrinth), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
@@ -31,15 +49,15 @@ public class LabyrintheEditor : Editor
         GUILayout.EndHorizontal();
         if(GUILayout.Button("Grid's wall Settings"))
         {
-            LabyrintheWallEditor.InitWindow(LabyrinthManager.labyrinth);
+            LabyrintheWallEditor.InitWindow(myObject.labyrinth, myObject);
         }
         GUILayout.Space(10);
 
-        if (LabyrinthManager.labyrinth)
+        if (myObject.labyrinth)
         {
             GUILayout.Label("Current labyrinthe :");
-            GUILayout.Label("Total size : " + LabyrinthManager.labyrinth.gridSizeX + " x " + LabyrinthManager.labyrinth.gridSizeY);
-            GUILayout.Label("Total of slot : " + LabyrinthManager.labyrinth.grid.Count);
+            GUILayout.Label("Total size : " + myObject.labyrinth.gridSizeX + " x " + myObject.labyrinth.gridSizeY);
+            GUILayout.Label("Total of slot : " + myObject.labyrinth.grid.Count);
         }
         else
             GUILayout.Label("--- No labyrinthe saved ---");
