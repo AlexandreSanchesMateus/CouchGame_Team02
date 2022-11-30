@@ -10,11 +10,13 @@ public class InspectedObject : MonoBehaviour , IInteractible
     [SerializeField] private float deltaHardThrow = 400;
     [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 0.5f;
 
-    private Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
     private BoxCollider boxCollider;
     private Transform startParent;
 
     Sequence PickUpSequence;
+    public delegate void OnGrabListner(InspectedObject source);
+    public OnGrabListner OnGrab;
 
     private bool isInHand = false;
     private bool inspectMode = false;
@@ -44,6 +46,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
         inspectMode = false;
         GUIManager.instance.EnablePick_upGUI(false);
         throwForce = defaultThrowForce;
+        rb.constraints = RigidbodyConstraints.None;
+        OnGrab(this);
 
         // Attach (move to transform parent)
         gameObject.transform.SetParent(PlayerControllerProto2.instance.hand);
