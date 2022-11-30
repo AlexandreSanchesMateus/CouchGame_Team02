@@ -1383,7 +1383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458402399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.97, y: 1.59, z: 6.78}
+  m_LocalPosition: {x: -13.97, y: 0.39, z: 6.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1406,7 +1406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   king: {fileID: 3994706}
-  editorLabyrinth: {fileID: 11400000, guid: 0afda283eea851146bbd7e94ac80744c, type: 2}
+  labyrinth: {fileID: 11400000, guid: 0afda283eea851146bbd7e94ac80744c, type: 2}
   vcam: {fileID: 1972099353}
   chestParent: {fileID: 626959727}
 --- !u!65 &458402402
