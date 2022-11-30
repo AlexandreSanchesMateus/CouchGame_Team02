@@ -41,6 +41,7 @@ public class HackerController : MonoBehaviour
 			Screen screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
 			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
+			screen.LockScreen();
 			screen.GetComponent<Screen>().DisplayCode();
         }
     }
