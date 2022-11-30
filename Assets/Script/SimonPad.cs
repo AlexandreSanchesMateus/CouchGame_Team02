@@ -271,4 +271,8 @@ public class SimonPad : MonoBehaviour, IInteractible
         yield return new WaitForSeconds(2);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
     }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }

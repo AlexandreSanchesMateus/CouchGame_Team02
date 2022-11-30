@@ -71,6 +71,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchInspectionMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3253168-a7d5-4a50-b6de-96c9e739f8ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""14c8aa83-1982-46c0-87ee-92ed12063ecf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,6 +333,50 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Actions"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adfd2f22-036b-41ad-ad80-dbea095fa14b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwitchInspectionMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b7ab9b6-9909-4abd-8f39-ddefa1937c6f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchInspectionMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2b66ac8-f8a0-4e7d-b651-f26f3f9d2b27"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b4b6eb9-aa88-494c-a0a4-c33cbbd4afdc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -612,6 +674,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Interact = m_FPSController.FindAction("Interact", throwIfNotFound: true);
         m_FPSController_Return = m_FPSController.FindAction("Return", throwIfNotFound: true);
         m_FPSController_Actions = m_FPSController.FindAction("Actions", throwIfNotFound: true);
+        m_FPSController_SwitchInspectionMode = m_FPSController.FindAction("SwitchInspectionMode", throwIfNotFound: true);
+        m_FPSController_Hold = m_FPSController.FindAction("Hold", throwIfNotFound: true);
         // HackerController
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
         m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
@@ -686,6 +750,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Interact;
     private readonly InputAction m_FPSController_Return;
     private readonly InputAction m_FPSController_Actions;
+    private readonly InputAction m_FPSController_SwitchInspectionMode;
+    private readonly InputAction m_FPSController_Hold;
     public struct FPSControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -695,6 +761,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_FPSController_Interact;
         public InputAction @Return => m_Wrapper.m_FPSController_Return;
         public InputAction @Actions => m_Wrapper.m_FPSController_Actions;
+        public InputAction @SwitchInspectionMode => m_Wrapper.m_FPSController_SwitchInspectionMode;
+        public InputAction @Hold => m_Wrapper.m_FPSController_Hold;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -719,6 +787,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Actions.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
                 @Actions.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
                 @Actions.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnActions;
+                @SwitchInspectionMode.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnSwitchInspectionMode;
+                @SwitchInspectionMode.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnSwitchInspectionMode;
+                @SwitchInspectionMode.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnSwitchInspectionMode;
+                @Hold.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
+                @Hold.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
+                @Hold.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
             }
             m_Wrapper.m_FPSControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -738,6 +812,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Actions.started += instance.OnActions;
                 @Actions.performed += instance.OnActions;
                 @Actions.canceled += instance.OnActions;
+                @SwitchInspectionMode.started += instance.OnSwitchInspectionMode;
+                @SwitchInspectionMode.performed += instance.OnSwitchInspectionMode;
+                @SwitchInspectionMode.canceled += instance.OnSwitchInspectionMode;
+                @Hold.started += instance.OnHold;
+                @Hold.performed += instance.OnHold;
+                @Hold.canceled += instance.OnHold;
             }
         }
     }
@@ -856,6 +936,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
         void OnActions(InputAction.CallbackContext context);
+        void OnSwitchInspectionMode(InputAction.CallbackContext context);
+        void OnHold(InputAction.CallbackContext context);
     }
     public interface IHackerControllerActions
     {
