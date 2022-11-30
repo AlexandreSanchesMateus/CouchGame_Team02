@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using DG.Tweening;
 
 public class Timer : MonoBehaviour
 {
+	public static Timer instance { get; private set; }
+
 	public float timeRemaining, timeValue = 90f;
 	public TextMeshPro timerText;
 	public GameObject gameOverScreen;
@@ -15,6 +17,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+		instance = this;
 		timeRemaining = timeValue;
 		timerIsRunning = true;
     }
@@ -55,6 +58,7 @@ public class Timer : MonoBehaviour
 
 	public void DisplayGameOver()
     {
+		AudioSpeaker.instance.PauseAudio();
 		Time.timeScale = 0;
 		gameOverScreen.SetActive(true);
 		Cursor.lockState = CursorLockMode.Confined;

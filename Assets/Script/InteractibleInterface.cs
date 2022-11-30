@@ -9,4 +9,6 @@ public interface IInteractible
     public void OnInteract();
     public void OnReturn();
     public void OnActions(Vector2 action, Vector2 joystick);
+    public void OnRightShoulder();
+    public void OnHoldReturn();
 }

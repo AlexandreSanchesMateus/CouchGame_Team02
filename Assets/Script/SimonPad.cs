@@ -257,7 +257,11 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
-        Destroy(door);
+        AudioSpeaker.instance.AlarmIntensite();
+
+        //Destroy(door);
+        EnigmeManager.instance.SuccessSimon();
+
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
         gameObject.layer = 0;
@@ -270,4 +274,8 @@ public class SimonPad : MonoBehaviour, IInteractible
         yield return new WaitForSeconds(2);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
     }
+
+    public void OnRightShoulder() { }
+
+    public void OnHoldReturn() { }
 }

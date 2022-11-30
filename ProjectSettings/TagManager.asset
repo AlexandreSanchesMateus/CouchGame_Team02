@@ -9,6 +9,7 @@ TagManager:
   - ads
   - Screen
   - MiniGame2
+  - LoadingTrigger
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Hacker
   - 
   - 
-  - 
+  - Outline
   - 
   - 
   - 
