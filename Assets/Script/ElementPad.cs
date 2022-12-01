@@ -123,6 +123,9 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
+
+        EnigmeManager.instance.SuccessElement();
+
         gameObject.layer = 0;
         yield return new WaitForSeconds(2);
         PlayerControllerProto2.enablePlayerMovement = true;

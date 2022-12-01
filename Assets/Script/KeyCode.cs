@@ -178,11 +178,14 @@ public class KeyCode : MonoBehaviour, IInteractible
             PlayAudio(validClip);
             displayCode.text = " G O O D";
             gameObject.layer = 0;
-            Destroy(door);
+
+            // Destroy(door);
+            EnigmeManager.instance.SuccessKeypade();
+
             yield return new WaitForSeconds(1);
             vcam.SetActive(false);
             GUIManager.instance.EnableHand(false);
-            AudioSpeaker.instance.AlarmIntensite();
+            // AudioSpeaker.instance.AlarmIntensite();
             yield return new WaitForSeconds(2);
             PlayerControllerProto2.enablePlayerMovement = true;
         }

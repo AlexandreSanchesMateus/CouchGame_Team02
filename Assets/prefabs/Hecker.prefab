@@ -1161,7 +1161,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6404365836932758215}
         m_TargetAssemblyTypeName: HackerController, Assembly-CSharp
-        m_MethodName: Interact
+        m_MethodName: MoveInScreen
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1221,6 +1221,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 77f4cd99-15c2-4a80-9936-7444d677d70e
     m_ActionName: HackerController/North[/Keyboard/numpad8,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c3253168-a7d5-4a50-b6de-96c9e739f8ae
+    m_ActionName: FPSController/SwitchInspectionMode[/Keyboard/r,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 14c8aa83-1982-46c0-87ee-92ed12063ecf
+    m_ActionName: FPSController/Hold[/Keyboard/f,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: HackerController
