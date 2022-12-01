@@ -48,7 +48,7 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     {
         if (other.CompareTag("LoadingTrigger"))
         {
-            audioSource.PlayOneShot(clip2);
+
             canInteract = true;
         }
     }
@@ -56,6 +56,16 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     {
         if (other.CompareTag("LoadingTrigger"))
         {
+            if (!boolsfx)
+            {
+                audioSource.PlayOneShot(clip1);
+                boolsfx = true;
+            }
+            else
+            {
+                audioSource.PlayOneShot(clip2);
+                boolsfx = false;
+            }
             canInteract = false;
         }
     }
