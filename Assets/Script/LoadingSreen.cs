@@ -11,6 +11,8 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     private AudioSource audioSource;
     private int numberRequired;
     private int currentNumber;
+
+    private bool boolsfx;
     private void OnEnable()
     {
         audioSource = GetComponent<AudioSource>();
@@ -23,7 +25,17 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     {
         if (canInteract && callback.action.name == "West" && callback.started)
         {
-            audioSource.PlayOneShot(clip1);
+            if (!boolsfx)
+            {
+                audioSource.PlayOneShot(clip1);
+                boolsfx = true;
+            }
+            else
+            {
+                audioSource.PlayOneShot(clip2);
+                boolsfx = false;
+            }
+            
             currentNumber++;
         }
         if (currentNumber >= numberRequired)
