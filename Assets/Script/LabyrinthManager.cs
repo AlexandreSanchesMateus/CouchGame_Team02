@@ -43,7 +43,9 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         }
 
         labyrinth.idPlayerSlot = labyrinth.idStartLabyrinth;
-        king.transform.position = slotChest[labyrinth.idPlayerSlot].position;
+        // king.transform.localPosition = slotChest[labyrinth.idPlayerSlot].localPosition;
+        king.transform.SetParent(slotChest[labyrinth.idPlayerSlot].transform);
+        king.transform.localPosition = Vector3.zero;
     }
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)
@@ -92,13 +94,14 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
         if (allowToMove)
         {
-            Vector3 position = slotChest[labyrinth.idPlayerSlot].position;
+            // Vector3 position = slotChest[labyrinth.idPlayerSlot].position;
+            king.transform.SetParent(slotChest[labyrinth.idPlayerSlot].transform);
             //robberRound = !robberRound;
             canNewInput = false;
             Sequence moveKinkSequence = DOTween.Sequence();
             // moveKinkSequence.Append(king.transform.DOJump(position, 0.3f, 1, 0.8f).SetEase(Ease.Linear));
-            moveKinkSequence.Append(king.transform.DOMove(position, 0.8f));
-            moveKinkSequence.AppendInterval(0.9f);
+            moveKinkSequence.Append(king.transform.DOLocalMove(Vector3.zero, 0.8f));
+            moveKinkSequence.AppendInterval(0.2f);
             moveKinkSequence.AppendCallback(() => canNewInput = true);
 
             if (labyrinth.idPlayerSlot == labyrinth.idEndLabyrinth)
@@ -146,12 +149,14 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
     {
         canNewInput = false;
         labyrinth.idPlayerSlot = labyrinth.idStartLabyrinth;
+        king.transform.SetParent(slotChest[labyrinth.idPlayerSlot].transform);
+
         Sequence resetBoardSequence = DOTween.Sequence();
-        resetBoardSequence.Append(king.transform.DOShakePosition(0.6f, 0.05f));
-        resetBoardSequence.AppendInterval(0.8f);
+        //resetBoardSequence.Append(king.transform.DOShakePosition(0.6f, 0.05f));
+        //resetBoardSequence.AppendInterval(0.8f);
         // resetBoardSequence.Append(king.transform.DOJump(slotChest[labyrinth.idPlayerSlot].position, 1, 1, 1.1f));
         // resetBoardSequence.Join(king.transform.DOPunchRotation(new Vector3(20, 20, 20), 1.1f, 1));
-        resetBoardSequence.Append(king.transform.DOMove(slotChest[labyrinth.idPlayerSlot].position, 0.8f));
+        resetBoardSequence.Append(king.transform.DOLocalMove(Vector3.zero, 0.8f));
         resetBoardSequence.AppendInterval(0.5f);
         resetBoardSequence.AppendCallback(() => canNewInput = true);
     }
