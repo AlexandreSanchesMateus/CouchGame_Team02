@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEditor.Progress;
 using System;
 //using Unity.VisualScripting;
 
@@ -122,6 +121,21 @@ public class screensholder : MonoBehaviour
 						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
 					}
 				}
+			}
+		}
+	}
+
+	public void TurnOffScreen()
+	{
+		Sequence turnOffSequence = DOTween.Sequence();
+		
+		foreach (Transform item in transform)
+		{
+			if (item.tag == "Screen")
+			{
+				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f));
+				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
+				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).SetEase(Ease.OutBounce).OnComplete(() => { item.GetChild(0).gameObject.SetActive(false); }));
 			}
 		}
 	}

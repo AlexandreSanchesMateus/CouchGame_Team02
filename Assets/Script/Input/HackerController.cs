@@ -20,6 +20,7 @@ public class HackerController : MonoBehaviour
 	private Transform originalCamTransform;
 
 	public GameObject setUp;
+	private bool locked;
 
 	private void Start()
 	{
@@ -41,6 +42,8 @@ public class HackerController : MonoBehaviour
 			Screen screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
 			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
+			screen.LockScreen();
+			locked = true;
 			screen.GetComponent<Screen>().DisplayCode();
         }
     }
@@ -81,7 +84,6 @@ public class HackerController : MonoBehaviour
 			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
 			{
 				Screen screen = hit.transform.GetComponent<Screen>();
-
 				switch (screen.screenState)
 				{
 					case ScreenState.MiniGame:
@@ -98,30 +100,30 @@ public class HackerController : MonoBehaviour
                             if (screen.currentPopup.Count <= 0)
                                 lastCorout = StartCoroutine(popupDelay());
                         }
-                        
-                        break;
-                        
+						break;                        
 					case ScreenState.Update:
 						break;
 					case ScreenState.Hack:
 						break;
 					case ScreenState.Setup:
-						
-						if (screen.UnlockScreen(callback))
-						{
-							GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
-                            screen.screenState = ScreenState.MiniGame;
-                            lastCorout = StartCoroutine(popupDelay());
-						}
+
+                        if (locked)
+                        {
+							if (screen.UnlockScreen(callback))
+							{
+								GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+								StartCoroutine(EndSetup(screen));
+								lastCorout = StartCoroutine(popupDelay());
+							}
+                        }
                         break;
-                        
 					default:
 						break;
 				}
 			}
 		}
 	}
-
+	//Input du joysitck
     public void MoveInScreen(InputAction.CallbackContext callback)
 	{
         if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
@@ -166,12 +168,19 @@ public class HackerController : MonoBehaviour
     IEnumerator popupDelay()
     {
 		yield return new WaitForSeconds(Random.Range(5f, 10f));
-
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
         Debug.Log("screen = " + hit.transform.name);
         if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
 			scr.displayPopUp();
+	}
+
+	IEnumerator EndSetup(Screen screen)
+    {
+		locked = false;
+		yield return new WaitForSeconds(2f);
+		screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
+		screen.screenState = ScreenState.MiniGame;
 	}
 	public void CamShake()
 	{
