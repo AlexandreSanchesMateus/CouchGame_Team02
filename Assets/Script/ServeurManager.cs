@@ -5,18 +5,17 @@ using UnityEngine;
 public class ServeurManager : MonoBehaviour
 {
     [SerializeField]
-    private List<InspectedObject> grabObj = new List<InspectedObject>();
+    private InspectedObject grabObj;
 
     void Start()
     {
-        foreach(InspectedObject other in grabObj)
-        {
-            other.OnGrab += OnGrabDisquette;
-        }
+        grabObj.OnGrab += OnGrabDisquette;
     }
 
     private void OnGrabDisquette(InspectedObject source)
     {
         source.OnGrab -= OnGrabDisquette;
+        gameObject.layer = LayerMask.GetMask("Default");
+        Debug.Log(source.name + " a été retirer.");
     }
 }

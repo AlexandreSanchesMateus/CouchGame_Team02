@@ -47,7 +47,9 @@ public class InspectedObject : MonoBehaviour , IInteractible
         GUIManager.instance.EnablePick_upGUI(false);
         throwForce = defaultThrowForce;
         rb.constraints = RigidbodyConstraints.None;
-        OnGrab(this);
+
+        if(OnGrab != null)
+            OnGrab(this);
 
         // Attach (move to transform parent)
         gameObject.transform.SetParent(PlayerControllerProto2.instance.hand);
