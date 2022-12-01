@@ -123,6 +123,8 @@ MonoBehaviour:
     degrees: 90
   - rotation: 2
     degrees: 270
+  - rotation: 1
+    degrees: 0
   speed: 3
   errorMargin: 5
 --- !u!1 &7776259562004743458
@@ -481,13 +483,6 @@ MonoBehaviour:
     LensShift: {x: 0, y: 0}
     GateFit: 2
     m_SensorSize: {x: 1, y: 1}
-    Iso: 200
-    ShutterSpeed: 0.005
-    Aperture: 16
-    BladeCount: 5
-    Curvature: {x: 2, y: 11}
-    BarrelClipping: 0.25
-    Anamorphism: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

@@ -29,9 +29,17 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     private void Start()
     {
+        Debug.Log(chestParent.childCount);
+
         for (int i = 0; i < chestParent.childCount; i++)
         {
-            slotChest.Add(chestParent.GetChild(i));
+            Transform horizontaleParent = chestParent.GetChild(i);
+            Debug.Log(horizontaleParent.childCount);
+
+            for (int y = 0; y < horizontaleParent.childCount; y++)
+            {
+                slotChest.Add(horizontaleParent.GetChild(y));
+            }
         }
 
         labyrinth.idPlayerSlot = labyrinth.idStartLabyrinth;
@@ -88,7 +96,8 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
             //robberRound = !robberRound;
             canNewInput = false;
             Sequence moveKinkSequence = DOTween.Sequence();
-            moveKinkSequence.Append(king.transform.DOJump(position, 0.3f, 1, 0.8f).SetEase(Ease.Linear));
+            // moveKinkSequence.Append(king.transform.DOJump(position, 0.3f, 1, 0.8f).SetEase(Ease.Linear));
+            moveKinkSequence.Append(king.transform.DOMove(position, 0.8f));
             moveKinkSequence.AppendInterval(0.9f);
             moveKinkSequence.AppendCallback(() => canNewInput = true);
 
@@ -140,8 +149,9 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         Sequence resetBoardSequence = DOTween.Sequence();
         resetBoardSequence.Append(king.transform.DOShakePosition(0.6f, 0.05f));
         resetBoardSequence.AppendInterval(0.8f);
-        resetBoardSequence.Append(king.transform.DOJump(slotChest[labyrinth.idPlayerSlot].position, 1, 1, 1.1f));
-        resetBoardSequence.Join(king.transform.DOPunchRotation(new Vector3(20, 20, 20), 1.1f, 1));
+        // resetBoardSequence.Append(king.transform.DOJump(slotChest[labyrinth.idPlayerSlot].position, 1, 1, 1.1f));
+        // resetBoardSequence.Join(king.transform.DOPunchRotation(new Vector3(20, 20, 20), 1.1f, 1));
+        resetBoardSequence.Append(king.transform.DOMove(slotChest[labyrinth.idPlayerSlot].position, 0.8f));
         resetBoardSequence.AppendInterval(0.5f);
         resetBoardSequence.AppendCallback(() => canNewInput = true);
     }
