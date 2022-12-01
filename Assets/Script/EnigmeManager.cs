@@ -27,7 +27,7 @@ public class EnigmeManager : MonoBehaviour
 
     public void SuccessSimon()
     {
-        gameObject.transform.DOLocalMoveY(4.4f, 1);
+        gameObject.transform.DOLocalMoveY(12f, 1);
     }
 
     public void SuccessCoffre()
