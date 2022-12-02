@@ -17,7 +17,6 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     private List<Transform> slotChest = new List<Transform>();
     private bool isOpen = false;
-    private static bool robberRound = true;
     private static bool canNewInput = true;
 
     private void Awake()
@@ -60,7 +59,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)
     {
-        if (!canNewInput || isRobberMoving != robberRound)
+        if (!canNewInput)
             return;
 
         bool allowToMove = false;
