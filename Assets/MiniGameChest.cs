@@ -44,7 +44,7 @@ public class MiniGameChest : MonoBehaviour, IMinigame
     {
         if(isWin)
         {
-            text.text = "Douglas";
+            text.text = "Jean Cérien";
             text.color = Color.green;
         }
     }
