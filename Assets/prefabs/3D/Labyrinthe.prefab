@@ -4680,6 +4680,7 @@ GameObject:
   - component: {fileID: 5243339076028183308}
   - component: {fileID: 5243339076028183311}
   - component: {fileID: 5243339076028183310}
+  - component: {fileID: 96974768414932614}
   m_Layer: 3
   m_Name: Labyrinthe
   m_TagString: Untagged
@@ -4737,3 +4738,15 @@ MonoBehaviour:
   beginScreen: {fileID: 2803068126294402920}
   vcam: {fileID: 2803068127959658855}
   chestParent: {fileID: 2803068127016651323}
+--- !u!114 &96974768414932614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868327113811683766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c070898dfd040448d2a59174a38f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
