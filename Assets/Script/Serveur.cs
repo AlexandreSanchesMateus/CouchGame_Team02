@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServeurManager : MonoBehaviour
+public class Serveur : MonoBehaviour
 {
     [SerializeField]
     private InspectedObject grabObj;
