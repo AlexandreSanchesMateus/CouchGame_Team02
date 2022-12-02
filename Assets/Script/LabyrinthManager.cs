@@ -10,6 +10,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     public GameObject king;
     public ScrLabyrinth labyrinth;
+    public GameObject beginScreen;
 
     public GameObject vcam;
     public Transform chestParent;
@@ -46,6 +47,15 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         // king.transform.localPosition = slotChest[labyrinth.idPlayerSlot].localPosition;
         king.transform.SetParent(slotChest[labyrinth.idPlayerSlot].transform);
         king.transform.localPosition = Vector3.zero;
+
+        gameObject.layer = LayerMask.GetMask("Default");
+        beginScreen.SetActive(true);
+    }
+
+    public void InitLabyrintheScreen()
+    {
+        gameObject.layer = LayerMask.GetMask("Interactible");
+        beginScreen.SetActive(false);
     }
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)

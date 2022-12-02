@@ -30,6 +30,11 @@ public class LabyrintheEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
+        GUILayout.Label("Begin Screen");
+        myObject.beginScreen = (GameObject)EditorGUILayout.ObjectField(myObject.beginScreen, typeof(GameObject), true);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
         GUILayout.Label("king");
         myObject.king = (GameObject)EditorGUILayout.ObjectField(myObject.king, typeof(GameObject), true);
         GUILayout.EndHorizontal();

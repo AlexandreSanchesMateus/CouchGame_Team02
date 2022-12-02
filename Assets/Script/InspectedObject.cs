@@ -14,7 +14,7 @@ public class InspectedObject : MonoBehaviour , IInteractible
     private BoxCollider boxCollider;
     private Transform startParent;
 
-    Sequence PickUpSequence;
+    Sequence PickUpSequence = DOTween.Sequence();
     public delegate void OnGrabListner(InspectedObject source);
     public OnGrabListner OnGrab;
 

@@ -2588,6 +2588,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   king: {fileID: 3994706}
   labyrinth: {fileID: 11400000, guid: 0afda283eea851146bbd7e94ac80744c, type: 2}
+  root: {fileID: 0}
+  beginScreen: {fileID: 0}
   vcam: {fileID: 1972099353}
   chestParent: {fileID: 626959727}
 --- !u!65 &458402402
@@ -9322,6 +9324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   king: {fileID: 560714915}
   labyrinth: {fileID: 11400000, guid: 184ff80543f209a41b39feeebc6ad74c, type: 2}
+  root: {fileID: 7307576565392662631}
+  beginScreen: {fileID: 619212473}
   vcam: {fileID: 1482045622}
   chestParent: {fileID: 270205930}
 --- !u!33 &9107541526017550279
