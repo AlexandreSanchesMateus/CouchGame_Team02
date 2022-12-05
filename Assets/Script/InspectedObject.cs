@@ -9,6 +9,7 @@ public class InspectedObject : MonoBehaviour , IInteractible
     [SerializeField] private float defaultThrowForce = 100;
     [SerializeField] private float deltaHardThrow = 400;
     [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 0.5f;
+    [SerializeField] private TrailRenderer trailRenderer;
 
     [HideInInspector] public Rigidbody rb;
     private BoxCollider[] boxCollider;
@@ -62,6 +63,9 @@ public class InspectedObject : MonoBehaviour , IInteractible
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        //trails desactive
+        if(trailRenderer != null)
+            trailRenderer.enabled = false;
         // move to location
         PickUpSequence = DOTween.Sequence();
         PickUpSequence.Append(transform.DOLocalMove(Vector3.zero, 0.8f).SetEase(Ease.InOutSine));
@@ -94,6 +98,9 @@ public class InspectedObject : MonoBehaviour , IInteractible
         {
             other.enabled = true;
         }
+        //trails active
+        if (trailRenderer != null)
+            trailRenderer.enabled = true;
         // enable rigidbody
         rb.useGravity = true;
         rb.AddForce(PlayerControllerProto2.instance.cameraObj.transform.forward * throwForce);

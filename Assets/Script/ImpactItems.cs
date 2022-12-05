@@ -6,7 +6,7 @@ public class ImpactItems : MonoBehaviour
 {
     [SerializeField] private AudioSource sfx;
     [SerializeField] private ParticleSystem vfx;
-    [SerializeField] private float magnitude = 10f;
+    [SerializeField] private float magnitude = 5f;
 
     private void OnCollisionEnter(Collision collision)
     {
