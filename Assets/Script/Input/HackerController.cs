@@ -37,7 +37,7 @@ public class HackerController : MonoBehaviour
 
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
-		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+		if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
 		{
 			screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
@@ -49,13 +49,14 @@ public class HackerController : MonoBehaviour
 	}
 	private void Update()
 	{
-		Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
+		Debug.DrawRay(cam1.transform.position, Vector3.forward * 2, Color.yellow);
 		
 
 	}
 	
 	public void Increment(InputAction.CallbackContext callback)
 	{
+        
 		if(screen.screenState == ScreenState.MiniGame)
 		{
 			if(callback.started)
@@ -70,8 +71,9 @@ public class HackerController : MonoBehaviour
 	}
 	public void Decrement(InputAction.CallbackContext callback)
 	{
-		if (screen.screenState == ScreenState.MiniGame)
-		{
+       
+            if (screen.screenState == ScreenState.MiniGame)
+			{
 			if (callback.started)
 			{
 				//Debug.Log("decrement");
@@ -87,44 +89,48 @@ public class HackerController : MonoBehaviour
 	{        
 		if (callback.started)
 		{
-			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+			if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
 			{
 				screen = hit.transform.GetComponent<Screen>();
-				switch (screen.screenState)
-				{
-					case ScreenState.MiniGame:
-						
-						screen.miniGame.GetComponent<IMinigame>().interact(callback);
-						
-						break;
-					case ScreenState.Popups:
-						
-						if (callback.action.name == "West")
+                if (screen.transform.tag != "FakeScreen")
+				{ 
+						if (screen!=null)
+						switch (screen.screenState)
 						{
-							screen.FightPopup();
+							case ScreenState.MiniGame:
 
-							if (screen.currentPopup.Count <= 0)
-								lastCorout = StartCoroutine(popupDelay());
-						}
-						break;                        
-					case ScreenState.Update:
-						break;
-					case ScreenState.Hack:
-						break;
-					case ScreenState.Setup:
+								screen.miniGame.GetComponent<IMinigame>().interact(callback);
 
-						if (locked)
-						{
-							if (screen.UnlockScreen(callback))
-							{
-								GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
-								StartCoroutine(EndSetup(screen));
-								lastCorout = StartCoroutine(popupDelay());
-							}
+								break;
+							case ScreenState.Popups:
+
+								if (callback.action.name == "West")
+								{
+									screen.FightPopup();
+
+									if (screen.currentPopup.Count <= 0)
+										lastCorout = StartCoroutine(popupDelay());
+								}
+								break;
+							case ScreenState.Update:
+								break;
+							case ScreenState.Hack:
+								break;
+							case ScreenState.Setup:
+
+								if (locked)
+								{
+									if (screen.UnlockScreen(callback))
+									{
+										GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+										StartCoroutine(EndSetup(screen));
+										lastCorout = StartCoroutine(popupDelay());
+									}
+								}
+								break;
+							default:
+								break;
 						}
-						break;
-					default:
-						break;
 				}
 			}
 		}
@@ -132,13 +138,20 @@ public class HackerController : MonoBehaviour
 	//Input du joysitck
 	public void MoveInScreen(InputAction.CallbackContext callback)
 	{
-		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+        if(callback.performed)
+        if(screen!=null)
+        if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
 		{
-			screen = hit.transform.GetComponent<Screen>();
-
-			if (screen.screenState == ScreenState.MiniGame)
+			if (screen.transform.tag != "FakeScreen")
 			{
-				screen.miniGame.GetComponent<IMinigame>().Move(callback);
+				Debug.Log("hit" + hit.transform.name);
+				screen = hit.transform.GetComponent<Screen>();
+				if (screen != null)
+					if (screen.screenState == ScreenState.MiniGame)
+					{
+						Debug.Log(callback.ReadValue<Vector2>());
+						screen.miniGame.GetComponent<IMinigame>().Move(callback);
+					}
 			}
 		}
 	}
@@ -174,10 +187,11 @@ public class HackerController : MonoBehaviour
 	IEnumerator popupDelay()
 	{
 		yield return new WaitForSeconds(Random.Range(5f, 10f));
-		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
+		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (screen.screenState != ScreenState.Popups && screen.currentPopup.Count <= 0)
+        if (screen != null)
+            if (screen.screenState != ScreenState.Popups && screen.currentPopup.Count <= 0)
 			screen.displayPopUp();
 	}
 
