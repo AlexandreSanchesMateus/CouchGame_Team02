@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ImpactItems : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private AudioSource sfx;
+    [SerializeField] private ParticleSystem vfx;
+    [SerializeField] private float magnitude = 10f;
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if(collision.relativeVelocity.magnitude > magnitude)
+        {
+            if (sfx != null)
+                sfx.Play();
+            if (vfx != null)
+                vfx.Play();
+        }
     }
 }
