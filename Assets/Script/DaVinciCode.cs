@@ -35,7 +35,6 @@ public class DaVinciCode : MonoBehaviour, IInteractible
     private int lettre;
 
     private int idColonne = 0;
-    private int idLettre = 0;
     private bool isOpen = false;
     private bool isValid = false;
 
@@ -180,9 +179,11 @@ public class DaVinciCode : MonoBehaviour, IInteractible
         }
         else
         {
-            aAjouter = actualLettre[idColonne][idLettre];
+            aAjouter = actualLettre[idColonne][idPrecedent[idColonne]];
             lettreCharAffiche[idColonne] = aAjouter[0];
             afficher = new string(lettreCharAffiche);
+            Debug.Log(aAjouter[0]);
+            Debug.Log(lettreCharAffiche[idColonne]);
             Debug.Log(afficher);
 
             //textAffiche[0] = actualText[colonne][lettre];
@@ -244,11 +245,19 @@ public class DaVinciCode : MonoBehaviour, IInteractible
             if(idArrow < 7)
             {
                 idPrecedent[idColonne]++;
+                if(idPrecedent[idColonne] == 7)
+                {
+                    idPrecedent[idColonne] = 0;
+                }
                 ApplyText();
             }
             else if(idArrow >= 7)
             {
                 idPrecedent[idColonne]--;
+                if (idPrecedent[idColonne] == -1)
+                {
+                    idPrecedent[idColonne] = 6;
+                }
                 ApplyText();
             }
         }
