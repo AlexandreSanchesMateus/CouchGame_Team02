@@ -5,15 +5,12 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioManager instance { get; set; }
+    public static AudioManager instance { get; set; }
 
-    [SerializeField]
-    private AudioMixer audioMixer;
+    [SerializeField] private AudioMixer music_audioMixer;
+    [SerializeField] private AudioMixer ambiance_audioMixer;
 
-    private List<AudioSource> speakers = new List<AudioSource>();
-    [SerializeField] private AudioSource playerAudioSource;
-
-    [SerializeField] AudioClip clip;
+    int level = 1;
 
     private void Awake()
     {
@@ -23,19 +20,32 @@ public class AudioManager : MonoBehaviour
             Destroy(this);
     }
 
-    /*public void PlayAudioOnSpeaker(AudioClip clip)
+    public void ChangeMusicLevel(int level)
     {
-        foreach(AudioSource source in speakers)
-        {
-            source.PlayOneShot(clip);
-        }
+        music_audioMixer.FindSnapshot("LEVEL_" + level.ToString()).TransitionTo(0.3f);
     }
 
-    public void PlayAudioOnPlayer(AudioClip clip)
+    public void ChangeAmbiance(AudioMixerSnapshot snapshot)
     {
-        playerAudioSource.PlayOneShot(clip);
-    }*/
+        snapshot.TransitionTo(0.3f);
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(UnityEngine.KeyCode.M))
+        {
+            level--;
+            level = Mathf.Clamp(level, 1, 10);
+            ChangeMusicLevel(level);
+        }
+
+        if (Input.GetKeyDown(UnityEngine.KeyCode.P))
+        {
+            level++;
+            level = Mathf.Clamp(level, 1, 10);
+            ChangeMusicLevel(level);
+        }
+    }
 
     public static float ParseToDebit0(float value)
     {

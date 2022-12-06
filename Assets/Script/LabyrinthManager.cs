@@ -34,7 +34,6 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         for (int i = 0; i < chestParent.childCount; i++)
         {
             Transform horizontaleParent = chestParent.GetChild(i);
-            Debug.Log(horizontaleParent.childCount);
 
             for (int y = 0; y < horizontaleParent.childCount; y++)
             {
