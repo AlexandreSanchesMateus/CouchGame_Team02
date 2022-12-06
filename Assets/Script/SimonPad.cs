@@ -104,7 +104,7 @@ public class SimonPad : MonoBehaviour, IInteractible
                 // lights[nbValid].color = Color.green;
                 lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
                 nbValid++;
-                if (nbValid == 4)
+                if (nbValid == 3)
                 {
                     StartCoroutine(PanelComplet());
                 }
@@ -257,7 +257,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
-        AudioSpeaker.instance.AlarmIntensite();
+        //AudioSpeaker.instance.AlarmIntensite();
 
         //Destroy(door);
         EnigmeManager.instance.SuccessSimon();

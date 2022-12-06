@@ -97,16 +97,16 @@ public class screensholder : MonoBehaviour
 			}
 		}
 	}
-	public void TurnOnScreen(bool onlyFirstScreen, Transform firstScreen)
+	public void TurnOnScreen(bool onlyFirstScreen, Transform fScr)
     {
         Sequence turnONSequence = DOTween.Sequence();
 
 		if (onlyFirstScreen)
 		{
             
-            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).OnComplete(() => { firstScreen.GetChild(0).gameObject.SetActive(true); }));
-            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
-            turnONSequence.Append(firstScreen.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
+            turnONSequence.Append(fScr.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).OnComplete(() => { fScr.GetChild(0).gameObject.SetActive(true); }));
+            turnONSequence.Append(fScr.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
+            turnONSequence.Append(fScr.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f).SetEase(Ease.OutBounce));
         }
 		else
 		{
@@ -114,7 +114,7 @@ public class screensholder : MonoBehaviour
 			{
 				if (item.tag == "Screen")
 				{
-                    if(item != firstScreen)
+                    if(item != fScr)
 					{
                         turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).OnComplete(() => { item.GetChild(0).gameObject.SetActive(true); }));
 						turnONSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
@@ -125,7 +125,7 @@ public class screensholder : MonoBehaviour
 		}
 	}
 
-	public void TurnOffScreen()
+	public void TurnOffScreen(Transform fScr)
 	{
 		Sequence turnOffSequence = DOTween.Sequence();
 		
@@ -133,9 +133,12 @@ public class screensholder : MonoBehaviour
 		{
 			if (item.tag == "Screen")
 			{
-				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0.2f));
-				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
-				turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0f).SetEase(Ease.OutBounce).OnComplete(() => { item.GetChild(0).gameObject.SetActive(false); }));
+				if (item != fScr)
+                {
+					turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 1f, 1), 0f));
+					turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(1, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce));
+					turnOffSequence.Append(item.transform.GetChild(0).DOScale(new Vector3(0, 0.2f, 1), 0.2f).SetEase(Ease.OutBounce).OnComplete(() => { item.GetChild(0).gameObject.SetActive(false); }));
+                }
 			}
 		}
 	}
