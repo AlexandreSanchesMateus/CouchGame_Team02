@@ -53,8 +53,8 @@ public class EnigmeManager : MonoBehaviour
         Sequence VaultUp = DOTween.Sequence();
         VaultUp.AppendInterval(1.6f);
         VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultMecanisme));
-        VaultUp.AppendInterval(5);
-        VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultOpen));
+        //VaultUp.AppendInterval(5);
+        //VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultOpen));
         VaultUp.Join(gameObject.transform.DOLocalMoveY(PosY, 2.8f).SetEase(Ease.Linear));
     }
 }

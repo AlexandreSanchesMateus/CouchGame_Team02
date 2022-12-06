@@ -35584,13 +35584,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 2122478766}
     m_Modifications:
     - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: fail
+      value: 
+      objectReference: {fileID: 8300000, guid: 575a9fc8b0f4b0540a10ce3b460f12fe, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: open
+      value: 
+      objectReference: {fileID: 8300000, guid: c4da3551102be7f4c84516e6611c1649, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: clear
+      value: 
+      objectReference: {fileID: 8300000, guid: 7b624ad613e0a8a48b6d4c19d713be3b, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
       propertyPath: outClip
       value: 
       objectReference: {fileID: 8300000, guid: 67700b3bf6f20b44d8ef12bbb5db1e37, type: 3}
     - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: sucsess
+      value: 
+      objectReference: {fileID: 8300000, guid: ee3905432653a2844ac1a1a745b447b0, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
       propertyPath: goodCode
       value: 0014
       objectReference: {fileID: 0}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: validate
+      value: 
+      objectReference: {fileID: 8300000, guid: a741af07a7aa305449942b5d1c74c39a, type: 3}
     - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
       propertyPath: enterClip
       value: 
@@ -35611,6 +35631,42 @@ PrefabInstance:
       propertyPath: wrongClip
       value: 
       objectReference: {fileID: 8300000, guid: 58e27110e6893414a8f7a6b7cd5e7817, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: hover.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: hover.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4fed689e38bb8c945bf8b5fdf7b58e01, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: hover.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 529755e51aac16e43b6150f305de7e7b, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: hover.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a7bc89cf3e792eb41b76c5defdb094c7, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: selections.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: selections.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 70b8857a941eeb041bc39e193203a2db, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: selections.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: e649b9cdf62117141bc9d826cdfd27d9, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: selections.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: b351b6b98f6d53445a3714b387988f2e, type: 3}
+    - target: {fileID: 2145415733702086416, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
+      propertyPath: selections.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: dc91a3c4d752c4747b9e5e6f63d8f8e7, type: 3}
     - target: {fileID: 2145415733702086423, guid: 49ba5745b45368d4e996e0bc1d466187, type: 3}
       propertyPath: m_Name
       value: Keypad
