@@ -18,6 +18,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
     private List<Transform> slotChest = new List<Transform>();
     private bool isOpen = false;
     private static bool canNewInput = true;
+    private bool isActive = false;
 
     private void Awake()
     {
@@ -52,13 +53,14 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     public void InitLabyrintheScreen()
     {
+        isActive = true;
         gameObject.layer = LayerMask.GetMask("Interactible");
         beginScreen.SetActive(false);
     }
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)
     {
-        if (!canNewInput)
+        if (!canNewInput || !isActive)
             return;
 
         bool allowToMove = false;

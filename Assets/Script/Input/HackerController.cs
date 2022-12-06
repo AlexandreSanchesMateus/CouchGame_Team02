@@ -5,26 +5,35 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using DG.Tweening;
 using Cinemachine;
+using UnityEngine.Video;
 
 public class HackerController : MonoBehaviour
 {
 	public GameObject MiniGamescreens;
+	public screensholder scrHold;
 	public float rotToAdd;
 	public float currentRot;
 	public static HackerController instance;
-	public CinemachineVirtualCamera cam1,cam2;
+	public CinemachineVirtualCamera cam1, cam2;
 	private RaycastHit hit;
 	private Coroutine lastCorout;
 	private Screen screen;
 
 	private Transform originalCamTransform;
 
-	public GameObject setUp;
+	public GameObject setUp, loadGame;
+	public Material setupMaterial, loadMaterial;
 	private bool locked;
+    private bool loadingSreen = false;
 
-	private void Start()
+	public AudioSource audioS;
+	public List<AudioClip> SFXChangeScreens;
+	public AudioClip SFXBoot, SFXLoad; 
+
+    private void Start()
 	{
 		originalCamTransform = cam1.transform;
+		audioS = GetComponent<AudioSource>();
 
 		if (instance == null)
 		{
@@ -34,34 +43,36 @@ public class HackerController : MonoBehaviour
 		{
 			Destroy(this);
 		}
-
+		loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
-		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+		if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
 		{
 			screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
-			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
+			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = setupMaterial;
 			screen.LockScreen();
+			scrHold.TurnOnScreen(true, screen.transform);
 			locked = true;
 			screen.GetComponent<Screen>().DisplayCode();
 		}
 	}
 	private void Update()
 	{
-		Debug.DrawRay(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, Color.yellow);
-		
+		Debug.DrawRay(cam1.transform.position, Vector3.forward * 2, Color.yellow);
+
 
 	}
-	
+
 	public void Increment(InputAction.CallbackContext callback)
 	{
-		if(screen.screenState == ScreenState.MiniGame)
+		if (screen.screenState == ScreenState.MiniGame)
 		{
-			if(callback.started)
+			if (callback.started)
 			{
-			//Debug.Log("Increment");
+				//Debug.Log("Increment");
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
+				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0,SFXChangeScreens.Count-1)]);
 			}
 
 			StopCoroutine(lastCorout);
@@ -70,12 +81,14 @@ public class HackerController : MonoBehaviour
 	}
 	public void Decrement(InputAction.CallbackContext callback)
 	{
+
 		if (screen.screenState == ScreenState.MiniGame)
 		{
 			if (callback.started)
 			{
 				//Debug.Log("decrement");
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
+				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0, SFXChangeScreens.Count - 1)]);
 			}
 
 			StopCoroutine(lastCorout);
@@ -84,47 +97,68 @@ public class HackerController : MonoBehaviour
 	}
 
 	public void Interact(InputAction.CallbackContext callback)
-	{        
+	{
 		if (callback.started)
 		{
-			if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
+			if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
 			{
 				screen = hit.transform.GetComponent<Screen>();
-				switch (screen.screenState)
+				if (screen.transform.tag != "FakeScreen")
 				{
-					case ScreenState.MiniGame:
-						
-						screen.miniGame.GetComponent<IMinigame>().interact(callback);
-						
-						break;
-					case ScreenState.Popups:
-						
-						if (callback.action.name == "West")
+					if (screen != null)
+						switch (screen.screenState)
 						{
-							screen.FightPopup();
+							case ScreenState.MiniGame:
 
-							if (screen.currentPopup.Count <= 0)
-								lastCorout = StartCoroutine(popupDelay());
-						}
-						break;                        
-					case ScreenState.Update:
-						break;
-					case ScreenState.Hack:
-						break;
-					case ScreenState.Setup:
+								screen.miniGame.GetComponent<IMinigame>().interact(callback);
 
-						if (locked)
-						{
-							if (screen.UnlockScreen(callback))
-							{
-								GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
-								StartCoroutine(EndSetup(screen));
-								lastCorout = StartCoroutine(popupDelay());
-							}
+								break;
+							case ScreenState.Popups:
+
+								if (callback.action.name == "West")
+								{
+									screen.FightPopup();
+
+									if (screen.currentPopup.Count <= 0)
+                                    {
+										lastCorout = StartCoroutine(popupDelay());
+										if (!loadingSreen)
+											StartCoroutine(loadDelay());
+                                    }
+								}
+								break;
+							case ScreenState.Load:
+
+								if (loadGame.GetComponent<IMinigame>().interact(callback))
+								{
+									loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
+									screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
+									screen.miniGame = screen.game;
+									audioS.PlayOneShot(SFXBoot);
+									GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+									screen.screenState = ScreenState.MiniGame;
+									StartCoroutine(loadDelay());
+								}
+								break;
+							case ScreenState.Hack:
+								break;
+							case ScreenState.Setup:
+
+								if (locked)
+								{
+									if (screen.UnlockScreen(callback))
+									{
+										audioS.PlayOneShot(SFXBoot);
+										GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+										StartCoroutine(EndSetup(screen));
+										lastCorout = StartCoroutine(popupDelay());
+										StartCoroutine(loadDelay());
+									}
+								}
+								break;
+							default:
+								break;
 						}
-						break;
-					default:
-						break;
 				}
 			}
 		}
@@ -132,15 +166,22 @@ public class HackerController : MonoBehaviour
 	//Input du joysitck
 	public void MoveInScreen(InputAction.CallbackContext callback)
 	{
-		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
-		{
-			screen = hit.transform.GetComponent<Screen>();
-
-			if (screen.screenState == ScreenState.MiniGame)
-			{
-				screen.miniGame.GetComponent<IMinigame>().Move(callback);
-			}
-		}
+		if (callback.performed)
+			if (screen != null)
+				if (Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit))
+				{
+					if (screen.transform.tag != "FakeScreen")
+					{
+						Debug.Log("hit" + hit.transform.name);
+						screen = hit.transform.GetComponent<Screen>();
+						if (screen != null)
+							if (screen.screenState == ScreenState.MiniGame)
+							{
+								Debug.Log(callback.ReadValue<Vector2>());
+								screen.miniGame.GetComponent<IMinigame>().Move(callback);
+							}
+					}
+				}
 	}
 	public void SwitchCam(InputAction.CallbackContext callback)
 	{
@@ -158,7 +199,7 @@ public class HackerController : MonoBehaviour
 			}
 		}
 	}
-	
+
 	public void Back(InputAction.CallbackContext callback)
 	{
 		Debug.Log("Back");
@@ -173,12 +214,13 @@ public class HackerController : MonoBehaviour
 
 	IEnumerator popupDelay()
 	{
-		yield return new WaitForSeconds(Random.Range(5f, 10f));
-		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
+		yield return new WaitForSeconds(Random.Range(20f, 30f));
+		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (screen.screenState != ScreenState.Popups && screen.currentPopup.Count <= 0)
-			screen.displayPopUp();
+		if (screen != null)
+			if (screen.screenState == ScreenState.MiniGame && screen.currentPopup.Count <= 0)
+				screen.displayPopUp();
 	}
 
 	IEnumerator EndSetup(Screen scr)
@@ -194,5 +236,27 @@ public class HackerController : MonoBehaviour
 		newSequence.Append(cam1.transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true));
 		newSequence.Append(cam1.transform.DOMove(originalCamTransform.position, 0.2f));
 	}
-}
 
+	IEnumerator loadDelay()
+	{
+		loadingSreen = true;
+		yield return new WaitForSeconds(Random.Range(120f, 240f));
+		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
+		Screen scr = hit.transform.GetComponent<Screen>();
+		Debug.Log("screen = " + hit.transform.name);
+		if (scr.screenState == ScreenState.MiniGame)
+		{
+			while (!scrHold.CanRotate)
+			{
+
+			}
+			scr.screenState = ScreenState.Load;
+			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
+			scr.miniGame = loadGame;
+			scrHold.TurnOffScreen(scr.transform);
+			audioS.PlayOneShot(SFXLoad);
+			loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, false);
+			loadingSreen = false;
+		}
+	}
+}

@@ -10,6 +10,7 @@ TagManager:
   - Screen
   - MiniGame2
   - LoadingTrigger
+  - FakeScreen
   layers:
   - Default
   - TransparentFX
