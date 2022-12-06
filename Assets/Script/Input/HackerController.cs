@@ -26,9 +26,14 @@ public class HackerController : MonoBehaviour
 	private bool locked;
     private bool loadingSreen = false;
 
+	public AudioSource audioS;
+	public List<AudioClip> SFXChangeScreens;
+	public AudioClip SFXBoot, SFXLoad; 
+
     private void Start()
 	{
 		originalCamTransform = cam1.transform;
+		audioS = GetComponent<AudioSource>();
 
 		if (instance == null)
 		{
@@ -67,6 +72,7 @@ public class HackerController : MonoBehaviour
 			{
 				//Debug.Log("Increment");
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
+				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0,SFXChangeScreens.Count-1)]);
 			}
 
 			StopCoroutine(lastCorout);
@@ -82,6 +88,7 @@ public class HackerController : MonoBehaviour
 			{
 				//Debug.Log("decrement");
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
+				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0, SFXChangeScreens.Count - 1)]);
 			}
 
 			StopCoroutine(lastCorout);
@@ -127,6 +134,7 @@ public class HackerController : MonoBehaviour
 									loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
 									screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
 									screen.miniGame = screen.game;
+									audioS.PlayOneShot(SFXBoot);
 									GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
 									screen.screenState = ScreenState.MiniGame;
 									StartCoroutine(loadDelay());
@@ -140,6 +148,7 @@ public class HackerController : MonoBehaviour
 								{
 									if (screen.UnlockScreen(callback))
 									{
+										audioS.PlayOneShot(SFXBoot);
 										GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
 										StartCoroutine(EndSetup(screen));
 										lastCorout = StartCoroutine(popupDelay());
@@ -245,6 +254,7 @@ public class HackerController : MonoBehaviour
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
 			scr.miniGame = loadGame;
 			scrHold.TurnOffScreen(scr.transform);
+			audioS.PlayOneShot(SFXLoad);
 			loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, false);
 			loadingSreen = false;
 		}

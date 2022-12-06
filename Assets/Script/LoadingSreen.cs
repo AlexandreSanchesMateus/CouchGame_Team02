@@ -9,7 +9,7 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     private bool canInteract;
     [SerializeField] private AudioClip clip1, clip2;
     private AudioSource audioSource;
-    private int numberRequired;
+    public int numberRequired;
     private int currentNumber;
 
     private bool boolsfx;
@@ -39,7 +39,10 @@ public class LoadingSreen : MonoBehaviour, IMinigame
             currentNumber++;
         }
         if (currentNumber >= numberRequired)
+        {
+            currentNumber = 0;
             return true;
+        }
         else
             return false;
     }
