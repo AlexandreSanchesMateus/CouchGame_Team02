@@ -9,6 +9,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 {
     public static PlayerControllerProto2 instance { get; private set; }
 
+    public GameObject mainCamera;
     public GameObject cameraObj;
 
     [SerializeField] private float playerSpeed = 2.0f;
@@ -22,6 +23,9 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField] private LayerMask layer;
     public Transform hand;
     private bool haveSomthingInHand = false;
+
+    [SerializeField] private LayerMask basicView;
+    [SerializeField] private LayerMask dyslexicView;
 
     [Header("Headbob Option")]
     [SerializeField] bool enableHeadbob;
@@ -127,6 +131,15 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if(Input.GetKeyDown(UnityEngine.KeyCode.C))
+        {
+            mainCamera.GetComponent<Camera>().cullingMask = basicView;
+        }
+        if (Input.GetKeyDown(UnityEngine.KeyCode.X))
+        {
+            mainCamera.GetComponent<Camera>().cullingMask = dyslexicView;
+        }
     }
 
     private void HeadbobHandle()

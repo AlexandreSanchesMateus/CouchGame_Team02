@@ -28,7 +28,7 @@ public class DaVinciCode : MonoBehaviour, IInteractible
     private List<List<string>> actualLettre;
     private string aAjouter;
     private char[] lettreCharAffiche;
-    private int[] idPrecedent = new int[6] {0,0,0,0,0,0};
+    private int[] idPrecedent = new int[7] {0,0,0,0,0,0,0};
 
     [SerializeField] private TMP_Text text;
     private int colonne;
@@ -59,7 +59,7 @@ public class DaVinciCode : MonoBehaviour, IInteractible
         actualLettre.Add(new List<string> { "A", "C", "S", "D", "P" });
         actualLettre.Add(new List<string> { "P", "O", "A", "E", "N" });
         actualLettre.Add(new List<string> { "L", "U", "R", "S", "I" });
-        actualLettre.Add(new List<string> { "A", "S", "S", "Q", "T" });
+        actualLettre.Add(new List<string> { "A", "E", "S", "Q", "T" });
         actualLettre.Add(new List<string> { "E", "S", "I", "E", "U", "A" });
         actualLettre.Add(new List<string> { "R", "I", "N", "U", "E", "G" });
         actualLettre.Add(new List<string> { "T", "R", "S", "E" });
@@ -185,6 +185,7 @@ public class DaVinciCode : MonoBehaviour, IInteractible
             Debug.Log(aAjouter[0]);
             Debug.Log(lettreCharAffiche[idColonne]);
             Debug.Log(afficher);
+            Verif(afficher);
 
             //textAffiche[0] = actualText[colonne][lettre];
             //string ljl = textAffiche.Substring(1) + 'A' + textAffiche.Substring(1);
@@ -196,7 +197,7 @@ public class DaVinciCode : MonoBehaviour, IInteractible
     // Complete le tableau delettre avec des aléatoires
     void ImplementRandomLetter()
     {
-        actualLettre[colonne].Add(RecupLettreObli(colonne, lettre));
+        actualLettre[colonne + 3].Add(RecupLettreObli(colonne, lettre));
 
         for(int i = 0; i < 7; i++)
         {
