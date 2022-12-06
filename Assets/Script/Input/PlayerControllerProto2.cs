@@ -33,6 +33,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private List<AudioClip> walk;
+    [SerializeField] private List<AudioClip> walkOnCarpet;
     private AudioSource audioSource;
     private float previousSin;
     private bool walked;
@@ -253,7 +254,12 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
             if (firstStep)
-                PlayFromRobberAudioSource(walk[Random.Range(0, walk.Count)]);
+            {
+                if(Physics.Raycast(gameObject.transform.position, -gameObject.transform.up, 1.5f, LayerMask.GetMask("Carpet")))
+                    PlayFromRobberAudioSource(walkOnCarpet[Random.Range(0, walkOnCarpet.Count)]);
+                else
+                    PlayFromRobberAudioSource(walk[Random.Range(0, walk.Count)]);
+            }
             else
                 firstStep = true;
             /* GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
