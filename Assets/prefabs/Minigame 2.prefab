@@ -264,7 +264,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5054958365922077024}
   - component: {fileID: 3000702171354064052}
-  - component: {fileID: 618623162429216166}
   - component: {fileID: 3332460896934417707}
   m_Layer: 0
   m_Name: Camera MiniGame2
@@ -324,21 +323,13 @@ Camera:
   m_TargetTexture: {fileID: 8400000, guid: 71b6194ea5b484542986efc1a7fd68e2, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &618623162429216166
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4372395948075576258}
-  m_Enabled: 1
 --- !u!114 &3332460896934417707
 MonoBehaviour:
   m_ObjectHideFlags: 0

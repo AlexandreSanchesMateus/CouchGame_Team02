@@ -120,10 +120,10 @@ public class PlayerControllerProto2 : MonoBehaviour
         cameraObj.transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
 
         // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        /*if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
+        }*/
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);

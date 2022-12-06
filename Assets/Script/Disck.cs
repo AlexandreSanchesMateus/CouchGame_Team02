@@ -16,8 +16,10 @@ public class Disck : MonoBehaviour, IInteractible
 
     [Header ("Accessibility")]
     [SerializeField] private CodeSection[] combination;
+    [SerializeField] private bool snapSteps = false;
     [SerializeField] private float speed;
-    [SerializeField] [Range(0, 10)] private float errorMargin;
+    [SerializeField] private int step;
+    // [SerializeField] [Range(0, 10)] private float errorMargin;
 
     private List<CodeSection> combinationSelected = new List<CodeSection>();
     private ROTATION rotationDisck = ROTATION.UNKNOWN;
@@ -58,7 +60,7 @@ public class Disck : MonoBehaviour, IInteractible
         else if (rotationDisck != rotationJoystick)
         {
             Debug.Log("Changement de sens");
-            combinationSelected.Add(new CodeSection(rotationDisck, angle));
+            combinationSelected.Add(new CodeSection(rotationDisck, AngleToStep(angle)));
             rotationDisck = rotationJoystick;
         }
 
@@ -66,7 +68,10 @@ public class Disck : MonoBehaviour, IInteractible
         if (angle < 0)
             angle += 360;
 
-        spinPart.transform.rotation = Quaternion.Euler(angle, 270, 270);
+        if (!snapSteps)
+            spinPart.transform.rotation = Quaternion.Euler(0, 0, angle);
+        else
+            spinPart.transform.rotation = Quaternion.Euler(0, 0, -(360.0f/step * AngleToStep(angle)));
 
         lastJoystickAngle = stickRotationInDeg;
     }
@@ -82,22 +87,25 @@ public class Disck : MonoBehaviour, IInteractible
         }
         else
         {
-            combinationSelected.Add(new CodeSection(rotationDisck, angle));
+            combinationSelected.Add(new CodeSection(rotationDisck, AngleToStep(angle)));
             bool pass = true;
-            if (combinationSelected.Count <= combination.Length + 1)
+            if (combinationSelected.Count == combination.Length)
             {
                 for (int i = 0; i < combinationSelected.Count; i++)
                 {
-                    if (i < combination.Length)
+                    if (combinationSelected[i].rotation == combination[i].rotation && combinationSelected[i].Value == combinationSelected[i].Value)
+                        continue;
+
+                    /*if (i < combination.Length)
                     {
-                        if (combinationSelected[i].rotation == combination[i].rotation && combinationSelected[i].degrees + errorMargin > combination[i].degrees && combinationSelected[i].degrees - errorMargin < combination[i].degrees)
+                        if (combinationSelected[i].rotation == combination[i].rotation && combinationSelected[i].Value + errorMargin > combination[i].Value && combinationSelected[i].Value - errorMargin < combination[i].Value)
                             continue;
                     }
                     else
                     {
-                        if (combinationSelected[i].degrees + errorMargin > combination[i - 1].degrees && combinationSelected[i].degrees - errorMargin < combination[i - 1].degrees)
+                        if (combinationSelected[i].Value + errorMargin > combination[i - 1].Value && combinationSelected[i].Value - errorMargin < combination[i - 1].Value)
                             continue;
-                    }
+                    }*/
 
                     pass = false;
                     break;
@@ -145,12 +153,12 @@ public class Disck : MonoBehaviour, IInteractible
     struct CodeSection
     {
         public ROTATION rotation;
-        [Range(0, 360)] public float degrees;
+        public int Value;
 
-        public CodeSection(ROTATION _rot, float _deg)
+        public CodeSection(ROTATION _rot, int _deg)
         {
             rotation = _rot;
-            degrees = _deg;
+            Value = _deg;
         }
     }
 
@@ -161,10 +169,27 @@ public class Disck : MonoBehaviour, IInteractible
         COUNTER_CLOCKWISE
     }
 
+    private int AngleToStep(float angleInDeg)
+    {
+        int arondi = Mathf.RoundToInt(step * angleInDeg / 360);
+        if (arondi == 0)
+            return 0;
+
+        return step - arondi;
+    }
+
+    private int AngleToAbsoluteStep(float angleInDeg)
+    {
+        return Mathf.RoundToInt(step * angleInDeg / 360);
+    }
+
     private IEnumerator PanelComplet()
     {
         vcam.SetActive(false);
         gameObject.layer = 0;
+
+        EnigmeManager.instance.SuccessCoffre();
+
         yield return new WaitForSeconds(2);
         PlayerControllerProto2.enablePlayerMovement = true;
     }

@@ -260,19 +260,19 @@ public class Screen : MonoBehaviour
 					else
 						firstDigit = codeToTrans[2] % 10;
 
-					if (firstDigit == 0 && codeToTrans[2] % 2 == 0)
+					if (firstDigit % 2 == 0 && codeToTrans[2] % 2 == 0)
                     {
 						translatedCode.Add("A");
 					}
-					else if (firstDigit != 0 && codeToTrans[2] % 2 != 0)
+					else if (firstDigit % 2 != 0 && codeToTrans[2] % 2 != 0)
 					{
 						translatedCode.Add("B");
 					}
-					else if (firstDigit == 0 && codeToTrans[2] % 2 != 0)
+					else if (firstDigit % 2 == 0 && codeToTrans[2] % 2 != 0)
 					{
 						translatedCode.Add("X");
 					}
-					else if (firstDigit != 0 && codeToTrans[2] % 2 == 0)
+					else if (firstDigit % 2 != 0 && codeToTrans[2] % 2 == 0)
 					{
 						translatedCode.Add("Y");
 					}
