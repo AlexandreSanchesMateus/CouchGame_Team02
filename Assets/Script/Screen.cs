@@ -12,7 +12,7 @@ public enum ScreenState
 {
 	MiniGame,
 	Popups,
-	Update,
+	Load,
 	Hack,
 	Setup
 };
@@ -41,12 +41,14 @@ public class Screen : MonoBehaviour
 	private int codeIndex;
 
 	public Material gameMaterial;
-	public Material SetupMatrial;
+	public GameObject game;
+
 
 
 	private void Start()
 	{
 		gameMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+		game = miniGame;
 
 
 		transform.GetChild(0).localScale = new Vector3(transform.GetChild(0).localScale.x, 0f, transform.GetChild(0).localScale.z);

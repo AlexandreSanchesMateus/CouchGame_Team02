@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using DG.Tweening;
 using Cinemachine;
+using UnityEngine.Video;
 
 public class HackerController : MonoBehaviour
 {
 	public GameObject MiniGamescreens;
+	public screensholder scrHold;
 	public float rotToAdd;
 	public float currentRot;
-	private bool canInteract=true;
 	public static HackerController instance;
 	public CinemachineVirtualCamera cam1,cam2;
 	private RaycastHit hit;
@@ -19,10 +20,11 @@ public class HackerController : MonoBehaviour
 
 	private Transform originalCamTransform;
 
-	public GameObject setUp;
+	public GameObject setUp, loadGame;
+	public Material setupMaterial, loadMaterial;
 	private bool locked;
 
-	private void Start()
+    private void Start()
 	{
         originalCamTransform = cam1.transform;
 
@@ -34,15 +36,16 @@ public class HackerController : MonoBehaviour
         {
 			Destroy(this);
         }
-
+		loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
 		if (Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit))
 		{
 			Screen screen = hit.transform.GetComponent<Screen>();
 			screen.screenState = ScreenState.Setup;
-			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.SetupMatrial;
-			screen.LockScreen();
+			screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = setupMaterial;
+			screen.LockScreen(); 
+			scrHold.TurnOnScreen(true, screen.transform);
 			locked = true;
 			screen.GetComponent<Screen>().DisplayCode();
         }
@@ -56,7 +59,7 @@ public class HackerController : MonoBehaviour
 	
 	public void Increment(InputAction.CallbackContext callback)
 	{
-		if(callback.started&&canInteract)
+		if(callback.started )
 		{
 		//Debug.Log("Increment");
 			MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
@@ -67,7 +70,7 @@ public class HackerController : MonoBehaviour
 	}
 	public void Decrement(InputAction.CallbackContext callback)
 	{
-		if (callback.started&&canInteract)
+		if (callback.started)
 		{
 			//Debug.Log("decrement");
 			MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
@@ -101,7 +104,16 @@ public class HackerController : MonoBehaviour
                                 lastCorout = StartCoroutine(popupDelay());
                         }
 						break;                        
-					case ScreenState.Update:
+					case ScreenState.Load:
+
+						if (loadGame.GetComponent<IMinigame>().interact(callback))
+                        {
+							loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
+							screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
+							screen.miniGame = screen.game;
+							GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
+							screen.screenState = ScreenState.MiniGame;
+                        }
 						break;
 					case ScreenState.Hack:
 						break;
@@ -114,6 +126,7 @@ public class HackerController : MonoBehaviour
 								GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
 								StartCoroutine(EndSetup(screen));
 								lastCorout = StartCoroutine(popupDelay());
+								StartCoroutine(loadDelay());
 							}
                         }
                         break;
@@ -171,7 +184,7 @@ public class HackerController : MonoBehaviour
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
         Debug.Log("screen = " + hit.transform.name);
-        if (scr.screenState != ScreenState.Popups && scr.currentPopup.Count <= 0)
+        if (scr.screenState == ScreenState.MiniGame && scr.currentPopup.Count <= 0)
 			scr.displayPopUp();
 	}
 
@@ -188,5 +201,25 @@ public class HackerController : MonoBehaviour
         newSequence.Append(cam1.transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true));
         newSequence.Append(cam1.transform.DOMove(originalCamTransform.position, 0.2f));
     }
+
+	IEnumerator loadDelay()
+	{
+		yield return new WaitForSeconds(4f);
+		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
+		Screen scr = hit.transform.GetComponent<Screen>();
+		Debug.Log("screen = " + hit.transform.name);
+		if (scr.screenState == ScreenState.MiniGame)
+        {
+            while (!scrHold.CanRotate)
+            {
+
+            }
+			scr.screenState = ScreenState.Load;
+			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
+			scr.miniGame = loadGame;
+			scrHold.TurnOffScreen(scr.transform);
+			loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, false);
+		}
+	}
 }
 
