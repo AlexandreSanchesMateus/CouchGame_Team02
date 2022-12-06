@@ -29,9 +29,14 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField, Range(0, 30)] private float _frequency = 10.0f;
     private float startPosY;
     private float timer;
+    private bool firstStep = false;
 
     [Header("Audio")]
     [SerializeField] private List<AudioClip> walk;
+    private AudioSource audioSource;
+    private float previousSin;
+    private bool walked;
+
 
     private CharacterController controller;
     private float xRotation;
@@ -46,8 +51,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     private Vector2 flechaction;
 
-    private float previousSin;
-    private bool walked;
+
 
 
     private void Awake()
@@ -61,6 +65,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         startPosY = cameraObj.transform.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         enablePlayerMovement = true;
@@ -155,6 +160,7 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (cameraObj.transform.localPosition.y == startPosY)
             return;
 
+        firstStep = false;
         cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, Mathf.Lerp(cameraObj.transform.localPosition.y, startPosY, Time.time * 0.01f), cameraObj.transform.localPosition.z);
         timer = 0;
     }
@@ -228,6 +234,11 @@ public class PlayerControllerProto2 : MonoBehaviour
         }
     }
 
+    public void PlayFromRobberAudioSource(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
     private void InteractWithEnigmes()
     {
         if(interactibleObject != null)
@@ -241,8 +252,12 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
-            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
-            GetComponent<AudioSource>().Play();
+            if (firstStep)
+                PlayFromRobberAudioSource(walk[Random.Range(0, walk.Count)]);
+            else
+                firstStep = true;
+            /* GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
+            GetComponent<AudioSource>().Play();*/
             walked = true;
         }
         else if(previousSin > Mathf.Sin(timer))
