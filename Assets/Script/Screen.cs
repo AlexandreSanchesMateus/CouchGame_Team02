@@ -63,43 +63,49 @@ public class Screen : MonoBehaviour
 
 	public void displayPopUp()
 	{
-		List<GameObject> popupsRandom = new List<GameObject>(popups);
+        Debug.Log("displayPopUp");
+        List<GameObject> popupsRandom = new List<GameObject>(popups);
 		//Debug.Log("displaying popup");
-		int n = Random.Range(3,7);
+		int n = Random.Range(3, popupsRandom.Count-1);
 		mySequence = DOTween.Sequence();
 		for (int j = 0; j < n; j++)
 		{
 				int i = Random.Range(0, popupsRandom.Count - 1);
 				popupsRandom[i].SetActive(true);
-				
-				mySequence.Insert(0,popups[i].transform.DOScale(new Vector3(0, 0, 0), 0.1f));
-				float scaleX = Random.Range(0.03f, 0.1f);
+            //popups[i].transform.localScale = new Vector3(0,0,0);
+            //mySequence.Insert(0,popups[i].transform.DOScale(new Vector3(0, 0, 0), 0.1f));
+            float scaleX = Random.Range(0.03f, 0.1f);
 				mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1, 0.01f), 0.2f).SetEase(Ease.OutBounce));
 				mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
 				if (popups[i].transform.localScale.x == 0)
 				{
-				
+					
 					switch(Random.Range(0, 3))
 						{
 						case 0:
-						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.05f, 1, 0.03f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        mySequence.Append(popups[i].transform.DOScale(new Vector3(0.05f, 1, 0.03f), 0.2f).SetEase(Ease.OutBounce));
+                        popups[i].transform.localScale = new Vector3(0.05f, 1, 0.03f);
+                        break;
 						case 1:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.02f, 1, 0.04f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 						case 2:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.03f, 1, 0.05f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 						case 3:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.1f, 1, 0.04f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 					}
 				}
-				
-			  
-				//Debug.Log("i = " + i);
-				//         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
-				currentPopup.Add(popupsRandom[i]);
+            if (popups[i].transform.localScale.x == 0)
+                popups[i].transform.localScale = new Vector3(0.05f, 1, 0.03f);
+
+            //Debug.Log("i = " + i);
+            //         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
+            currentPopup.Add(popupsRandom[i]);
 				popupsRandom.RemoveAt(i);
 				HackerController.instance.CamShake();
 			
@@ -135,7 +141,8 @@ public class Screen : MonoBehaviour
 		//mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
 		yield return new WaitForSeconds(0.2f);
 		popup.SetActive(false);
-	}
+        popup.transform.localScale = new Vector3(0.05f, 1, 0.03f);
+    }
 
 	public void LockScreen()
 	{
