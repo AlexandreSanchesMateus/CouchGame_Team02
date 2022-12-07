@@ -4,12 +4,12 @@ using UnityEngine;
 using DG.Tweening;
 
 [System.Serializable]
-public class LabyrinthManager : MonoBehaviour , IInteractible
+public class LabyrinthManager : MonoBehaviour, IInteractible
 {
     public static LabyrinthManager instance { get; private set; }
 
     public GameObject king;
-    public ScrLabyrinth labyrinth;
+    [SerializeField] public ScrLabyrinth labyrinth;
     public GameObject beginScreen;
 
     public GameObject vcam;
