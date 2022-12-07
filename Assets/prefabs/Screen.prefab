@@ -1791,7 +1791,15 @@ MonoBehaviour:
   currentPopup: []
   focus: 0
   gameMaterial: {fileID: 0}
-  SetupMatrial: {fileID: 0}
+  game: {fileID: 0}
+  pitch: 0.66
+  SFXFightPopups:
+  - {fileID: 8300000, guid: 1ed29ac78b9fd0049bb1125b7be586ac, type: 3}
+  - {fileID: 8300000, guid: 23a13c8d4e6afe04db064cc8cefcaca0, type: 3}
+  - {fileID: 8300000, guid: 2dbe813436d8d6c4bab4e5f1bd18568a, type: 3}
+  - {fileID: 8300000, guid: f58e1688106250749bc24d1103be559d, type: 3}
+  SFXSelect: {fileID: 8300000, guid: 3b7a6611cbbc2e54da96a614e3e3dbed, type: 3}
+  SFXFail: {fileID: 8300000, guid: 58e27110e6893414a8f7a6b7cd5e7817, type: 3}
 --- !u!1001 &5490380378556605159
 PrefabInstance:
   m_ObjectHideFlags: 0
