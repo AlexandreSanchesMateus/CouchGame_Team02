@@ -43,7 +43,10 @@ public class Screen : MonoBehaviour
 	public Material gameMaterial;
 	public GameObject game;
 
-
+	[Range(0, 2)]
+	public float pitch;
+	public List<AudioClip> SFXFightPopups;
+	public AudioClip SFXSelect, SFXFail;
 
 	private void Start()
 	{
@@ -116,12 +119,16 @@ public class Screen : MonoBehaviour
 			currentPopupLife--;
 			if (currentPopupLife <= 0)
 			{
+				HackerController.instance.audioS.pitch = pitch;
+				HackerController.instance.audioS.PlayOneShot(SFXFightPopups[Random.Range(0, SFXFightPopups.Count - 1)]);
+				HackerController.instance.audioS.pitch = 1f;
 				StartCoroutine(destroyPopup(currentPopup[0]));
 				currentPopup.RemoveAt(0);
 				currentPopupLife = Random.Range(1, 3);
 			}
 			if (currentPopup.Count > 0)
 			{
+				HackerController.instance.audioS.PlayOneShot(SFXFightPopups[Random.Range(0, SFXFightPopups.Count - 1)]);
 				return true;
 			}
 		}
@@ -176,7 +183,7 @@ public class Screen : MonoBehaviour
 			default:
 				break;
 		}
-
+		HackerController.instance.audioS.PlayOneShot(SFXSelect);
 		codeIndex++;
 		DisplayCode();
 		if (codeIndex >= 4)
@@ -187,6 +194,7 @@ public class Screen : MonoBehaviour
 				return true;
 			}
 			currentCode = new List<string>();
+			HackerController.instance.audioS.PlayOneShot(SFXFail);
 			DisplayCode();
 		}
 		return false;
