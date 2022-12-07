@@ -17,13 +17,15 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private GameObject door;
 
     [Header("Auio")]
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip enterClip;
-    [SerializeField] private AudioClip outClip;
-    [SerializeField] private AudioClip hoverClip;
+    [SerializeField] private AudioClip sucsess;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioClip[] selections;
+    [SerializeField] private AudioClip validate;
+    [SerializeField] private AudioClip clear;
+    [SerializeField] private AudioClip[] hover;
     [SerializeField] private AudioClip inputClip;
-    [SerializeField] private AudioClip validClip;
-    [SerializeField] private AudioClip wrongClip;
+    [SerializeField] private AudioClip open;
+    private AudioSource audioSource;
 
 
     private List<int> currentCode = new List<int>();
@@ -36,7 +38,6 @@ public class KeyCode : MonoBehaviour, IInteractible
         isOpen = false;
         idKey = 0;
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = enterClip;
     }
 
     // Lorsque je joueur utilise l'object
@@ -60,7 +61,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         else if (action == Vector2.left)
             idKey--;
 
-        PlayAudio(hoverClip);
+        audioSource.PlayOneShot(inputClip);
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
@@ -74,6 +75,7 @@ public class KeyCode : MonoBehaviour, IInteractible
     // Lorsque je joueur regarde l'object
     public void OnItemHover()
     {
+        audioSource.PlayOneShot(hover[Random.Range(0, hover.Length)]);
         GUIManager.instance.EnableUseGUI(true);
     }
 
@@ -84,7 +86,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         // SI NON OUVERT : orienter caméra + désactiver input player
         if (!isOpen)
         {
-            PlayAudio(enterClip);
+            audioSource.PlayOneShot(open);
             StartCoroutine(Delay());
             GUIManager.instance.EnableUseGUI(false);
             // GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
@@ -95,17 +97,19 @@ public class KeyCode : MonoBehaviour, IInteractible
         // SI DEJA OUVERT : appuyer sur les touche
         else
         {
-            PlayAudio(inputClip);
             switch (idKey)
             {
                 case 9:
+                    audioSource.PlayOneShot(validate);
                     StartCoroutine(Verification());
                     break;
                 case 11:
+                    audioSource.PlayOneShot(clear);
                     currentCode.Clear();
                     displayCode.text = " _ _ _ _";
                     break;
                 default:
+                    audioSource.PlayOneShot(selections[Random.Range(0, selections.Length)]);
                     if(currentCode.Count < 4)
                     {
                         currentCode.Add(KeyToInt(idKey));
@@ -116,11 +120,11 @@ public class KeyCode : MonoBehaviour, IInteractible
         }
     }
 
-    // Lo
-    // rsque le joueur revient en arrière
+    // Lorsque le joueur revient en arrière
     public void OnReturn()
     {
-        PlayAudio(outClip);
+        if (!isOpen) return;
+
         isOpen = false;
         GUIManager.instance.EnableUseGUI(false);
         GUIManager.instance.EnableHand(false);
@@ -175,7 +179,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         // CODE BON
         if (ListToString(currentCode) == goodCode)
         {
-            PlayAudio(validClip);
+            audioSource.PlayOneShot(sucsess);
             displayCode.text = " G O O D";
             gameObject.layer = 0;
 
@@ -186,25 +190,20 @@ public class KeyCode : MonoBehaviour, IInteractible
             vcam.SetActive(false);
             GUIManager.instance.EnableHand(false);
             // AudioSpeaker.instance.AlarmIntensite();
+            gameObject.layer = LayerMask.GetMask("Ignore Raycast");
             yield return new WaitForSeconds(2);
             PlayerControllerProto2.enablePlayerMovement = true;
         }
         // CODE MAUVAIS
         else
         {
-            PlayAudio(wrongClip);
-            Debug.Log("Don't pass");
+            audioSource.PlayOneShot(fail);
             currentCode.Clear();
             displayCode.text = " _ _ _ _";
             isVerif = false;
         }
     }
 
-    private void PlayAudio(AudioClip clip)
-    {
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(2);

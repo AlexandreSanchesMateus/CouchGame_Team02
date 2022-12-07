@@ -32,6 +32,8 @@ public class PlayerControllerProto2 : MonoBehaviour
     private bool firstStep = false;
 
     [Header("Audio")]
+    [SerializeField] private AudioClip rotateItem;
+    [SerializeField] private AudioClip[] grabItem;
     [SerializeField] private List<AudioClip> walk;
     [SerializeField] private List<AudioClip> walkOnCarpet;
     private AudioSource audioSource;
@@ -186,7 +188,10 @@ public class PlayerControllerProto2 : MonoBehaviour
             interactibleObject.GetComponent<IInteractible>().OnInteract();
 
             if (interactibleObject.GetComponent<InspectedObject>() != null)
+            {
                 haveSomthingInHand = true;
+                audioSource.PlayOneShot(grabItem[Random.Range(0, grabItem.Length)]);
+            }
         }
     }
 
@@ -224,6 +229,7 @@ public class PlayerControllerProto2 : MonoBehaviour
         if(haveSomthingInHand && context.performed && interactibleObject != null)
         {
             interactibleObject.GetComponent<IInteractible>().OnRightShoulder();
+            audioSource.PlayOneShot(rotateItem);
         }
     }
 

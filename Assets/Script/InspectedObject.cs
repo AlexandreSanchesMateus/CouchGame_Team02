@@ -86,6 +86,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
 
     public void OnReturn()
     {
+        if (!isInHand) return;
+
         PlayerControllerProto2.enablePlayerMovement = true;
 
         if (!PickUpSequence.IsComplete())
