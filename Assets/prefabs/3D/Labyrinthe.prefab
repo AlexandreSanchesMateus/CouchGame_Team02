@@ -4069,7 +4069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2803068127959658854}
   - component: {fileID: 2803068127959658857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: vcam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4738,6 +4738,7 @@ MonoBehaviour:
   beginScreen: {fileID: 2803068126294402920}
   vcam: {fileID: 2803068127959658855}
   chestParent: {fileID: 2803068127016651323}
+  allServeur: []
 --- !u!114 &96974768414932614
 MonoBehaviour:
   m_ObjectHideFlags: 0

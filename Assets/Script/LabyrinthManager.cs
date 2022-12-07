@@ -15,6 +15,8 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
     public GameObject vcam;
     public Transform chestParent;
 
+    public List<Serveur> allServeur = new List<Serveur>();
+
     private List<Transform> slotChest = new List<Transform>();
     private bool isOpen = false;
     private static bool canNewInput = true;
@@ -47,14 +49,20 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         king.transform.SetParent(slotChest[labyrinth.idPlayerSlot].transform);
         king.transform.localPosition = Vector3.zero;
 
-        gameObject.layer = LayerMask.GetMask("Default");
+        gameObject.layer = 2;
         beginScreen.SetActive(true);
     }
 
-    public void InitLabyrintheScreen()
+    public void CheckServeur(Serveur other)
+    {
+        allServeur.Remove(other);
+        if (allServeur.Count <= 0) InitLabyrintheScreen();
+    }
+
+    private void InitLabyrintheScreen()
     {
         isActive = true;
-        gameObject.layer = LayerMask.GetMask("Interactible");
+        gameObject.layer = 3;
         beginScreen.SetActive(false);
     }
 
@@ -70,12 +78,14 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
                 // ---- Vers la droite ---- //
             case { x: 1, y: 0 }:
                 allowToMove = CheckSlotAccess(labyrinth.grid[labyrinth.idPlayerSlot].rightWall, isRobberMoving);
+                Debug.Log("DROITE");
                 if(allowToMove)
                     labyrinth.idPlayerSlot++;
                 break;
 
                 // ---- Vers le haut ---- //
             case { x: 0, y: 1 }:
+                Debug.Log("HAUT");
                 if (labyrinth.idPlayerSlot - labyrinth.gridSizeX < 0)
                     break;
 
@@ -86,6 +96,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
                 // ---- Vers la gauche ---- //
             case { x: -1, y: 0 }:
+                Debug.Log("GAUCHE");
                 if (labyrinth.idPlayerSlot - 1 < 0 || labyrinth.idPlayerSlot % labyrinth.gridSizeY == 0 )
                     break;
 
@@ -96,6 +107,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
                 // ---- Vers le bas ---- //
             case { x: 0, y: -1 }:
+                Debug.Log("BAS");
                 allowToMove = CheckSlotAccess(labyrinth.grid[labyrinth.idPlayerSlot].bottomWall, isRobberMoving);
                 if (allowToMove)
                     labyrinth.idPlayerSlot += labyrinth.gridSizeX;

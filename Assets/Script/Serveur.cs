@@ -10,12 +10,13 @@ public class Serveur : MonoBehaviour
     void Start()
     {
         grabObj.OnGrab += OnGrabDisquette;
+        LabyrinthManager.instance.allServeur.Add(this);
     }
 
     private void OnGrabDisquette(InspectedObject source)
     {
         source.OnGrab -= OnGrabDisquette;
         gameObject.layer = LayerMask.GetMask("Default");
-        Debug.Log(source.name + " a été retirer.");
+        LabyrinthManager.instance.CheckServeur(this);
     }
 }

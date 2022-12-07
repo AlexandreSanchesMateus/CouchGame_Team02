@@ -66,6 +66,7 @@ MonoBehaviour:
   defaultThrowForce: 100
   deltaHardThrow: 400
   turnSensibitive: 0.5
+  trailRenderer: {fileID: 0}
   rb: {fileID: 0}
 --- !u!54 &366639915371091435
 Rigidbody:
@@ -92,8 +93,8 @@ AudioSource:
   m_GameObject: {fileID: 366639915371091431}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2388514067669648283, guid: 91a4e8dffeb1e2a4591f66ea205f4162, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 97d2028ff62678d40be6c4ec2b0ec33a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

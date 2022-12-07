@@ -23,13 +23,8 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip validate;
     [SerializeField] private AudioClip clear;
     [SerializeField] private AudioClip[] hover;
-    [SerializeField] private AudioClip open;
-    /*[SerializeField] private AudioClip enterClip;
-    [SerializeField] private AudioClip outClip;
-    [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip inputClip;
-    [SerializeField] private AudioClip validClip;
-    [SerializeField] private AudioClip wrongClip;*/
+    [SerializeField] private AudioClip open;
     private AudioSource audioSource;
 
 
@@ -66,6 +61,7 @@ public class KeyCode : MonoBehaviour, IInteractible
         else if (action == Vector2.left)
             idKey--;
 
+        audioSource.PlayOneShot(inputClip);
         idKey = Mathf.Clamp(idKey, 0, keys.Length - 1);
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
     }
@@ -124,10 +120,11 @@ public class KeyCode : MonoBehaviour, IInteractible
         }
     }
 
-    // Lo
-    // rsque le joueur revient en arrière
+    // Lorsque le joueur revient en arrière
     public void OnReturn()
     {
+        if (!isOpen) return;
+
         isOpen = false;
         GUIManager.instance.EnableUseGUI(false);
         GUIManager.instance.EnableHand(false);

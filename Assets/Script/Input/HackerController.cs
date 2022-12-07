@@ -177,7 +177,7 @@ public class HackerController : MonoBehaviour
 						if (screen != null)
 							if (screen.screenState == ScreenState.MiniGame)
 							{
-								Debug.Log(callback.ReadValue<Vector2>());
+								//Debug.Log(callback.ReadValue<Vector2>());
 								screen.miniGame.GetComponent<IMinigame>().Move(callback);
 							}
 					}
