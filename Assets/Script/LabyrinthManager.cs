@@ -17,6 +17,9 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     public List<Serveur> allServeur = new List<Serveur>();
 
+    public AudioClip setUp;
+    private AudioSource audioSource;
+
     private List<Transform> slotChest = new List<Transform>();
     private bool isOpen = false;
     private static bool canNewInput = true;
@@ -32,7 +35,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     private void Start()
     {
-        Debug.Log(chestParent.childCount);
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         for (int i = 0; i < chestParent.childCount; i++)
         {
@@ -64,6 +67,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         isActive = true;
         gameObject.layer = 3;
         beginScreen.SetActive(false);
+        audioSource.PlayOneShot(setUp);
     }
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)

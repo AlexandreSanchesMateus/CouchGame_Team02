@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioMixer music_audioMixer;
     [SerializeField] private AudioMixer ambiance_audioMixer;
+    [SerializeField, Range (0, 5)] private float transitionTime = 0.3f;
 
     int level = 1;
 
@@ -27,7 +28,7 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeAmbiance(AudioMixerSnapshot snapshot)
     {
-        snapshot.TransitionTo(0.3f);
+        snapshot.TransitionTo(transitionTime);
     }
 
     private void Update()

@@ -23,7 +23,12 @@ public class LabyrintheEditor : Editor
         GUILayout.Label("Virtual Cam");
         myObject.vcam = (GameObject)EditorGUILayout.ObjectField(myObject.vcam, typeof(GameObject), true);
         GUILayout.EndHorizontal();
-        
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Audio Set Up");
+        myObject.setUp = (AudioClip)EditorGUILayout.ObjectField(myObject.setUp, typeof(AudioClip), true);
+        GUILayout.EndHorizontal();
+
         GUILayout.BeginHorizontal();
         GUILayout.Label("Parent slot");
         myObject.chestParent = (Transform)EditorGUILayout.ObjectField(myObject.chestParent, typeof(Transform), true);

@@ -55,6 +55,6 @@ public class EnigmeManager : MonoBehaviour
         VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultMecanisme));
         //VaultUp.AppendInterval(5);
         //VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultOpen));
-        VaultUp.Join(gameObject.transform.DOLocalMoveY(PosY, 2.8f).SetEase(Ease.Linear));
+        VaultUp.Join(gameObject.transform.DOLocalMoveY(PosY, 4.8f).SetEase(Ease.Linear));
     }
 }
