@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class billboarding : MonoBehaviour
 {
@@ -21,7 +20,9 @@ public class billboarding : MonoBehaviour
     void Update()
     {
         transform.LookAt(target);
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
     }
+
     private void OnTriggerEnter(Collider other)
     {
         //Sequence mySequence = DOTween.Sequence();
@@ -29,6 +30,7 @@ public class billboarding : MonoBehaviour
         transform.GetChild(0).DOScaleY(0, 0.5f).SetEase(Ease.InOutBack);
 
     }
+
     private void OnTriggerExit(Collider other)
     {
         transform.GetChild(0).DOScaleY(1, 0.5f).SetEase(Ease.OutBounce);
