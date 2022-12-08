@@ -27,26 +27,26 @@ public class EnigmeManager : MonoBehaviour
 
     void Start()
     {
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, 9.12f, gameObject.transform.localPosition.z);
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, 8.47f, gameObject.transform.localPosition.z);
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public void SuccessKeypade()
     {
-        UpdateVaultPosition(10.6f);
+        UpdateVaultPosition(9.94f);
         //gameObject.transform.DOLocalMoveY( 10.6f, 1);
         OnAlarmeEnable(7);
     }
 
     public void SuccessSimon()
     {
-        UpdateVaultPosition(12f);
+        UpdateVaultPosition(11.38f);
         //gameObject.transform.DOLocalMoveY(12f, 1);
     }
 
-    public void SuccessCoffre()
+    public void SuccessElementPad()
     {
-        UpdateVaultPosition(12.5f);
+        UpdateVaultPosition(12.64f);
         //gameObject.transform.DOLocalMoveY(12.5f, 1);
     }
 

@@ -14,13 +14,17 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     [Header("General")]
     [SerializeField] private GameObject lockey;
-    [SerializeField] private TextMeshProUGUI display;
+    [SerializeField] private SpriteRenderer display;
     [SerializeField] private GameObject[] keys;
 
     [Header("Led")]
     [SerializeField] private Material redMat;
     [SerializeField] private Material greenMat;
     [SerializeField] private GameObject[] lights;
+    [SerializeField] private Sprite PopCoin;
+    [SerializeField] private Sprite DogeCoins;
+    [SerializeField] private Sprite SusCoins;
+    [SerializeField] private Sprite PepeCoins;
 
     [Header("Réponses")]
     [SerializeField] private List<Etapes> etapes;
@@ -127,11 +131,15 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
+        yield return new WaitForSeconds(0.5f);
+        display.sprite = null;
+        display.color = Color.green;
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
 
         EnigmeManager.instance.SuccessElement();
         LabyrinthManager.instance.InitLabyrintheScreen();
+        EnigmeManager.instance.SuccessElementPad();
 
         gameObject.layer = 0;
         yield return new WaitForSeconds(2);
@@ -149,7 +157,8 @@ public class ElementPad : MonoBehaviour, IInteractible
         //Set situation
         int idSituation = Random.Range(0, 3);
         currentSituation = etapes[actualEtape].situations[idSituation];
-        display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+        //display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+        display.sprite = GetElementSprite(etapes[actualEtape].situations[idSituation].element);
 
         //Set goodkey
         key = currentSituation.goodkey;
@@ -176,7 +185,6 @@ public class ElementPad : MonoBehaviour, IInteractible
                 {
                     // Destroy(lockey);
                     StartCoroutine(PanelComplet());
-                    display.text = "Well done";
                     return;
                 }
             }
@@ -213,6 +221,26 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void OnRightShoulder() { }
 
     public void OnHoldReturn() { }
+
+    private Sprite GetElementSprite(ELEMENTS _element)
+    {
+        switch (_element)
+        {
+            case ELEMENTS.FIRE:
+                return PopCoin;
+
+            case ELEMENTS.EARTH:
+                return DogeCoins;
+
+            case ELEMENTS.WATER:
+                return SusCoins;
+
+            case ELEMENTS.WIND:
+                return PepeCoins;
+        }
+
+        return null;
+    }
 
     public void InitLabyrintheScreen(Serveur other)
     {
