@@ -1,16 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using System.Diagnostics.Tracing;
 
 public class MiniGameChest : MonoBehaviour, IMinigame 
 {
     [SerializeField] private string code;
     private bool isWin;
-    public TextMeshPro text; 
+    public TextMeshPro text;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip feedback1, feedback2, feedback3, feedback4;
+    [SerializeField] private AudioClip win, lose;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public bool interact(InputAction.CallbackContext callback)
     {
         if (!isWin)
@@ -18,15 +22,19 @@ public class MiniGameChest : MonoBehaviour, IMinigame
             {
                 case "West":
                 text.text += " ";
+                    audioSource.PlayOneShot(feedback1);
                     break;
                 case "South":
                 text.text += ".";
-                break;
+                    audioSource.PlayOneShot(feedback2);
+                    break;
                 case "East":
                 text.text += "-";
-                break;
+                    audioSource.PlayOneShot(feedback3);
+                    break;
                 case "North":
-                    if(text.text.Length>0)
+                    audioSource.PlayOneShot(feedback4);
+                    if (text.text.Length>0)
                     text.text = text.text.Substring(0, text.text.Length - 1);
                 break;
                 default:
@@ -44,8 +52,14 @@ public class MiniGameChest : MonoBehaviour, IMinigame
     {
         if(isWin)
         {
+            //audioSource.PlayOneShot(win);
             text.text = "Jean Cérien";
-            text.color = Color.green;
+           // text.color = Color.green;
+        }
+        if (text.text.Length > 12)
+        {
+            //audioSource.PlayOneShot(lose);
+            text.text="";
         }
     }
     public void Move(InputAction.CallbackContext callback) { }
