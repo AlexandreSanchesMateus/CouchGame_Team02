@@ -14,7 +14,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     [Header("General")]
     [SerializeField] private GameObject lockey;
-    [SerializeField] private SpriteRenderer display;
+    [SerializeField] private Image display;
     [SerializeField] private GameObject[] keys;
 
     [Header("Led")]
@@ -137,7 +137,6 @@ public class ElementPad : MonoBehaviour, IInteractible
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
 
-        EnigmeManager.instance.SuccessElement();
         LabyrinthManager.instance.InitLabyrintheScreen();
         EnigmeManager.instance.SuccessElementPad();
 
@@ -226,16 +225,16 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         switch (_element)
         {
-            case ELEMENTS.FIRE:
+            case ELEMENTS.POP:
                 return PopCoin;
 
-            case ELEMENTS.EARTH:
+            case ELEMENTS.DOGE:
                 return DogeCoins;
 
-            case ELEMENTS.WATER:
+            case ELEMENTS.SUS:
                 return SusCoins;
 
-            case ELEMENTS.WIND:
+            case ELEMENTS.PEPE:
                 return PepeCoins;
         }
 
@@ -246,6 +245,9 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         allServeur.Remove(other);
         if (allServeur.Count <= 0)
+        {
             gameObject.layer = 3;
+            EnigmeManager.instance.OnLightEnable(true);
+        }
     }
 }
