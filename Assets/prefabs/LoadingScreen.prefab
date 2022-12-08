@@ -343,6 +343,7 @@ MonoBehaviour:
   pos2: {fileID: 1894550443821010568}
   clip1: {fileID: 8300000, guid: dd2f00c3808a3624eba9d8a524eae562, type: 3}
   clip2: {fileID: 8300000, guid: 8938d69da8001144e880f6dcadeee035, type: 3}
+  numberRequired: 8
 --- !u!82 &8882886652863983907
 AudioSource:
   m_ObjectHideFlags: 0
@@ -502,7 +503,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
