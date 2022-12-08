@@ -9,6 +9,12 @@ public class EnigmeManager : MonoBehaviour
     [SerializeField] private AudioClip vaultOpen;
     [SerializeField] private AudioClip vaultMecanisme;
 
+    // Prototype
+    public delegate void AlarmLisener(float duration);
+    // déclaration de la variable
+    public AlarmLisener OnAlarmeEnable;
+
+
     private AudioSource audioSource;
 
     private void Awake()
@@ -29,6 +35,7 @@ public class EnigmeManager : MonoBehaviour
     {
         UpdateVaultPosition(10.6f);
         //gameObject.transform.DOLocalMoveY( 10.6f, 1);
+        OnAlarmeEnable(7);
     }
 
     public void SuccessSimon()
