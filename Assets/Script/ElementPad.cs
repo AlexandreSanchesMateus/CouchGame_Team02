@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ElementPad : MonoBehaviour, IInteractible
 {
-    public static ElementPad instance;
+    public static ElementPad instance { get; set; }
     [SerializeField] private GameObject vcam;
 
     // [SerializeField] private GameObject GUIhover;
@@ -38,15 +38,23 @@ public class ElementPad : MonoBehaviour, IInteractible
     private Coroutine corout;
     private bool timerIsRunning = false;
 
-    void Start()
+    public List<Serveur> allServeur = new List<Serveur>();
+
+    private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
+        else
+            Destroy(gameObject);
+    }
 
+    void Start()
+    {
         isOpen = false;
         idKeyBraq = 0;
+        gameObject.layer = 2;
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
@@ -107,8 +115,6 @@ public class ElementPad : MonoBehaviour, IInteractible
 
         braqHavePlayed = true;
         CheckInput();
-        
-        
     }
 
     public void OnReturn()
@@ -125,6 +131,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         vcam.SetActive(false);
 
         EnigmeManager.instance.SuccessElement();
+        LabyrinthManager.instance.InitLabyrintheScreen();
 
         gameObject.layer = 0;
         yield return new WaitForSeconds(2);
@@ -206,4 +213,11 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void OnRightShoulder() { }
 
     public void OnHoldReturn() { }
+
+    public void InitLabyrintheScreen(Serveur other)
+    {
+        allServeur.Remove(other);
+        if (allServeur.Count <= 0)
+            gameObject.layer = 3;
+    }
 }

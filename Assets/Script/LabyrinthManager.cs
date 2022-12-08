@@ -15,8 +15,6 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
     public GameObject vcam;
     public Transform chestParent;
 
-    public List<Serveur> allServeur = new List<Serveur>();
-
     public AudioClip setUp;
     private AudioSource audioSource;
 
@@ -56,13 +54,7 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
         beginScreen.SetActive(true);
     }
 
-    public void CheckServeur(Serveur other)
-    {
-        allServeur.Remove(other);
-        if (allServeur.Count <= 0) InitLabyrintheScreen();
-    }
-
-    private void InitLabyrintheScreen()
+    public void InitLabyrintheScreen()
     {
         isActive = true;
         gameObject.layer = 3;
