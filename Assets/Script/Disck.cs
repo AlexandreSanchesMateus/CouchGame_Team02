@@ -69,9 +69,9 @@ public class Disck : MonoBehaviour, IInteractible
             angle += 360;
 
         if (!snapSteps)
-            spinPart.transform.rotation = Quaternion.Euler(0, 0, angle);
+            spinPart.transform.localRotation = Quaternion.Euler(0, 0, angle);
         else
-            spinPart.transform.rotation = Quaternion.Euler(0, 0, -(360.0f/step * AngleToStep(angle)));
+            spinPart.transform.localRotation = Quaternion.Euler(0, 0, -(360.0f/step * AngleToStep(angle)));
 
         lastJoystickAngle = stickRotationInDeg;
     }
@@ -93,8 +93,14 @@ public class Disck : MonoBehaviour, IInteractible
             {
                 for (int i = 0; i < combinationSelected.Count; i++)
                 {
-                    if (combinationSelected[i].rotation == combination[i].rotation && combinationSelected[i].Value == combinationSelected[i].Value)
+                    if (combinationSelected[i].rotation == combination[i].rotation && combinationSelected[i].Value == combination[i].Value)
                         continue;
+                    else
+                    {
+                        Debug.Log("BITE");
+                        pass = false;
+                        break;
+                    }
 
                     /*if (i < combination.Length)
                     {
@@ -106,9 +112,6 @@ public class Disck : MonoBehaviour, IInteractible
                         if (combinationSelected[i].Value + errorMargin > combination[i - 1].Value && combinationSelected[i].Value - errorMargin < combination[i - 1].Value)
                             continue;
                     }*/
-
-                    pass = false;
-                    break;
                 }
             }
             else
@@ -125,7 +128,7 @@ public class Disck : MonoBehaviour, IInteractible
                 Debug.Log("You don't pass");
                 angle = 0;
                 rotationDisck = ROTATION.UNKNOWN;
-                spinPart.transform.rotation = Quaternion.Euler(angle, 270, 270);
+                spinPart.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 combinationSelected.Clear();
             }
         }

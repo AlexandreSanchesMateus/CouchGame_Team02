@@ -14,7 +14,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     [Header("General")]
     [SerializeField] private GameObject lockey;
-    [SerializeField] private Image display;
+    [SerializeField] private TextMeshProUGUI display;
     [SerializeField] private GameObject[] keys;
 
     [Header("Led")]
@@ -132,8 +132,8 @@ public class ElementPad : MonoBehaviour, IInteractible
     private IEnumerator PanelComplet()
     {
         yield return new WaitForSeconds(0.5f);
-        display.sprite = null;
-        display.color = Color.green;
+        /*display.sprite = null;
+        display.color = Color.green;*/
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
 
@@ -156,8 +156,8 @@ public class ElementPad : MonoBehaviour, IInteractible
         //Set situation
         int idSituation = Random.Range(0, 3);
         currentSituation = etapes[actualEtape].situations[idSituation];
-        //display.text = etapes[actualEtape].situations[idSituation].element.ToString();
-        display.sprite = GetElementSprite(etapes[actualEtape].situations[idSituation].element);
+        display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+        //display.sprite = GetElementSprite(etapes[actualEtape].situations[idSituation].element);
 
         //Set goodkey
         key = currentSituation.goodkey;
