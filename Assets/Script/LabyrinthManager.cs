@@ -123,7 +123,7 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
             moveKinkSequence.AppendCallback(() => canNewInput = true);
 
             if (labyrinth.idPlayerSlot == labyrinth.idEndLabyrinth)
-                Debug.Log("WIN");
+                StartCoroutine(PanelComplet());
         }
     }
 
@@ -222,4 +222,12 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
     public void OnRightShoulder() { }
 
     public void OnHoldReturn() { }
+
+    private IEnumerator PanelComplet()
+    {
+        vcam.SetActive(false);
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(2);
+        PlayerControllerProto2.enablePlayerMovement = true;
+    }
 }
