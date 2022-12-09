@@ -209,6 +209,7 @@ public class ElementPad : MonoBehaviour, IInteractible
                 corout = StartCoroutine(cooldown());
         }
     }
+
     IEnumerator cooldown()
     {
         timerIsRunning = true;
