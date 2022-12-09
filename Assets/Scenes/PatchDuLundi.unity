@@ -25069,7 +25069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Keyboard
+      value: Gamepad
       objectReference: {fileID: 0}
     - target: {fileID: 6278166380298309707, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -25222,6 +25222,10 @@ PrefabInstance:
     - target: {fileID: 7878069747631107474, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: playerSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7878069747631107474, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
+      propertyPath: sensitivity
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7878069747631107474, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: layer.m_Bits
