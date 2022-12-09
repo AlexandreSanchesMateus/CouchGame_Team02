@@ -21,11 +21,6 @@ public class AudioManager : MonoBehaviour
             Destroy(this);
     }
 
-    public void ChangeMusicLevel(int level)
-    {
-        music_audioMixer.FindSnapshot("LEVEL_" + level.ToString()).TransitionTo(0.3f);
-    }
-
     public void ChangeAmbiance(AudioMixerSnapshot snapshot)
     {
         snapshot.TransitionTo(transitionTime);
@@ -35,17 +30,31 @@ public class AudioManager : MonoBehaviour
     {
         if (Input.GetKeyDown(UnityEngine.KeyCode.M))
         {
-            level--;
-            level = Mathf.Clamp(level, 1, 10);
-            ChangeMusicLevel(level);
+            ReduceMusicLevel();
         }
 
         if (Input.GetKeyDown(UnityEngine.KeyCode.P))
         {
-            level++;
-            level = Mathf.Clamp(level, 1, 10);
-            ChangeMusicLevel(level);
+            IncreaseMusicLevel();
         }
+    }
+
+    public void IncreaseMusicLevel()
+    {
+        level++;
+        ChangeMusicLevel(level);
+    }
+
+    public void ReduceMusicLevel()
+    {
+        level--;
+        ChangeMusicLevel(level);
+    }
+
+    public void ChangeMusicLevel(int level)
+    {
+        level = Mathf.Clamp(level, 1, 10);
+        music_audioMixer.FindSnapshot("LEVEL_" + level.ToString()).TransitionTo(0.3f);
     }
 
     public static float ParseToDebit0(float value)
