@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class MiniGameChest : MonoBehaviour, IMinigame 
 {
     [SerializeField] private string code;
-    private bool isWin;
+    private bool isWining;
+    private bool hasWin;
     public TextMeshPro text;
+    public TextMeshPro finaltext;
     private AudioSource audioSource;
     [SerializeField] private AudioClip feedback1, feedback2, feedback3, feedback4;
     [SerializeField] private AudioClip win, lose;
@@ -17,7 +20,7 @@ public class MiniGameChest : MonoBehaviour, IMinigame
     }
     public bool interact(InputAction.CallbackContext callback)
     {
-        if (!isWin)
+        if (!isWining)
             switch (callback.action.name)
             {
                 case "West":
@@ -43,20 +46,22 @@ public class MiniGameChest : MonoBehaviour, IMinigame
 
         if (text.text == code)
         {
-            isWin = true;
+            isWining = true;
             return true;
         }
         return false;
     }
     private void Update()
     {
-        if(isWin)
+        if (isWining && !hasWin)
         {
-            //audioSource.PlayOneShot(win);
-            text.text = "Jean Cérien";
-           // text.color = Color.green;
+            audioSource.PlayOneShot(win);
+            text.text = "Jean Cerien";
+            text.color = Color.green;
+            hasWin = true;
+            Debug.Log("Win");
         }
-        if (text.text.Length > 12)
+        if (text.text.Length > 12&& !hasWin)
         {
             //audioSource.PlayOneShot(lose);
             text.text="";
