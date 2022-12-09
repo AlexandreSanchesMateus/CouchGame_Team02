@@ -116,6 +116,7 @@ public class HackerController : MonoBehaviour
 
 									if (screen.currentPopup.Count <= 0)
                                     {
+										screen.screenState = ScreenState.MiniGame;
 										lastCorout = StartCoroutine(popupDelay());
 										if (!loadingSreen)
 											StartCoroutine(loadDelay());
