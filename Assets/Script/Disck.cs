@@ -188,8 +188,6 @@ public class Disck : MonoBehaviour, IInteractible
         vcam.SetActive(false);
         gameObject.layer = 0;
 
-        EnigmeManager.instance.SuccessCoffre();
-
         yield return new WaitForSeconds(2);
         PlayerControllerProto2.enablePlayerMovement = true;
     }

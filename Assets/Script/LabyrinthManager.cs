@@ -4,18 +4,19 @@ using UnityEngine;
 using DG.Tweening;
 
 [System.Serializable]
-public class LabyrinthManager : MonoBehaviour , IInteractible
+public class LabyrinthManager : MonoBehaviour, IInteractible
 {
     public static LabyrinthManager instance { get; private set; }
 
     public GameObject king;
-    public ScrLabyrinth labyrinth;
+    [SerializeField] public ScrLabyrinth labyrinth;
     public GameObject beginScreen;
 
     public GameObject vcam;
     public Transform chestParent;
 
-    public List<Serveur> allServeur = new List<Serveur>();
+    public AudioClip setUp;
+    private AudioSource audioSource;
 
     private List<Transform> slotChest = new List<Transform>();
     private bool isOpen = false;
@@ -32,7 +33,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
 
     private void Start()
     {
-        Debug.Log(chestParent.childCount);
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         for (int i = 0; i < chestParent.childCount; i++)
         {
@@ -53,17 +54,12 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
         beginScreen.SetActive(true);
     }
 
-    public void CheckServeur(Serveur other)
-    {
-        allServeur.Remove(other);
-        if (allServeur.Count <= 0) InitLabyrintheScreen();
-    }
-
-    private void InitLabyrintheScreen()
+    public void InitLabyrintheScreen()
     {
         isActive = true;
         gameObject.layer = 3;
         beginScreen.SetActive(false);
+        audioSource.PlayOneShot(setUp);
     }
 
     public void MovePlayerOnGrid(Vector2 direction, bool isRobberMoving = false)
@@ -127,7 +123,7 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
             moveKinkSequence.AppendCallback(() => canNewInput = true);
 
             if (labyrinth.idPlayerSlot == labyrinth.idEndLabyrinth)
-                Debug.Log("WIN");
+                StartCoroutine(PanelComplet());
         }
     }
 
@@ -226,4 +222,12 @@ public class LabyrinthManager : MonoBehaviour , IInteractible
     public void OnRightShoulder() { }
 
     public void OnHoldReturn() { }
+
+    private IEnumerator PanelComplet()
+    {
+        vcam.SetActive(false);
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(2);
+        PlayerControllerProto2.enablePlayerMovement = true;
+    }
 }

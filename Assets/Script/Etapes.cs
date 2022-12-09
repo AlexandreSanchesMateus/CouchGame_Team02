@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Etapes
 {
-    public Situation[] situations = { new Situation(ELEMENTS.FIRE), new Situation(ELEMENTS.WATER), new Situation(ELEMENTS.WIND), new Situation(ELEMENTS.EARTH), };
+    public Situation[] situations = { new Situation(ELEMENTS.POP), new Situation(ELEMENTS.SUS), new Situation(ELEMENTS.PEPE), new Situation(ELEMENTS.DOGE), };
 }
 
 [System.Serializable]
@@ -25,8 +25,8 @@ public struct Situation
 [System.Serializable]
 public enum ELEMENTS
 {
-    FIRE,
-    WATER,
-    WIND,
-    EARTH
+    POP,
+    SUS,
+    PEPE,
+    DOGE
 }

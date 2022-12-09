@@ -12,7 +12,7 @@ public class InspectedObject : MonoBehaviour , IInteractible
     [SerializeField] private TrailRenderer trailRenderer;
 
     [HideInInspector] public Rigidbody rb;
-    private BoxCollider[] boxCollider;
+    private Collider[] Collider;
     private Transform startParent;
 
     Sequence PickUpSequence;
@@ -26,7 +26,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        boxCollider = gameObject.GetComponents<BoxCollider>();
+        Collider = gameObject.GetComponents<Collider>();
+        //Collider = gameObject.GetComponents<SphereCollider>();
         startParent = gameObject.transform.parent;
         throwForce = defaultThrowForce;
     }
@@ -55,10 +56,11 @@ public class InspectedObject : MonoBehaviour , IInteractible
         // Attach (move to transform parent)
         gameObject.transform.SetParent(PlayerControllerProto2.instance.hand);
         // disable colider
-        foreach (BoxCollider other in boxCollider)
+        foreach (Collider other in Collider)
         {
             other.enabled = false;
         }
+
         // disable RigidBody
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
@@ -96,7 +98,7 @@ public class InspectedObject : MonoBehaviour , IInteractible
         // Dettach
         gameObject.transform.SetParent(startParent);
         // enable colider        
-        foreach (BoxCollider other in boxCollider)
+        foreach (Collider other in Collider)
         {
             other.enabled = true;
         }

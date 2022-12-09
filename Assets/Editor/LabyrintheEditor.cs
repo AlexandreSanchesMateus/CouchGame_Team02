@@ -19,33 +19,26 @@ public class LabyrintheEditor : Editor
     {
 
         GUILayout.Label("Generale Settings");
-        GUILayout.BeginHorizontal();
         GUILayout.Label("Virtual Cam");
         myObject.vcam = (GameObject)EditorGUILayout.ObjectField(myObject.vcam, typeof(GameObject), true);
-        GUILayout.EndHorizontal();
-        
-        GUILayout.BeginHorizontal();
+
+        GUILayout.Label("Audio Set Up");
+        myObject.setUp = (AudioClip)EditorGUILayout.ObjectField(myObject.setUp, typeof(AudioClip), true);
+
         GUILayout.Label("Parent slot");
         myObject.chestParent = (Transform)EditorGUILayout.ObjectField(myObject.chestParent, typeof(Transform), true);
-        GUILayout.EndHorizontal();
 
-        GUILayout.BeginHorizontal();
         GUILayout.Label("Begin Screen");
         myObject.beginScreen = (GameObject)EditorGUILayout.ObjectField(myObject.beginScreen, typeof(GameObject), true);
-        GUILayout.EndHorizontal();
 
-        GUILayout.BeginHorizontal();
         GUILayout.Label("king");
         myObject.king = (GameObject)EditorGUILayout.ObjectField(myObject.king, typeof(GameObject), true);
-        GUILayout.EndHorizontal();
 
         GUILayout.Space(20);
         GUILayout.Label("Ref Labyrinthe");
 
-        GUILayout.BeginHorizontal();
         GUILayout.Label("Labyrinthe");
         myObject.labyrinth = (ScrLabyrinth)EditorGUILayout.ObjectField(myObject.labyrinth, typeof(ScrLabyrinth), true);
-        GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
 
