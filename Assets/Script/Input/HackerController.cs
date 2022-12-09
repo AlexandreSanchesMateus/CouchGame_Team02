@@ -24,7 +24,8 @@ public class HackerController : MonoBehaviour
 	public GameObject setUp, loadGame;
 	public Material setupMaterial, loadMaterial;
 	private bool locked;
-    private bool loadingSreen = false;
+	private bool loadingSreen = false;
+	private bool popupStack = false;
 
 	public AudioSource audioS;
 	public List<AudioClip> SFXChangeScreens;
@@ -74,9 +75,6 @@ public class HackerController : MonoBehaviour
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(true);
 				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0,SFXChangeScreens.Count-1)]);
 			}
-
-			StopCoroutine(lastCorout);
-			lastCorout = StartCoroutine(popupDelay());
 		}
 	}
 	public void Decrement(InputAction.CallbackContext callback)
@@ -90,9 +88,6 @@ public class HackerController : MonoBehaviour
 				MiniGamescreens.GetComponent<screensholder>().DoRotate(false);
 				audioS.PlayOneShot(SFXChangeScreens[Random.Range(0, SFXChangeScreens.Count - 1)]);
 			}
-
-			StopCoroutine(lastCorout);
-			lastCorout = StartCoroutine(popupDelay());
 		}
 	}
 
@@ -138,6 +133,11 @@ public class HackerController : MonoBehaviour
 									GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
 									screen.screenState = ScreenState.MiniGame;
 									StartCoroutine(loadDelay());
+									if (!popupStack)
+                                    {
+										screen.displayPopUp();
+										popupStack = false;
+                                    }
 								}
 								break;
 							case ScreenState.Hack:
@@ -214,13 +214,17 @@ public class HackerController : MonoBehaviour
 
 	IEnumerator popupDelay()
 	{
-		yield return new WaitForSeconds(Random.Range(20f, 30f));
+		yield return new WaitForSeconds(3f);
 		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
 		if (screen != null)
+        {
 			if (screen.screenState == ScreenState.MiniGame && screen.currentPopup.Count <= 0)
 				screen.displayPopUp();
+			else
+				popupStack = true;
+        }
 	}
 
 	IEnumerator EndSetup(Screen scr)
@@ -240,16 +244,23 @@ public class HackerController : MonoBehaviour
 	IEnumerator loadDelay()
 	{
 		loadingSreen = true;
-		yield return new WaitForSeconds(Random.Range(120f, 240f));
+		yield return new WaitForSeconds(5f);
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (scr.screenState == ScreenState.MiniGame)
+		if (scr.screenState != ScreenState.Load)
 		{
-			while (!scrHold.CanRotate)
-			{
-
+			if(scr.screenState == ScreenState.Popups)
+            {
+				scr.ShutDownPopup();
 			}
+            else
+            {
+				while (!scrHold.CanRotate)
+				{
+					
+				}
+            }
 			scr.screenState = ScreenState.Load;
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
 			scr.miniGame = loadGame;

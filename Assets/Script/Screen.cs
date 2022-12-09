@@ -128,8 +128,8 @@ public class Screen : MonoBehaviour
 				HackerController.instance.audioS.pitch = pitch;
 				HackerController.instance.audioS.PlayOneShot(SFXFightPopups[Random.Range(0, SFXFightPopups.Count - 1)]);
 				HackerController.instance.audioS.pitch = 1f;
-				StartCoroutine(destroyPopup(currentPopup[0]));
-				currentPopup.RemoveAt(0);
+				StartCoroutine(destroyPopup());
+				
 				currentPopupLife = Random.Range(1, 3);
 			}
 			if (currentPopup.Count > 0)
@@ -141,16 +141,24 @@ public class Screen : MonoBehaviour
 		screenState = ScreenState.MiniGame;
 		return false;
 	}
-	IEnumerator destroyPopup(GameObject popup)
+	public IEnumerator destroyPopup()
 	{
 		mySequence = DOTween.Sequence();
-		mySequence.Append(popup.transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
+		mySequence.Append(currentPopup[0].transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
 		//mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
 		yield return new WaitForSeconds(0.2f);
-		popup.SetActive(false);
-        popup.transform.localScale = new Vector3(0.05f, 1, 0.03f);
-    }
+		currentPopup[0].SetActive(false);
+		currentPopup[0].transform.localScale = new Vector3(0.05f, 1, 0.03f);
+		currentPopup.RemoveAt(0);
+	}
 
+	public void ShutDownPopup()
+    {
+		foreach (GameObject popup in currentPopup)
+		{
+			StartCoroutine(destroyPopup());
+		}
+	}
 	public void LockScreen()
 	{
 		codeToUnlock = new List<string>();
