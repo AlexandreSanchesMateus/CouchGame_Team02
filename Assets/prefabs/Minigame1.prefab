@@ -558,8 +558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.6, y: 2.28}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: 0.6, y: 4.67}
+  m_SizeDelta: {x: 7.7829, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1729622460
 MeshRenderer:
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 14.426247, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.016319275, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -1398,6 +1398,8 @@ MonoBehaviour:
   Cam: {fileID: 5949478322294919031}
   code: 14
   text: {fileID: 1729622459}
+  good: {fileID: 0}
+  bad: {fileID: 0}
 --- !u!1 &5949478322294919050
 GameObject:
   m_ObjectHideFlags: 0

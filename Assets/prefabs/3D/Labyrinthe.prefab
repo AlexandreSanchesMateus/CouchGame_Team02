@@ -4735,11 +4735,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   king: {fileID: 2803068126235516274}
-  labyrinth: {fileID: 11400000, guid: 184ff80543f209a41b39feeebc6ad74c, type: 2}
+  labyrinth: {fileID: 11400000, guid: d896283c843e9ce4884f4f93eaabf7de, type: 2}
   beginScreen: {fileID: 2803068126294402920}
   vcam: {fileID: 2803068127959658855}
   chestParent: {fileID: 2803068127016651323}
-  allServeur: []
   setUp: {fileID: 0}
 --- !u!114 &96974768414932614
 MonoBehaviour:
