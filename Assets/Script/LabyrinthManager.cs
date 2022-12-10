@@ -23,6 +23,8 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
     private static bool canNewInput = true;
     private bool isActive = false;
 
+    public AudioClip SFXHackerMove, SFXRobberMove;
+
     private void Awake()
     {
         if (instance == null)
@@ -135,6 +137,10 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
                 return false;
 
             case Slot.ACCESS.BOTH:
+                if (!isRobberMoving)
+                    HackerController.instance.audioS.PlayOneShot(SFXHackerMove);
+                if (isRobberMoving)
+                    HackerController.instance.audioS.PlayOneShot(SFXRobberMove);
                 return true;
 
             case Slot.ACCESS.EITHER:
@@ -143,7 +149,10 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 
             case Slot.ACCESS.HACKER:
                 if (!isRobberMoving)
+                {
+                    HackerController.instance.audioS.PlayOneShot(SFXHackerMove);
                     return true;
+                }
                 else
                 {
                     ResetLabyrinthe();
@@ -152,7 +161,10 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 
             case Slot.ACCESS.ROBBER:
                 if (isRobberMoving)
+                {
+                    HackerController.instance.audioS.PlayOneShot(SFXRobberMove);
                     return true;
+                }
                 else
                 {
                     ResetLabyrinthe();
