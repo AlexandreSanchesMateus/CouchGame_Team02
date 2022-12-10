@@ -227,7 +227,7 @@ public class HackerController : MonoBehaviour
 		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (screen != null)
+		if (screen != null && screen.tag != "FakeScreen")
         {
 			if (screen.screenState == ScreenState.MiniGame && screen.currentPopup.Count <= 0)
 				screen.displayPopUp();
