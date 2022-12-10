@@ -16,7 +16,7 @@ public class KeyCode : MonoBehaviour, IInteractible
     [SerializeField] private string goodCode;
     [SerializeField] private GameObject door;
 
-    [Header("Auio")]
+    [Header("Audio")]
     [SerializeField] private AudioClip sucsess;
     [SerializeField] private AudioClip fail;
     [SerializeField] private AudioClip[] selections;

@@ -39,6 +39,16 @@ public class SimonPad : MonoBehaviour, IInteractible
     private ColorSimon currentColorText;
     private ColorSimon currentColor;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip sucsess;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioClip validate;
+    [SerializeField] private AudioClip clear;
+    [SerializeField] private AudioClip[] hover;
+    [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip open;
+    private AudioSource audioSource;
+
     //public static Vector2 hacker { set { hacker = value; OnActionsHacker();  } }
 
     public int hackeurId;
@@ -59,6 +69,8 @@ public class SimonPad : MonoBehaviour, IInteractible
         isOpen = false;
         braqueurId = 0;
         nbValid = 0;
+
+        audioSource = GetComponent<AudioSource>();
         // keys[idKey].GetComponent<Image>().sprite = selected;
         // GUIhover.SetActive(false);
         // Pad.SetActive(false);
@@ -88,7 +100,7 @@ public class SimonPad : MonoBehaviour, IInteractible
             }
         }
 
-
+        audioSource.PlayOneShot(inputClip);
         braqueurId = Mathf.Clamp(braqueurId, 0, keys.Length - 1);
         // keys[idKey].GetComponent<Image>().sprite = selected;
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
@@ -108,6 +120,7 @@ public class SimonPad : MonoBehaviour, IInteractible
                 {
                     StartCoroutine(PanelComplet());
                 }
+                //audioSource.PlayOneShot();
             }
             else
             {
@@ -131,6 +144,7 @@ public class SimonPad : MonoBehaviour, IInteractible
     {
         if (!isOpen)
         {
+            audioSource.PlayOneShot(open);
             idColor = 0;
             // GUIhover.SetActive(false);
             GUIManager.instance.EnableUseGUI(false);

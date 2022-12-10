@@ -44,7 +44,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public List<Serveur> allServeur = new List<Serveur>();
 
-    [Header("Auio")]
+    [Header("Audio")]
     [SerializeField] private AudioClip sucsess;
     [SerializeField] private AudioClip fail;
     [SerializeField] private AudioClip[] validations;
@@ -191,7 +191,6 @@ public class ElementPad : MonoBehaviour, IInteractible
             {
                 lights[actualEtape].GetComponent<MeshRenderer>().material = greenMat;
                 previousElement.Add(key);
-                audioSource.PlayOneShot(validations[actualEtape - 1]);
                 actualEtape++;
                 if (actualEtape == 6)
                 {
@@ -200,6 +199,7 @@ public class ElementPad : MonoBehaviour, IInteractible
                     StartCoroutine(PanelComplet());
                     return;
                 }
+                audioSource.PlayOneShot(validations[actualEtape - 2]);
             }
             else
             {
