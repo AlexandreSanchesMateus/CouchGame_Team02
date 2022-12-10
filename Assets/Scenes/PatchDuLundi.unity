@@ -22379,6 +22379,11 @@ Transform:
   m_Father: {fileID: 541992253}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1104475413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2579319771754054557, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+  m_PrefabInstance: {fileID: 1736819846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1117464191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35404,6 +35409,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: fail
+      value: 
+      objectReference: {fileID: 8300000, guid: 575a9fc8b0f4b0540a10ce3b460f12fe, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: open
+      value: 
+      objectReference: {fileID: 8300000, guid: c4da3551102be7f4c84516e6611c1649, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
       propertyPath: time
       value: 10
       objectReference: {fileID: 0}
@@ -35411,6 +35424,10 @@ PrefabInstance:
       propertyPath: PopCoin
       value: 
       objectReference: {fileID: 21300000, guid: 7ea7cefb78c69364ab296a475319c2ff, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: sucsess
+      value: 
+      objectReference: {fileID: 8300000, guid: ee3905432653a2844ac1a1a745b447b0, type: 3}
     - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
       propertyPath: SusCoins
       value: 
@@ -35423,6 +35440,34 @@ PrefabInstance:
       propertyPath: PepeCoins
       value: 
       objectReference: {fileID: 21300000, guid: abcdc2bc75e73604cb127c582fe77bc7, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: inputClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f1a99ec9efb6cc24082478d743702f17, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ff9dd9f58f48d64459213f5748cea416, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e000500b94a29e4babb78ab757353b4, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: f39bd266481d8ee4a851dcd1568d1ff1, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8d85fc30a60bbc240a4eede3824297ae, type: 3}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: validations.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 09cf70232a89b1047ac056e6c235d303, type: 3}
     - target: {fileID: 2579319771754054557, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
       propertyPath: m_Name
       value: ElementPad (1)
@@ -35486,6 +35531,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2579319771754054529, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
   m_PrefabInstance: {fileID: 1736819846}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1736819852
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104475413}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3797822102677870096, guid: 91a4e8dffeb1e2a4591f66ea205f4162, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1746000593
 PrefabInstance:
   m_ObjectHideFlags: 0
