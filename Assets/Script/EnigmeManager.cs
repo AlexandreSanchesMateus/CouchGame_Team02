@@ -12,7 +12,7 @@ public class EnigmeManager : MonoBehaviour
 
     // Prototype
     public delegate void AlarmLisener(float duration);
-    // déclaration de la variable
+    // dï¿½claration de la variable
     public AlarmLisener OnAlarmeEnable;
 
     public delegate void LightLisener(bool status);

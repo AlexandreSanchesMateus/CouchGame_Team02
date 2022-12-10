@@ -189,7 +189,8 @@ public class KeyCode : MonoBehaviour, IInteractible
             yield return new WaitForSeconds(1);
             vcam.SetActive(false);
             GUIManager.instance.EnableHand(false);
-            // AudioSpeaker.instance.AlarmIntensite();
+            AudioSpeaker.instance.AlarmIntensite();
+            AudioSpeaker.instance.StartCoroutine(AudioSpeaker.instance.StopAfter(6));
             gameObject.layer = LayerMask.GetMask("Ignore Raycast");
             yield return new WaitForSeconds(2);
             PlayerControllerProto2.enablePlayerMovement = true;
