@@ -39,6 +39,27 @@ public class VolumeSettings : MonoBehaviour
         ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
     }
 
+    private void Start()
+    {
+        if (musicMixer.GetFloat(MIXER_MUSIC, out float music))
+        {
+            musicSlider.value = ParseToDebit20(music);
+            Debug.Log("MUSIC" + music);
+        }
+
+        if (sfxMixer.GetFloat(MIXER_SFX, out float sfx))
+        {
+            sfxSlider.value = ParseToDebit20(sfx);
+            Debug.Log("SFX" + sfx);
+        }
+
+        if (ambianceMixer.GetFloat(MIXER_AMBIENCE, out float ambience))
+        {
+            ambienceSlider.value = ParseToDebit20(ambience);
+            Debug.Log("Ambance" + ambience);
+        }
+    }
+
     private void SubmitMusicField(string value)
     {
         if (float.TryParse(value, out float submit))
