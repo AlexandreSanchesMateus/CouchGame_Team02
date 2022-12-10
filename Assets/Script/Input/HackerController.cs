@@ -29,8 +29,11 @@ public class HackerController : MonoBehaviour
 
 	public AudioSource audioS;
 	public List<AudioClip> SFXChangeScreens;
-	public AudioClip SFXBoot, SFXLoad; 
+	public AudioClip SFXBoot, SFXLoad;
 
+    public List<Light> HackerLight = new List<Light>();
+	public Color baseColor;
+    public Color malus;
     private void Start()
 	{
 		originalCamTransform = cam1.transform;
@@ -264,7 +267,12 @@ public class HackerController : MonoBehaviour
             }
 			scr.screenState = ScreenState.Load;
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
-			scr.miniGame = loadGame;
+   //         Sequence newSequence = DOTween.Sequence();
+			//foreach (var l in HackerLight)
+			//{
+			//	newSequence.Join(l.DOColor(malus, 0.5f));
+   //         }
+            scr.miniGame = loadGame;
 			scrHold.TurnOffScreen(scr.transform);
 			audioS.PlayOneShot(SFXLoad);
 			loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, false);
