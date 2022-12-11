@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  clips:
+  - {fileID: 8300000, guid: d53b44c5fea809844a74bc18c876ae9a, type: 3}
+  - {fileID: 8300000, guid: 052f073650618d941a37fcad80a22224, type: 3}
   feedback1: {fileID: 8300000, guid: 7124695ad3433104bbd3649814ea9265, type: 3}
 --- !u!65 &2319490853035568387
 BoxCollider:
@@ -71,7 +74,7 @@ AudioSource:
   m_GameObject: {fileID: 3130970055340813643}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 91a4e8dffeb1e2a4591f66ea205f4162, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

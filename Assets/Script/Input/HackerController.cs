@@ -134,6 +134,11 @@ public class HackerController : MonoBehaviour
 									screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
 									screen.miniGame = screen.game;
 									audioS.PlayOneShot(SFXBoot);
+									Sequence newSequence = DOTween.Sequence();
+									foreach (var l in HackerLight)
+									{
+										newSequence.Join(l.DOColor(baseColor, 0.5f));
+									}
 									GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
 									screen.screenState = ScreenState.MiniGame;
 									StartCoroutine(loadDelay());
@@ -222,7 +227,7 @@ public class HackerController : MonoBehaviour
 		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (screen != null)
+		if (screen != null && screen.tag != "FakeScreen")
         {
 			if (screen.screenState == ScreenState.MiniGame && screen.currentPopup.Count <= 0)
 				screen.displayPopUp();
@@ -252,7 +257,7 @@ public class HackerController : MonoBehaviour
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
-		if (scr.screenState != ScreenState.Load)
+		if (scr.screenState != ScreenState.Load && scr.tag != "FakeScreen")
 		{
 			if(scr.screenState == ScreenState.Popups)
             {
@@ -267,16 +272,30 @@ public class HackerController : MonoBehaviour
             }
 			scr.screenState = ScreenState.Load;
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
-   //         Sequence newSequence = DOTween.Sequence();
-			//foreach (var l in HackerLight)
-			//{
-			//	newSequence.Join(l.DOColor(malus, 0.5f));
-   //         }
+			Sequence newSequence = DOTween.Sequence();
+			foreach (var l in HackerLight)
+			{
+				newSequence.Join(l.DOColor(malus, 0.5f));
+			}
             scr.miniGame = loadGame;
 			scrHold.TurnOffScreen(scr.transform);
 			audioS.PlayOneShot(SFXLoad);
 			loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, false);
 			loadingSreen = false;
 		}
+	}
+
+	public void WrongAnswerLights()
+    {
+		foreach (var l in HackerLight)
+		{
+			Sequence newSequence = DOTween.Sequence();
+			for(int i = 0; i<3; i++)
+			{
+				newSequence.Append(l.DOColor(malus, 0.2f));
+				newSequence.Append(l.DOColor(baseColor, 0.2f));
+			}
+		}
+
 	}
 }

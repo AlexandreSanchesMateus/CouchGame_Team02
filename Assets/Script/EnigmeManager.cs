@@ -12,7 +12,7 @@ public class EnigmeManager : MonoBehaviour
 
     // Prototype
     public delegate void AlarmLisener(float duration);
-    // déclaration de la variable
+    // dï¿½claration de la variable
     public AlarmLisener OnAlarmeEnable;
 
     public delegate void LightLisener(bool status);
@@ -38,16 +38,19 @@ public class EnigmeManager : MonoBehaviour
 
     public void SuccessKeypade()
     {
+        AudioManager.instance.IncreaseMusicLevel();
         UpdateVaultPosition(9.94f);
     }
 
     public void SuccessSimon()
     {
+        AudioManager.instance.IncreaseMusicLevel();
         UpdateVaultPosition(11.38f, true);
     }
 
     public void SuccessElementPad()
     {
+        AudioManager.instance.IncreaseMusicLevel();
         UpdateVaultPosition(12.64f);
     }
 

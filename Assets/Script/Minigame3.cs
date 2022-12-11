@@ -8,6 +8,7 @@ public class Minigame3 : MonoBehaviour , IMinigame
 	private int key;
 	[SerializeField] private Material selected, notSelected;
 	[SerializeField] private List<GameObject> buttons;
+	public AudioClip SFXSelect, SFXHover;
 
 	private bool haveInput = false;
 
@@ -23,6 +24,7 @@ public class Minigame3 : MonoBehaviour , IMinigame
 
 	public bool interact(InputAction.CallbackContext callback)
 	{
+		HackerController.instance.audioS.PlayOneShot(SFXSelect);
 		ElementPad.instance.idKeyHacker = key;
 		ElementPad.instance.hackHavePlayed = true;
 		ElementPad.instance.CheckInput();
@@ -34,7 +36,7 @@ public class Minigame3 : MonoBehaviour , IMinigame
 		if (haveInput && callback.ReadValue<Vector2>().magnitude < 0.5f) haveInput = false;
 
 		if (haveInput || !callback.performed || callback.ReadValue<Vector2>().magnitude < 0.5f) return;
-
+		HackerController.instance.audioS.PlayOneShot(SFXHover);
 		haveInput = true;
 		Vector2 val = callback.ReadValue<Vector2>().normalized;
 		if (val.x != 0)

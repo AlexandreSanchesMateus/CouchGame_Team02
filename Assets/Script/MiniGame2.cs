@@ -7,6 +7,7 @@ public class MiniGame2 : MonoBehaviour,IMinigame
 {
 	private float stickRotationInDeg;
 	private GameObject color, selectedColor;
+	public AudioClip SFXSelect, SFXHover;
 
 	public bool interact(InputAction.CallbackContext ctx)
 	{
@@ -34,6 +35,8 @@ public class MiniGame2 : MonoBehaviour,IMinigame
 					id = 5;
 					break;
 			}
+
+			HackerController.instance.audioS.PlayOneShot(SFXSelect);
 
 			Debug.Log("hackerId " + SimonPad.instance.hackeurId);
 			Debug.Log("hackerPlay " + SimonPad.instance.hackeurPlay);
@@ -65,8 +68,8 @@ public class MiniGame2 : MonoBehaviour,IMinigame
 				color = hit.transform.gameObject;
 				if(selectedColor != color)
                 {
+					HackerController.instance.audioS.PlayOneShot(SFXHover);
 					selectedColor = color;
-					
 				}
             }
         }

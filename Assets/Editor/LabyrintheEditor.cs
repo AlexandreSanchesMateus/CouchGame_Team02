@@ -24,6 +24,14 @@ public class LabyrintheEditor : Editor
 
         GUILayout.Label("Audio Set Up");
         myObject.setUp = (AudioClip)EditorGUILayout.ObjectField(myObject.setUp, typeof(AudioClip), true);
+        GUILayout.Label("Hacker move");
+        myObject.SFXHackerMove = (AudioClip)EditorGUILayout.ObjectField(myObject.SFXHackerMove, typeof(AudioClip), true);
+        GUILayout.Label("Robber move");
+        myObject.SFXRobberMove = (AudioClip)EditorGUILayout.ObjectField(myObject.SFXRobberMove, typeof(AudioClip), true);
+        GUILayout.Label("fail");
+        myObject.SFXFail = (AudioClip)EditorGUILayout.ObjectField(myObject.SFXFail, typeof(AudioClip), true);
+        GUILayout.Label("sucess");
+        myObject.SFXSucess = (AudioClip)EditorGUILayout.ObjectField(myObject.SFXSucess, typeof(AudioClip), true);
 
         GUILayout.Label("Parent slot");
         myObject.chestParent = (Transform)EditorGUILayout.ObjectField(myObject.chestParent, typeof(Transform), true);

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class billboarding : MonoBehaviour
 {
     [SerializeField] private Transform target;
-
+    [SerializeField] private List<AudioClip> clips;
     private AudioSource audioSource;
 
     [SerializeField] AudioClip feedback1;
@@ -26,6 +26,7 @@ public class billboarding : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Sequence mySequence = DOTween.Sequence();
+        audioSource.PlayOneShot(clips[Random.Range(0,clips.Count)]);
         audioSource.PlayOneShot(feedback1);
         transform.GetChild(0).DOScaleY(0, 0.5f).SetEase(Ease.InOutBack);
 

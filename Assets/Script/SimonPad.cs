@@ -10,8 +10,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 {
     public static SimonPad instance;
 
-    [SerializeField] private GameObject vcam;
-    [SerializeField] private GameObject door;
+    [SerializeField] private GameObject vcam, door;
 
     [Header("Canvas")]
     /* [SerializeField] private GameObject GUIhover;
@@ -24,8 +23,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     //[SerializeField] private List<Image> lights;
     [SerializeField] private List<GameObject> lights;
-    [SerializeField] private Material redMat;
-    [SerializeField] private Material greenMat;
+    [SerializeField] private Material redMat, greenMat;
 
 
     /*[SerializeField] private Sprite unselected;
@@ -36,8 +34,17 @@ public class SimonPad : MonoBehaviour, IInteractible
     [Header("ID : Jaune: 0; Rouge: 1; Magenta: 2; Bleu: 3; Cyan: 4; Vert: 5")]
     public ColorSimon[] colors = { new ColorSimon(COLORS.ROUGE), new ColorSimon(COLORS.BLEU), new ColorSimon(COLORS.VERT), new ColorSimon(COLORS.JAUNE) };
 
-    private ColorSimon currentColorText;
-    private ColorSimon currentColor;
+    private ColorSimon currentColorText, currentColor;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip sucsess;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioClip validate;
+    [SerializeField] private AudioClip clear;
+    [SerializeField] private AudioClip[] hover;
+    [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip open;
+    private AudioSource audioSource;
 
     //public static Vector2 hacker { set { hacker = value; OnActionsHacker();  } }
 
@@ -46,8 +53,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     private int braqueurId;
     private bool isOpen;
-    private int nbValid;
-    private int idColor;
+    private int nbValid, idColor;
 
     void Start()
     {
@@ -59,6 +65,8 @@ public class SimonPad : MonoBehaviour, IInteractible
         isOpen = false;
         braqueurId = 0;
         nbValid = 0;
+
+        audioSource = GetComponent<AudioSource>();
         // keys[idKey].GetComponent<Image>().sprite = selected;
         // GUIhover.SetActive(false);
         // Pad.SetActive(false);
@@ -88,7 +96,7 @@ public class SimonPad : MonoBehaviour, IInteractible
             }
         }
 
-
+        audioSource.PlayOneShot(inputClip);
         braqueurId = Mathf.Clamp(braqueurId, 0, keys.Length - 1);
         // keys[idKey].GetComponent<Image>().sprite = selected;
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[braqueurId].transform.position);
@@ -108,6 +116,7 @@ public class SimonPad : MonoBehaviour, IInteractible
                 {
                     StartCoroutine(PanelComplet());
                 }
+                //audioSource.PlayOneShot();
             }
             else
             {
@@ -118,7 +127,12 @@ public class SimonPad : MonoBehaviour, IInteractible
                 }
                 nbValid = 0;
 
-                
+                audioSource.PlayOneShot(fail);
+
+                if (braqueurId == currentColorText.idBraqueur)
+                {
+                    HackerController.instance.WrongAnswerLights();
+                }
             }
             braqueurPlay = false;
             hackeurPlay = false;
@@ -131,6 +145,7 @@ public class SimonPad : MonoBehaviour, IInteractible
     {
         if (!isOpen)
         {
+            audioSource.PlayOneShot(open);
             idColor = 0;
             // GUIhover.SetActive(false);
             GUIManager.instance.EnableUseGUI(false);
@@ -199,10 +214,10 @@ public class SimonPad : MonoBehaviour, IInteractible
             case COLORS.JAUNE:
                 return Color.yellow;
 
-            case COLORS.CYAN:
+            case COLORS.BLEUCLAIR:
                 return Color.cyan;
 
-            case COLORS.MAGENTA:
+            case COLORS.ROSE:
                 return Color.magenta;
 
         }
@@ -232,8 +247,8 @@ public class SimonPad : MonoBehaviour, IInteractible
         ROUGE,
         VERT,
         JAUNE,
-        CYAN,
-        MAGENTA
+        BLEUCLAIR,
+        ROSE
     }
 
     private IEnumerator ColorRotation()
@@ -258,10 +273,10 @@ public class SimonPad : MonoBehaviour, IInteractible
     private IEnumerator PanelComplet()
     {
         //AudioSpeaker.instance.AlarmIntensite();
+        audioSource.PlayOneShot(sucsess);
 
         //Destroy(door);
         EnigmeManager.instance.SuccessSimon();
-
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
         gameObject.layer = 0;

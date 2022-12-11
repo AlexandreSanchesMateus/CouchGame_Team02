@@ -44,6 +44,14 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public List<Serveur> allServeur = new List<Serveur>();
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip sucsess;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioClip[] validations;
+    [SerializeField] private AudioClip[] hover;
+    [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip open;
+    private AudioSource audioSource;
     private void Awake()
     {
         if (instance == null)
@@ -59,6 +67,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         isOpen = false;
         idKeyBraq = 0;
         gameObject.layer = 2;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
@@ -83,6 +92,7 @@ public class ElementPad : MonoBehaviour, IInteractible
             }
         }
 
+        audioSource.PlayOneShot(inputClip);
         /*idKeyBraq = Mathf.Clamp(idKeyBraq, 0, keys.Length - 1);*/
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
     }
@@ -94,6 +104,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnItemHover()
     {
+        audioSource.PlayOneShot(hover[Random.Range(0, hover.Length)]);
         GUIManager.instance.EnableUseGUI(true);
     }
 
@@ -101,6 +112,7 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         if (!isOpen)
         {
+            audioSource.PlayOneShot(open);
             braqHavePlayed = false;
             hackHavePlayed = false;
 
@@ -183,9 +195,11 @@ public class ElementPad : MonoBehaviour, IInteractible
                 if (actualEtape == 6)
                 {
                     // Destroy(lockey);
+                    audioSource.PlayOneShot(sucsess);
                     StartCoroutine(PanelComplet());
                     return;
                 }
+                audioSource.PlayOneShot(validations[actualEtape - 2]);
             }
             else
             {
@@ -193,8 +207,13 @@ public class ElementPad : MonoBehaviour, IInteractible
                 {
                     lights[i].GetComponent<MeshRenderer>().material = redMat;
                 }
+                audioSource.PlayOneShot(fail);
                 previousElement.Clear();
                 actualEtape = 0;
+                if (idKeyHacker == key)
+                {
+                    HackerController.instance.WrongAnswerLights();
+                }
             }
             braqHavePlayed = false;
             hackHavePlayed = false;
@@ -247,6 +266,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         allServeur.Remove(other);
         if (allServeur.Count <= 0)
         {
+            AudioManager.instance.IncreaseMusicLevel();
             gameObject.layer = 3;
             EnigmeManager.instance.OnLightEnable(true);
         }

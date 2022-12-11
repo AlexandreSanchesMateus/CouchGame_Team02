@@ -103,4 +103,10 @@ public class AudioSpeaker : MonoBehaviour
             actualSpeaker.alarmSource.Pause();
         }
     }
+
+    public IEnumerator StopAfter(int duration)
+    {
+        yield return new WaitForSeconds(duration);
+        PauseAudio();
+    }
 }

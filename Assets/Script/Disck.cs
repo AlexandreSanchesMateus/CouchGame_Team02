@@ -121,6 +121,7 @@ public class Disck : MonoBehaviour, IInteractible
             {
                 Debug.Log("You Pass");
                 indicator.GetComponent<MeshRenderer>().material = greenMat;
+
                 StartCoroutine(PanelComplet());
             }
             else
@@ -188,6 +189,7 @@ public class Disck : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
+        AudioManager.instance.IncreaseMusicLevel();
         vcam.SetActive(false);
         gameObject.layer = 0;
 

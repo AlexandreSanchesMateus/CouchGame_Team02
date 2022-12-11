@@ -46,7 +46,7 @@ public class DaVinciCode : MonoBehaviour, IInteractible
         audioSource =  GetComponent<AudioSource>();
         audioSource.clip = enterClip;
         // Lettre de remplissage
-        lettreFill = new List<string>() { "B ", "D ", "F ", "M ", "G ", "P", "H", "U", "J", "Q", "S"};
+        lettreFill = new List<string>() { "B", "D", "F", "M", "G", "P", "H", "U", "J", "Q", "S"};
 
         // Lettre pour le mot
         lettreObligatoire = new List<List<string>>();
