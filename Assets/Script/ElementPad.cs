@@ -199,7 +199,10 @@ public class ElementPad : MonoBehaviour, IInteractible
                     StartCoroutine(PanelComplet());
                     return;
                 }
-                audioSource.PlayOneShot(validations[actualEtape - 2]);
+                else
+                {
+                    audioSource.PlayOneShot(validations[actualEtape - 1]);
+                }
             }
             else
             {

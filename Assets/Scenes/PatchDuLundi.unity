@@ -23466,7 +23466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7652117877001887262, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7878069747631107474, guid: b120e0b79f965be42b7142b5bfa1400f, type: 3}
       propertyPath: rotateItem
@@ -44094,11 +44094,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speaker:
   - {fileID: 1158682046}
-  starterClip: {fileID: 0}
-  warningClip: {fileID: 0}
-  baseClip: {fileID: 0}
-  accelerateClip: {fileID: 0}
-  accelerateFasterClip: {fileID: 0}
+  starterClip: {fileID: 8300000, guid: f298c16d3f573e744b658f905cfa1e5a, type: 3}
+  warningClip: {fileID: 8300000, guid: 702567d0d8bb840498f3bf9d86e73c7b, type: 3}
+  baseClip: {fileID: 8300000, guid: 75b87c6d7fb0c8c41bdb0211cf7793be, type: 3}
+  accelerateClip: {fileID: 8300000, guid: 737455a8ac862f74193a28fbe909965b, type: 3}
+  accelerateFasterClip: {fileID: 8300000, guid: 0670dfc795992e845a469760ede03809, type: 3}
   softAlarmClip: {fileID: 8300000, guid: 530466d9d5e8ddf4a93c85c877cb91f9, type: 3}
   mediumAlarmClip: {fileID: 8300000, guid: dd2df8a90c358b141be4b94274cf8a73, type: 3}
   hardAlarmClip: {fileID: 8300000, guid: 02ab2cb8fcad05f45b5bec4c9383d059, type: 3}
