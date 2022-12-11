@@ -43,20 +43,17 @@ public class VolumeSettings : MonoBehaviour
     {
         if (musicMixer.GetFloat(MIXER_MUSIC, out float music))
         {
-            musicSlider.value = ParseToDebit20(music);
-            Debug.Log("MUSIC" + music);
+            musicSlider.value = (music + 80) / 100;
         }
 
         if (sfxMixer.GetFloat(MIXER_SFX, out float sfx))
         {
-            sfxSlider.value = ParseToDebit20(sfx);
-            Debug.Log("SFX" + sfx);
+            sfxSlider.value = (sfx + 80) / 100;
         }
 
         if (ambianceMixer.GetFloat(MIXER_AMBIENCE, out float ambience))
         {
-            ambienceSlider.value = ParseToDebit20(ambience);
-            Debug.Log("Ambance" + ambience);
+            ambienceSlider.value = (ambience + 80) / 100;
         }
     }
 
