@@ -284,4 +284,18 @@ public class HackerController : MonoBehaviour
 			loadingSreen = false;
 		}
 	}
+
+	public void WrongAnswerLights()
+    {
+		foreach (var l in HackerLight)
+		{
+			Sequence newSequence = DOTween.Sequence();
+			for(int i = 0; i<3; i++)
+			{
+				newSequence.Append(l.DOColor(malus, 0.2f));
+				newSequence.Append(l.DOColor(baseColor, 0.2f));
+			}
+		}
+
+	}
 }

@@ -210,6 +210,10 @@ public class ElementPad : MonoBehaviour, IInteractible
                 audioSource.PlayOneShot(fail);
                 previousElement.Clear();
                 actualEtape = 0;
+                if (idKeyHacker == key)
+                {
+                    HackerController.instance.WrongAnswerLights();
+                }
             }
             braqHavePlayed = false;
             hackHavePlayed = false;
@@ -262,6 +266,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         allServeur.Remove(other);
         if (allServeur.Count <= 0)
         {
+            AudioManager.instance.IncreaseMusicLevel();
             gameObject.layer = 3;
             EnigmeManager.instance.OnLightEnable(true);
         }
