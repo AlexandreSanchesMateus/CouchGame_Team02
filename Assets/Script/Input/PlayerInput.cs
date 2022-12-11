@@ -89,6 +89,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""3449af09-351c-4081-a494-4536d85e54b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +384,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""417c2ee2-a1ef-4676-a53b-4f5d58882d01"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7de50822-2747-4fe9-aa09-85a98db560a3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -709,6 +740,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_FPSController_Actions = m_FPSController.FindAction("Actions", throwIfNotFound: true);
         m_FPSController_SwitchInspectionMode = m_FPSController.FindAction("SwitchInspectionMode", throwIfNotFound: true);
         m_FPSController_Hold = m_FPSController.FindAction("Hold", throwIfNotFound: true);
+        m_FPSController_Pause = m_FPSController.FindAction("Pause", throwIfNotFound: true);
         // HackerController
         m_HackerController = asset.FindActionMap("HackerController", throwIfNotFound: true);
         m_HackerController_Increment = m_HackerController.FindAction("Increment", throwIfNotFound: true);
@@ -785,6 +817,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Actions;
     private readonly InputAction m_FPSController_SwitchInspectionMode;
     private readonly InputAction m_FPSController_Hold;
+    private readonly InputAction m_FPSController_Pause;
     public struct FPSControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -796,6 +829,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Actions => m_Wrapper.m_FPSController_Actions;
         public InputAction @SwitchInspectionMode => m_Wrapper.m_FPSController_SwitchInspectionMode;
         public InputAction @Hold => m_Wrapper.m_FPSController_Hold;
+        public InputAction @Pause => m_Wrapper.m_FPSController_Pause;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -826,6 +860,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Hold.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
                 @Hold.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
                 @Hold.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnHold;
+                @Pause.started -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_FPSControllerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_FPSControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -851,6 +888,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Hold.started += instance.OnHold;
                 @Hold.performed += instance.OnHold;
                 @Hold.canceled += instance.OnHold;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -971,6 +1011,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnActions(InputAction.CallbackContext context);
         void OnSwitchInspectionMode(InputAction.CallbackContext context);
         void OnHold(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IHackerControllerActions
     {

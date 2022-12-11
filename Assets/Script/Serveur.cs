@@ -13,7 +13,8 @@ public class Serveur : MonoBehaviour
     void Start()
     {
         grabObj.OnGrab += OnGrabDisquette;
-        ElementPad.instance.allServeur.Add(this);
+        if(ElementPad.instance)
+            ElementPad.instance.allServeur.Add(this);
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
@@ -22,6 +23,7 @@ public class Serveur : MonoBehaviour
         source.OnGrab -= OnGrabDisquette;
         gameObject.layer = LayerMask.GetMask("Default");
         audioSource.PlayOneShot(pullOut[Random.Range(0, pullOut.Length)]);
-        ElementPad.instance.InitLabyrintheScreen(this);
+        if (ElementPad.instance)
+            ElementPad.instance.InitLabyrintheScreen(this);
     }
 }
