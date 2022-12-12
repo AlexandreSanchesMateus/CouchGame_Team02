@@ -487,6 +487,7 @@ MonoBehaviour:
   SFXFightPopups: []
   SFXSelect: {fileID: 0}
   SFXFail: {fileID: 0}
+  SFXClosePopup: {fileID: 0}
 --- !u!1 &1785903575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,7 +1137,6 @@ GameObject:
   - component: {fileID: 6404365836932758214}
   - component: {fileID: 6404365836932758219}
   - component: {fileID: 6404365836932758215}
-  - component: {fileID: 707409400}
   - component: {fileID: 8450563620781015948}
   m_Layer: 7
   m_Name: Hecker
@@ -1335,6 +1335,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 14c8aa83-1982-46c0-87ee-92ed12063ecf
     m_ActionName: FPSController/Hold[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3449af09-351c-4081-a494-4536d85e54b9
+    m_ActionName: FPSController/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: Onpause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fd444f71-e894-4b73-9ccc-63e22176f4a5
+    m_ActionName: HackerController/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: HackerController
@@ -1370,105 +1390,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b9b83378e135f84409244f632e0b3508, type: 3}
   SFXBoot: {fileID: 8300000, guid: 4dc20e6a4da99fe4685b0063324df88b, type: 3}
   SFXLoad: {fileID: 8300000, guid: 43dc262ae942c8b4b944d99d8c9745b5, type: 3}
-  HackerLight: []
+  HackerLight:
+  - {fileID: 0}
   baseColor: {r: 0.28627452, g: 1, b: 0.92941177, a: 0}
   malus: {r: 1, g: 0.08235294, b: 0, a: 0}
---- !u!82 &707409400
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404365836932758218}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.403
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!82 &8450563620781015948
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1478,7 +1403,7 @@ AudioSource:
   m_GameObject: {fileID: 6404365836932758218}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 91a4e8dffeb1e2a4591f66ea205f4162, type: 2}
+  OutputAudioMixerGroup: {fileID: 3797822102677870096, guid: 91a4e8dffeb1e2a4591f66ea205f4162, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.403
@@ -1763,6 +1688,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (7)
@@ -1910,6 +1839,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (10)
@@ -2049,6 +1982,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (11)
@@ -2156,6 +2093,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (5)
@@ -2259,6 +2200,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (6)
@@ -2366,6 +2311,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (13)
@@ -2469,6 +2418,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (8)
@@ -2572,6 +2525,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (9)
@@ -2671,6 +2628,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (12)
@@ -2774,6 +2735,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (14)
@@ -2881,6 +2846,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (1)
@@ -2984,6 +2953,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (2)
@@ -3091,6 +3064,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (4)
@@ -3194,6 +3171,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1 (3)
@@ -3289,6 +3270,10 @@ PrefabInstance:
       propertyPath: SetupMatrial
       value: 
       objectReference: {fileID: 2100000, guid: 9be43fb473ab9784a9db282d94a4344c, type: 2}
+    - target: {fileID: 8036318441249347312, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
+      propertyPath: SFXClosePopup
+      value: 
+      objectReference: {fileID: 8300000, guid: 30b2424bacf406b4fbce3c54fb983172, type: 3}
     - target: {fileID: 8161986894761104256, guid: efa918b2ae76f564da1b518a95b621ed, type: 3}
       propertyPath: m_Name
       value: Screen 1
