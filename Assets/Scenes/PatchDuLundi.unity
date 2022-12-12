@@ -21705,13 +21705,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 575a9fc8b0f4b0540a10ce3b460f12fe, type: 3}
     - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: open
+      value: 
+      objectReference: {fileID: 8300000, guid: c4da3551102be7f4c84516e6611c1649, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
       propertyPath: sucess
       value: 
       objectReference: {fileID: 8300000, guid: ee3905432653a2844ac1a1a745b447b0, type: 3}
     - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: sucsess
+      value: 
+      objectReference: {fileID: 8300000, guid: ee3905432653a2844ac1a1a745b447b0, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: validate
+      value: 
+      objectReference: {fileID: 8300000, guid: a741af07a7aa305449942b5d1c74c39a, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: inputClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f1a99ec9efb6cc24082478d743702f17, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1599257328}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: hover.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: hover.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4fed689e38bb8c945bf8b5fdf7b58e01, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: hover.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 529755e51aac16e43b6150f305de7e7b, type: 3}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: hover.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a7bc89cf3e792eb41b76c5defdb094c7, type: 3}
     - target: {fileID: 1742831592050007605, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
       propertyPath: m_fontAsset
       value: 

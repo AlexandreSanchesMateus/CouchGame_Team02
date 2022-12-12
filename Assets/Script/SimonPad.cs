@@ -40,7 +40,6 @@ public class SimonPad : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip sucsess;
     [SerializeField] private AudioClip fail;
     [SerializeField] private AudioClip validate;
-    [SerializeField] private AudioClip clear;
     [SerializeField] private AudioClip[] hover;
     [SerializeField] private AudioClip inputClip;
     [SerializeField] private AudioClip open;
@@ -111,12 +110,12 @@ public class SimonPad : MonoBehaviour, IInteractible
                 Debug.Log("Bon");
                 // lights[nbValid].color = Color.green;
                 lights[nbValid].GetComponent<MeshRenderer>().material = greenMat;
+                audioSource.PlayOneShot(validate);
                 nbValid++;
                 if (nbValid == 3)
                 {
                     StartCoroutine(PanelComplet());
                 }
-                //audioSource.PlayOneShot();
             }
             else
             {
@@ -179,6 +178,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     public void OnItemHover()
     {
+        audioSource.PlayOneShot(hover[Random.Range(0, colors.Length)]);
         GUIManager.instance.EnableUseGUI(true);
         // GUIhover.SetActive(true);
     }
