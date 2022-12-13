@@ -70,7 +70,7 @@ public class HackerController : MonoBehaviour
 
 	public void Increment(InputAction.CallbackContext callback)
 	{
-		if (screen.screenState == ScreenState.MiniGame)
+		if (screen.screenState == ScreenState.MiniGame && scrHold.CanRotate)
 		{
 			if (callback.started)
 			{
@@ -82,8 +82,7 @@ public class HackerController : MonoBehaviour
 	}
 	public void Decrement(InputAction.CallbackContext callback)
 	{
-
-		if (screen.screenState == ScreenState.MiniGame)
+		if (screen.screenState == ScreenState.MiniGame && scrHold.CanRotate)
 		{
 			if (callback.started)
 			{
@@ -132,6 +131,11 @@ public class HackerController : MonoBehaviour
 								{
 									loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
 									screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
+									if (screen.GetComponentInChildren<VideoPlayer>() != null)
+									{
+										screen.GetComponentInChildren<VideoPlayer>().enabled = true;
+										screen.GetComponentInChildren<MeshRenderer>().enabled = false;
+									}
 									screen.miniGame = screen.game;
 									audioS.PlayOneShot(SFXBoot);
 									Sequence newSequence = DOTween.Sequence();
@@ -254,6 +258,7 @@ public class HackerController : MonoBehaviour
 	{
 		loadingSreen = true;
 		yield return new WaitForSeconds(Random.Range(120, 140));
+		yield return new WaitUntil(() => scrHold.CanRotate);
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
@@ -263,14 +268,14 @@ public class HackerController : MonoBehaviour
             {
 				scr.ShutDownPopup();
 			}
-            else
-            {
-				while (!scrHold.CanRotate)
-				{
-					
-				}
-            }
+
 			scr.screenState = ScreenState.Load;
+
+			if (scr.GetComponentInChildren<VideoPlayer>() != null)
+            {
+				scr.GetComponentInChildren<VideoPlayer>().enabled = false;
+				scr.GetComponentInChildren<MeshRenderer>().enabled = true;
+			}
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
 			Sequence newSequence = DOTween.Sequence();
 			foreach (var l in HackerLight)
