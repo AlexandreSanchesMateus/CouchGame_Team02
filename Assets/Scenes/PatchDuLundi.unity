@@ -9825,6 +9825,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+--- !u!114 &392564220 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 75744731114784230, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+  m_PrefabInstance: {fileID: 392564219}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf5e03d11c133d42ae6c59cc6e66b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &392660922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29228,6 +29239,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+--- !u!114 &1344191112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 75744731114784230, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+  m_PrefabInstance: {fileID: 1344191111}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf5e03d11c133d42ae6c59cc6e66b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1347538665
 GameObject:
   m_ObjectHideFlags: 0
@@ -30222,6 +30244,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+--- !u!114 &1389001928 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 75744731114784230, guid: 472a81a4242e7f24d96e9f27a5b927eb, type: 3}
+  m_PrefabInstance: {fileID: 1389001927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf5e03d11c133d42ae6c59cc6e66b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1390994036
 GameObject:
   m_ObjectHideFlags: 0
@@ -44478,6 +44511,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speaker:
   - {fileID: 1158682046}
+  - {fileID: 1344191112}
+  - {fileID: 1389001928}
+  - {fileID: 392564220}
   starterClip: {fileID: 8300000, guid: f298c16d3f573e744b658f905cfa1e5a, type: 3}
   warningClip: {fileID: 8300000, guid: 702567d0d8bb840498f3bf9d86e73c7b, type: 3}
   baseClip: {fileID: 8300000, guid: 75b87c6d7fb0c8c41bdb0211cf7793be, type: 3}
