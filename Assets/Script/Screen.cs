@@ -207,6 +207,7 @@ public class Screen : MonoBehaviour
 				return true;
 			}
 			currentCode = new List<string>();
+			HackerController.instance.WrongAnswerLights();
 			HackerController.instance.audioS.PlayOneShot(SFXFail);
 			DisplayCode();
 		}
