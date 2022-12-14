@@ -260,7 +260,7 @@ public class HackerController : MonoBehaviour
 	IEnumerator loadDelay()
 	{
 		loadingSreen = true;
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(Random.Range(120, 140));
 		yield return new WaitUntil(() => scrHold.CanRotate);
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
