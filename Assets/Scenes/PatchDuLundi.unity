@@ -22273,6 +22273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simon
       objectReference: {fileID: 0}
+    - target: {fileID: 1742831590687406974, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
+      propertyPath: valeurScale
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1742831591973630386, guid: b20f279fee47de14fb2dddc1297c5543, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -38003,6 +38007,10 @@ PrefabInstance:
     - target: {fileID: 2579319771754054529, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579319771754054530, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
+      propertyPath: valeurScale
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2579319771754054557, guid: 4173ee99d9ae02242a618e54edfab78f, type: 3}
       propertyPath: m_Name
