@@ -13,10 +13,12 @@ public class LightAlarme : MonoBehaviour
     void Start()
     {
         _light = GetComponent<Light>();
+        basicColor = _light.color;
         EnigmeManager.instance.OnAlarmeEnable += LightChangeColor;
         EnigmeManager.instance.OnLightEnable += EnableLight;
         _light.color = basicColor;
         defautIntensity = _light.intensity;
+
     }
 
     void LightChangeColor (float duration)
