@@ -21,7 +21,7 @@ public class LevelLoader : MonoBehaviour
     private void Start()
     {
         if (freeCursor)
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void LoadNextScene()

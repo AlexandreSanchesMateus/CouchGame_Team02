@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 
 	public float timeRemaining, timeValue = 90f;
 	public TextMeshPro timerText;
-	public GameObject gameOverScreen;
+	//public GameObject gameOverScreen;
 
 	private bool timerIsRunning = false;
 
@@ -59,16 +59,17 @@ public class Timer : MonoBehaviour
 	public void DisplayGameOver()
     {
 		AudioSpeaker.instance.PauseAudio();
-		Time.timeScale = 0;
+		PauseManager.instance.GameOver();
+		/*Time.timeScale = 0;
 		gameOverScreen.SetActive(true);
-		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.lockState = CursorLockMode.Confined;*/
 	}
 
 	public void DisplayGame()
     {
 		Time.timeScale = 1;
 		timeRemaining = timeValue;
-		gameOverScreen.SetActive(false);
+		// gameOverScreen.SetActive(false);
 		timerIsRunning = true;
 		Cursor.lockState = CursorLockMode.Locked;
 	}
