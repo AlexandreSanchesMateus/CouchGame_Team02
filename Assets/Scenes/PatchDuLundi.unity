@@ -8786,6 +8786,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2cae6ffdded084b8a5a268c6474044, type: 3}
+--- !u!108 &332088419 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 309899105093495026, guid: fa2cae6ffdded084b8a5a268c6474044, type: 3}
+  m_PrefabInstance: {fileID: 332088418}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &338175286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15684,7 +15689,7 @@ PrefabInstance:
     - target: {fileID: 6404365836932758215, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: HackerLight.Array.data[0]
       value: 
-      objectReference: {fileID: 339723069}
+      objectReference: {fileID: 332088419}
     - target: {fileID: 6404365836932758218, guid: c3ef5ee73e68e7c4da9d76f48b9ecb0c, type: 3}
       propertyPath: m_Name
       value: Hecker
