@@ -11,6 +11,7 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 	public GameObject king;
 	[SerializeField] public ScrLabyrinth labyrinth;
 	public GameObject beginScreen;
+	public GameObject sucsessScreen;
 
 	public GameObject vcam;
 	public Transform chestParent;
@@ -54,6 +55,7 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 
 		gameObject.layer = 2;
 		beginScreen.SetActive(true);
+		sucsessScreen.SetActive(false);
 	}
 
 	private void Update()
@@ -255,6 +257,8 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 	{
 		AudioManager.instance.IncreaseMusicLevel();
 		vcam.SetActive(false);
+		isActive = false;
+		sucsessScreen.SetActive(true);
 		gameObject.layer = 0;
 		yield return new WaitForSeconds(2);
 		PlayerControllerProto2.enablePlayerMovement = true;

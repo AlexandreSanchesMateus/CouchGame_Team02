@@ -39,6 +39,9 @@ public class LabyrintheEditor : Editor
         GUILayout.Label("Begin Screen");
         myObject.beginScreen = (GameObject)EditorGUILayout.ObjectField(myObject.beginScreen, typeof(GameObject), true);
 
+        GUILayout.Label("End Screen");
+        myObject.sucsessScreen = (GameObject)EditorGUILayout.ObjectField(myObject.sucsessScreen, typeof(GameObject), true);
+
         GUILayout.Label("king");
         myObject.king = (GameObject)EditorGUILayout.ObjectField(myObject.king, typeof(GameObject), true);
 
