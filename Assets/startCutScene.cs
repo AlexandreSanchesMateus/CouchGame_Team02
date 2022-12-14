@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class startCutScene : MonoBehaviour
 {
     private bool hasplayed = false;
@@ -23,7 +23,12 @@ public class startCutScene : MonoBehaviour
         {
             hasplayed = true;
             cutscene.SetActive(true);
-            
+            StartCoroutine(waitToload());
         }
+    }
+    private IEnumerator waitToload()
+    {
+        yield return new WaitForSeconds(17f);
+        SceneManager.LoadScene("MainMenu");
     }
 }
