@@ -97,7 +97,6 @@ public class SimonPad : MonoBehaviour, IInteractible
             }
         }
 
-        GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
         audioSource.PlayOneShot(inputClip);
         braqueurId = Mathf.Clamp(braqueurId, 0, keys.Length - 1);
         // keys[idKey].GetComponent<Image>().sprite = selected;

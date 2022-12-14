@@ -94,7 +94,6 @@ public class ElementPad : MonoBehaviour, IInteractible
             }
         }
 
-        GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
         audioSource.PlayOneShot(inputClip);
         /*idKeyBraq = Mathf.Clamp(idKeyBraq, 0, keys.Length - 1);*/
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
