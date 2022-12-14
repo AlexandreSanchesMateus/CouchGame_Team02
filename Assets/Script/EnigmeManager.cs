@@ -10,6 +10,9 @@ public class EnigmeManager : MonoBehaviour
     [SerializeField] private AudioClip vaultMecanisme;
     [SerializeField] private Material[] matLampe;
 
+    public bool lastegnimedone = false;
+
+
     // Prototype
     public delegate void AlarmLisener(float duration);
     // d�claration de la variable
@@ -51,6 +54,7 @@ public class EnigmeManager : MonoBehaviour
     public void SuccessElementPad()
     {
         AudioManager.instance.IncreaseMusicLevel();
+        
         UpdateVaultPosition(12.64f);
     }
 
