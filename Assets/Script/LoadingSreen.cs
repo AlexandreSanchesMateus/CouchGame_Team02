@@ -11,10 +11,14 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     private AudioSource audioSource;
     public int numberRequired;
     private int currentNumber;
+    public GameObject slider;
+    private float actualSliderValue;
 
     private bool boolsfx;
     private void OnEnable()
     {
+        slider.transform.localScale = new Vector3(0, 1, 1);
+        actualSliderValue = 0;
         audioSource = GetComponent<AudioSource>();
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(transform.DOMove(pos2.position,1f));
@@ -23,6 +27,8 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     }
     public bool interact(InputAction.CallbackContext callback)
     {
+        Sequence newSequence = DOTween.Sequence();
+
         if (canInteract && callback.action.name == "West" && callback.started)
         {
             if (!boolsfx)
@@ -35,6 +41,9 @@ public class LoadingSreen : MonoBehaviour, IMinigame
                 audioSource.PlayOneShot(clip2);
                 boolsfx = false;
             }
+
+            actualSliderValue += (1 / (float)numberRequired);
+            newSequence.Append(slider.transform.DOScale(new Vector3(actualSliderValue, 1f, 1f), 0.4f).SetEase(Ease.OutCirc));
             
             currentNumber++;
         }
