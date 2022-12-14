@@ -4,15 +4,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager instance { get; private set; }
 
-    [SerializeField] private CanvasGroup pauseMenu;
-    [SerializeField] private InputSystemUIInputModule inputModule;
+    [Header ("General")]
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private GameObject firstSelected;
+    [SerializeField] private InputSystemUIInputModule inputModule;
+    [SerializeField] private GameObject background;
+
+    [Header ("Game Over")]
+    [SerializeField] private GameObject endGameMenu;
+    [SerializeField] private GameObject firstSelected_GO;
+
+    [Header ("Pause")]
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject firstSelected_PA;
     private static bool isGamePaused = false;
 
     private void Awake()
@@ -26,9 +35,19 @@ public class PauseManager : MonoBehaviour
     private void Start()
     {
         inputModule.enabled = false;
-        pauseMenu.alpha = 0;
-        pauseMenu.interactable = false;
-        pauseMenu.blocksRaycasts = false;
+        pauseMenu.SetActive(false);
+        endGameMenu.SetActive(false);
+        background.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        endGameMenu.SetActive(true);
+        background.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+        PlayerControllerProto2.enablePlayerMovement = false;
+        eventSystem.SetSelectedGameObject(firstSelected_GO);
     }
 
     public void Onpause(InputAction.CallbackContext context)
@@ -42,22 +61,20 @@ public class PauseManager : MonoBehaviour
 
         if (isGamePaused)
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
             inputModule.enabled = true;
-            eventSystem.SetSelectedGameObject(firstSelected);
+            eventSystem.SetSelectedGameObject(firstSelected_PA);
             Time.timeScale = 0;
-            pauseMenu.alpha = 1;
-            pauseMenu.interactable = true;
-            pauseMenu.blocksRaycasts = true;
+            pauseMenu.SetActive(true);
+            background.SetActive(true);
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             inputModule.enabled = false;
             Time.timeScale = 1;
-            pauseMenu.alpha = 0;
-            pauseMenu.interactable = false;
-            pauseMenu.blocksRaycasts = false;
+            pauseMenu.SetActive(false);
+            background.SetActive(false);
         }
     }
 
