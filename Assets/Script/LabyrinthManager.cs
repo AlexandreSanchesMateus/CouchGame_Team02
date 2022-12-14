@@ -252,5 +252,6 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 		gameObject.layer = 0;
 		yield return new WaitForSeconds(2);
 		PlayerControllerProto2.enablePlayerMovement = true;
+        EnigmeManager.instance.lastegnimedone = true;
 	}
 }
