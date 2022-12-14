@@ -33,6 +33,8 @@ public class KeyCode : MonoBehaviour, IInteractible
     private bool isOpen;
     private bool isVerif = false;
 
+    public float valeurScale;
+
     void Start()
     {
         isOpen = false;
@@ -89,7 +91,8 @@ public class KeyCode : MonoBehaviour, IInteractible
             audioSource.PlayOneShot(open);
             StartCoroutine(Delay());
             GUIManager.instance.EnableUseGUI(false);
-            // GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
+            GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
+            GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKey].transform.position);
             vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;

@@ -48,4 +48,9 @@ public class GUIManager : MonoBehaviour
         if(RectTransformUtility.ScreenPointToLocalPointInRectangle(gameObject.GetComponent<RectTransform>(), screenPos, PlayerCam, out Vector2 local))
             hand.transform.DOLocalMove(local, 0.2f).SetEase(Ease.InSine);
     }
+
+    public void ScaleHand(float x, float y, float z)
+    {
+        hand.transform.localScale = new Vector3(x, y, z);
+    }
 }

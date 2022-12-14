@@ -54,6 +54,8 @@ public class SimonPad : MonoBehaviour, IInteractible
     private bool isOpen;
     private int nbValid, idColor;
 
+    public float valeurScale;
+
     void Start()
     {
         if(instance == null)
@@ -95,6 +97,7 @@ public class SimonPad : MonoBehaviour, IInteractible
             }
         }
 
+        GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
         audioSource.PlayOneShot(inputClip);
         braqueurId = Mathf.Clamp(braqueurId, 0, keys.Length - 1);
         // keys[idKey].GetComponent<Image>().sprite = selected;
@@ -148,6 +151,7 @@ public class SimonPad : MonoBehaviour, IInteractible
             idColor = 0;
             // GUIhover.SetActive(false);
             GUIManager.instance.EnableUseGUI(false);
+            GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
             // Pad.SetActive(true);
             StartCoroutine(Delay());
             vcam.SetActive(true);

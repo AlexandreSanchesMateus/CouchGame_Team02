@@ -52,6 +52,8 @@ public class ElementPad : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip inputClip;
     [SerializeField] private AudioClip open;
     private AudioSource audioSource;
+
+    public float valeurScale;
     private void Awake()
     {
         if (instance == null)
@@ -92,6 +94,7 @@ public class ElementPad : MonoBehaviour, IInteractible
             }
         }
 
+        GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
         audioSource.PlayOneShot(inputClip);
         /*idKeyBraq = Mathf.Clamp(idKeyBraq, 0, keys.Length - 1);*/
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
@@ -118,6 +121,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
             StartCoroutine(Delay());
             GUIManager.instance.EnableUseGUI(false);
+            GUIManager.instance.ScaleHand(valeurScale, valeurScale, valeurScale);
             vcam.SetActive(true);
             PlayerControllerProto2.enablePlayerMovement = false;
             isOpen = true;
