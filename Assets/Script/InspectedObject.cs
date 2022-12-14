@@ -9,12 +9,15 @@ public class InspectedObject : MonoBehaviour , IInteractible
     [SerializeField] private float defaultThrowForce = 100;
     [SerializeField] private float deltaHardThrow = 400;
     [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 0.5f;
+    [SerializeField] private TrailRenderer trailRenderer;
 
-    private Rigidbody rb;
-    private BoxCollider boxCollider;
+    [HideInInspector] public Rigidbody rb;
+    private Collider[] Collider;
     private Transform startParent;
 
     Sequence PickUpSequence;
+    public delegate void OnGrabListner(InspectedObject source);
+    public OnGrabListner OnGrab;
 
     private bool isInHand = false;
     private bool inspectMode = false;
@@ -23,7 +26,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        boxCollider = gameObject.GetComponent<BoxCollider>();
+        Collider = gameObject.GetComponents<Collider>();
+        //Collider = gameObject.GetComponents<SphereCollider>();
         startParent = gameObject.transform.parent;
         throwForce = defaultThrowForce;
     }
@@ -44,19 +48,30 @@ public class InspectedObject : MonoBehaviour , IInteractible
         inspectMode = false;
         GUIManager.instance.EnablePick_upGUI(false);
         throwForce = defaultThrowForce;
+        rb.constraints = RigidbodyConstraints.None;
+
+        if (OnGrab != null)
+            OnGrab(this);
 
         // Attach (move to transform parent)
         gameObject.transform.SetParent(PlayerControllerProto2.instance.hand);
         // disable colider
-        boxCollider.enabled = false;
+        foreach (Collider other in Collider)
+        {
+            other.enabled = false;
+        }
+
         // disable RigidBody
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        //trails desactive
+        if(trailRenderer != null)
+            trailRenderer.enabled = false;
         // move to location
         PickUpSequence = DOTween.Sequence();
         PickUpSequence.Append(transform.DOLocalMove(Vector3.zero, 0.8f).SetEase(Ease.InOutSine));
-        PickUpSequence.Join(transform.DOLocalRotate(new Vector3(-90, 0, 0), 0.5f));
+        //PickUpSequence.Join(transform.DOLocalRotate(new Vector3(-90, 0, 0), 0.5f));
 
         isInHand = true;
     }
@@ -73,6 +88,8 @@ public class InspectedObject : MonoBehaviour , IInteractible
 
     public void OnReturn()
     {
+        if (!isInHand) return;
+
         PlayerControllerProto2.enablePlayerMovement = true;
 
         if (!PickUpSequence.IsComplete())
@@ -80,8 +97,14 @@ public class InspectedObject : MonoBehaviour , IInteractible
 
         // Dettach
         gameObject.transform.SetParent(startParent);
-        // enable colider
-        boxCollider.enabled = true;
+        // enable colider        
+        foreach (Collider other in Collider)
+        {
+            other.enabled = true;
+        }
+        //trails active
+        if (trailRenderer != null)
+            trailRenderer.enabled = true;
         // enable rigidbody
         rb.useGravity = true;
         rb.AddForce(PlayerControllerProto2.instance.cameraObj.transform.forward * throwForce);

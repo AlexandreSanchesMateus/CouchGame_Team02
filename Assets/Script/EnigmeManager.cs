@@ -6,6 +6,23 @@ using DG.Tweening;
 public class EnigmeManager : MonoBehaviour
 {
     public static EnigmeManager instance { get; private set; }
+    [SerializeField] private AudioClip vaultOpen;
+    [SerializeField] private AudioClip vaultMecanisme;
+    [SerializeField] private Material[] matLampe;
+
+    public bool lastegnimedone = false;
+
+
+    // Prototype
+    public delegate void AlarmLisener(float duration);
+    // d�claration de la variable
+    public AlarmLisener OnAlarmeEnable;
+
+    public delegate void LightLisener(bool status);
+    public LightLisener OnLightEnable;
+
+
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -17,26 +34,53 @@ public class EnigmeManager : MonoBehaviour
 
     void Start()
     {
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, 9.12f, gameObject.transform.localPosition.z);
+        OnLightEnable += MaterialEnable;
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, 8.47f, gameObject.transform.localPosition.z);
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public void SuccessKeypade()
     {
-        gameObject.transform.DOLocalMoveY( 10.6f, 1);
+        AudioManager.instance.IncreaseMusicLevel();
+        UpdateVaultPosition(9.94f);
     }
 
     public void SuccessSimon()
     {
-        gameObject.transform.DOLocalMoveY(4.4f, 1);
+        AudioManager.instance.IncreaseMusicLevel();
+        UpdateVaultPosition(11.38f, true);
     }
 
-    public void SuccessCoffre()
+    public void SuccessElementPad()
     {
-        gameObject.transform.DOLocalMoveY(12.5f, 1);
+        AudioManager.instance.IncreaseMusicLevel();
+        
+        UpdateVaultPosition(12.64f);
     }
 
-    public void SuccessElement()
+    private void UpdateVaultPosition(float PosY, bool lightOn = false)
     {
-        Debug.Log("Sucess");
+        OnAlarmeEnable(7);
+        Sequence VaultUp = DOTween.Sequence();
+        VaultUp.AppendInterval(1.6f);
+        VaultUp.AppendCallback(() => audioSource.PlayOneShot(vaultMecanisme));
+        VaultUp.Join(gameObject.transform.DOLocalMoveY(PosY, 4.8f).SetEase(Ease.Linear));
+
+        if (lightOn)
+            VaultUp.AppendCallback(() => OnLightEnable(false));
+    }
+
+    private void MaterialEnable(bool active)
+    {
+        if(active)
+            foreach(Material other in matLampe)
+            {
+                other.EnableKeyword("_EMISSION");
+            }
+        else
+            foreach (Material other in matLampe)
+            {
+                other.DisableKeyword("_EMISSION");
+            }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ElementPad : MonoBehaviour, IInteractible
 {
-    public static ElementPad instance;
+    public static ElementPad instance { get; set; }
     [SerializeField] private GameObject vcam;
 
     // [SerializeField] private GameObject GUIhover;
@@ -21,6 +21,10 @@ public class ElementPad : MonoBehaviour, IInteractible
     [SerializeField] private Material redMat;
     [SerializeField] private Material greenMat;
     [SerializeField] private GameObject[] lights;
+    [SerializeField] private Sprite PopCoin;
+    [SerializeField] private Sprite DogeCoins;
+    [SerializeField] private Sprite SusCoins;
+    [SerializeField] private Sprite PepeCoins;
 
     [Header("Réponses")]
     [SerializeField] private List<Etapes> etapes;
@@ -38,15 +42,32 @@ public class ElementPad : MonoBehaviour, IInteractible
     private Coroutine corout;
     private bool timerIsRunning = false;
 
-    void Start()
+    public List<Serveur> allServeur = new List<Serveur>();
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip sucsess;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioClip[] validations;
+    [SerializeField] private AudioClip[] hover;
+    [SerializeField] private AudioClip inputClip;
+    [SerializeField] private AudioClip open;
+    private AudioSource audioSource;
+    private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
+        else
+            Destroy(gameObject);
+    }
 
+    void Start()
+    {
         isOpen = false;
         idKeyBraq = 0;
+        gameObject.layer = 2;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void OnActions(Vector2 action, Vector2 joystick)
@@ -71,6 +92,7 @@ public class ElementPad : MonoBehaviour, IInteractible
             }
         }
 
+        audioSource.PlayOneShot(inputClip);
         /*idKeyBraq = Mathf.Clamp(idKeyBraq, 0, keys.Length - 1);*/
         GUIManager.instance.MoveHandWorldToScreenPosition(keys[idKeyBraq].transform.position);
     }
@@ -82,6 +104,7 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     public void OnItemHover()
     {
+        audioSource.PlayOneShot(hover[Random.Range(0, hover.Length)]);
         GUIManager.instance.EnableUseGUI(true);
     }
 
@@ -89,6 +112,7 @@ public class ElementPad : MonoBehaviour, IInteractible
     {
         if (!isOpen)
         {
+            audioSource.PlayOneShot(open);
             braqHavePlayed = false;
             hackHavePlayed = false;
 
@@ -107,8 +131,6 @@ public class ElementPad : MonoBehaviour, IInteractible
 
         braqHavePlayed = true;
         CheckInput();
-        
-        
     }
 
     public void OnReturn()
@@ -121,10 +143,14 @@ public class ElementPad : MonoBehaviour, IInteractible
 
     private IEnumerator PanelComplet()
     {
+        yield return new WaitForSeconds(0.5f);
+        /*display.sprite = null;
+        display.color = Color.green;*/
         GUIManager.instance.EnableHand(false);
         vcam.SetActive(false);
 
-        EnigmeManager.instance.SuccessElement();
+        LabyrinthManager.instance.InitLabyrintheScreen();
+        EnigmeManager.instance.SuccessElementPad();
 
         gameObject.layer = 0;
         yield return new WaitForSeconds(2);
@@ -143,6 +169,7 @@ public class ElementPad : MonoBehaviour, IInteractible
         int idSituation = Random.Range(0, 3);
         currentSituation = etapes[actualEtape].situations[idSituation];
         display.text = etapes[actualEtape].situations[idSituation].element.ToString();
+        //display.sprite = GetElementSprite(etapes[actualEtape].situations[idSituation].element);
 
         //Set goodkey
         key = currentSituation.goodkey;
@@ -168,9 +195,13 @@ public class ElementPad : MonoBehaviour, IInteractible
                 if (actualEtape == 6)
                 {
                     // Destroy(lockey);
+                    audioSource.PlayOneShot(sucsess);
                     StartCoroutine(PanelComplet());
-                    display.text = "Well done";
                     return;
+                }
+                else
+                {
+                    audioSource.PlayOneShot(validations[actualEtape - 1]);
                 }
             }
             else
@@ -179,8 +210,13 @@ public class ElementPad : MonoBehaviour, IInteractible
                 {
                     lights[i].GetComponent<MeshRenderer>().material = redMat;
                 }
+                audioSource.PlayOneShot(fail);
                 previousElement.Clear();
                 actualEtape = 0;
+                if (idKeyHacker == key)
+                {
+                    HackerController.instance.WrongAnswerLights();
+                }
             }
             braqHavePlayed = false;
             hackHavePlayed = false;
@@ -195,6 +231,7 @@ public class ElementPad : MonoBehaviour, IInteractible
                 corout = StartCoroutine(cooldown());
         }
     }
+
     IEnumerator cooldown()
     {
         timerIsRunning = true;
@@ -206,4 +243,35 @@ public class ElementPad : MonoBehaviour, IInteractible
     public void OnRightShoulder() { }
 
     public void OnHoldReturn() { }
+
+    private Sprite GetElementSprite(ELEMENTS _element)
+    {
+        switch (_element)
+        {
+            case ELEMENTS.POP:
+                return PopCoin;
+
+            case ELEMENTS.DOGE:
+                return DogeCoins;
+
+            case ELEMENTS.SUS:
+                return SusCoins;
+
+            case ELEMENTS.PEPE:
+                return PepeCoins;
+        }
+
+        return null;
+    }
+
+    public void InitLabyrintheScreen(Serveur other)
+    {
+        allServeur.Remove(other);
+        if (allServeur.Count <= 0)
+        {
+            AudioManager.instance.IncreaseMusicLevel();
+            gameObject.layer = 3;
+            EnigmeManager.instance.OnLightEnable(true);
+        }
+    }
 }

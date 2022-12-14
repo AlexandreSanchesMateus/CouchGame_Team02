@@ -29,9 +29,17 @@ public class PlayerControllerProto2 : MonoBehaviour
     [SerializeField, Range(0, 30)] private float _frequency = 10.0f;
     private float startPosY;
     private float timer;
+    private bool firstStep = false;
 
     [Header("Audio")]
+    [SerializeField] private AudioClip rotateItem;
+    [SerializeField] private AudioClip[] grabItem;
     [SerializeField] private List<AudioClip> walk;
+    [SerializeField] private List<AudioClip> walkOnCarpet;
+    private AudioSource audioSource;
+    private float previousSin;
+    private bool walked;
+
 
     private CharacterController controller;
     private float xRotation;
@@ -46,8 +54,7 @@ public class PlayerControllerProto2 : MonoBehaviour
 
     private Vector2 flechaction;
 
-    private float previousSin;
-    private bool walked;
+
 
 
     private void Awake()
@@ -61,6 +68,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         startPosY = cameraObj.transform.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         enablePlayerMovement = true;
@@ -73,7 +81,11 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         // Désactivation des mouvement
         if (!enablePlayerMovement)
+        {
+            if (haveSomthingInHand && interactibleObject != null)
+                InteractWithEnigmes();
             return;
+        }
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -120,10 +132,10 @@ public class PlayerControllerProto2 : MonoBehaviour
         cameraObj.transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
 
         // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        /*if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
+        }*/
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
@@ -155,6 +167,7 @@ public class PlayerControllerProto2 : MonoBehaviour
         if (cameraObj.transform.localPosition.y == startPosY)
             return;
 
+        firstStep = false;
         cameraObj.transform.localPosition = new Vector3(cameraObj.transform.localPosition.x, Mathf.Lerp(cameraObj.transform.localPosition.y, startPosY, Time.time * 0.01f), cameraObj.transform.localPosition.z);
         timer = 0;
     }
@@ -168,7 +181,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         rotateInput = context.ReadValue<Vector2>();
 
-        if (interactibleObject != null)
+        if (!haveSomthingInHand && interactibleObject != null)
             InteractWithEnigmes();
     }
 
@@ -179,7 +192,10 @@ public class PlayerControllerProto2 : MonoBehaviour
             interactibleObject.GetComponent<IInteractible>().OnInteract();
 
             if (interactibleObject.GetComponent<InspectedObject>() != null)
+            {
                 haveSomthingInHand = true;
+                audioSource.PlayOneShot(grabItem[Random.Range(0, grabItem.Length)]);
+            }
         }
     }
 
@@ -217,6 +233,7 @@ public class PlayerControllerProto2 : MonoBehaviour
         if(haveSomthingInHand && context.performed && interactibleObject != null)
         {
             interactibleObject.GetComponent<IInteractible>().OnRightShoulder();
+            audioSource.PlayOneShot(rotateItem);
         }
     }
 
@@ -226,6 +243,11 @@ public class PlayerControllerProto2 : MonoBehaviour
         {
             interactibleObject.GetComponent<IInteractible>().OnHoldReturn();
         }
+    }
+
+    public void PlayFromRobberAudioSource(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 
     private void InteractWithEnigmes()
@@ -241,8 +263,17 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         if (previousSin < Mathf.Sin(timer) && !walked)
         {
-            GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
-            GetComponent<AudioSource>().Play();
+            if (firstStep)
+            {
+                if(Physics.Raycast(gameObject.transform.position, -gameObject.transform.up, 1.5f, LayerMask.GetMask("Carpet")))
+                    PlayFromRobberAudioSource(walkOnCarpet[Random.Range(0, walkOnCarpet.Count)]);
+                else
+                    PlayFromRobberAudioSource(walk[Random.Range(0, walk.Count)]);
+            }
+            else
+                firstStep = true;
+            /* GetComponent<AudioSource>().clip = walk[Random.Range(0, walk.Count)];
+            GetComponent<AudioSource>().Play();*/
             walked = true;
         }
         else if(previousSin > Mathf.Sin(timer))

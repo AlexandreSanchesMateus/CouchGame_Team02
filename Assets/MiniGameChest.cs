@@ -1,32 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using System.Diagnostics.Tracing;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class MiniGameChest : MonoBehaviour, IMinigame 
 {
     [SerializeField] private string code;
-    private bool isWin;
-    public TextMeshPro text; 
+    private bool isWining;
+    private bool hasWin;
+    public TextMeshPro text;
+    public TextMeshPro finaltext;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip feedback1, feedback2, feedback3, feedback4;
+    [SerializeField] private AudioClip win, lose;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public bool interact(InputAction.CallbackContext callback)
     {
-        if (!isWin)
+        if (!isWining)
             switch (callback.action.name)
             {
                 case "West":
                 text.text += " ";
+                    audioSource.PlayOneShot(feedback1);
                     break;
                 case "South":
                 text.text += ".";
-                break;
+                    audioSource.PlayOneShot(feedback2);
+                    break;
                 case "East":
                 text.text += "-";
-                break;
+                    audioSource.PlayOneShot(feedback3);
+                    break;
                 case "North":
-                    if(text.text.Length>0)
+                    audioSource.PlayOneShot(feedback4);
+                    if (text.text.Length>0)
                     text.text = text.text.Substring(0, text.text.Length - 1);
                 break;
                 default:
@@ -35,17 +46,25 @@ public class MiniGameChest : MonoBehaviour, IMinigame
 
         if (text.text == code)
         {
-            isWin = true;
+            isWining = true;
             return true;
         }
         return false;
     }
     private void Update()
     {
-        if(isWin)
+        if (isWining && !hasWin)
         {
-            text.text = "Douglas";
+            audioSource.PlayOneShot(win);
+            text.text = "Jean Cerien";
             text.color = Color.green;
+            hasWin = true;
+            Debug.Log("Win");
+        }
+        if (text.text.Length > 12&& !hasWin)
+        {
+            //audioSource.PlayOneShot(lose);
+            text.text="";
         }
     }
     public void Move(InputAction.CallbackContext callback) { }

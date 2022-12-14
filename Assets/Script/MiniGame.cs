@@ -11,15 +11,23 @@ public class MiniGame : MonoBehaviour, IMinigame
     public Camera Cam;
     public int code;
     public TextMeshPro text;
+    private AudioSource audioSource;
+    public AudioClip good, bad;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public bool interact(InputAction.CallbackContext callback) 
     {
         if (isGood)
         {
+            audioSource.PlayOneShot(good);
             text.text = code.ToString();
             return true;
         }
         else
         {
+            audioSource.PlayOneShot(bad);
             text.text = Random.Range(0, 99).ToString();
             return false;
         }

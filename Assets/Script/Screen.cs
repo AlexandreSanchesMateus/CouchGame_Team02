@@ -12,7 +12,7 @@ public enum ScreenState
 {
 	MiniGame,
 	Popups,
-	Update,
+	Load,
 	Hack,
 	Setup
 };
@@ -41,17 +41,23 @@ public class Screen : MonoBehaviour
 	private int codeIndex;
 
 	public Material gameMaterial;
-	public Material SetupMatrial;
+	public GameObject game;
 
+	[Range(0, 2)]
+	public float pitch;
+	public List<AudioClip> SFXFightPopups;
+	public AudioClip SFXSelect, SFXFail, SFXClosePopup;
 
 	private void Start()
 	{
-		gameMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
-
-
-		transform.GetChild(0).localScale = new Vector3(transform.GetChild(0).localScale.x, 0f, transform.GetChild(0).localScale.z);
-		transform.GetChild(0).gameObject.SetActive(false);
-
+        if (transform.childCount > 0)
+        {
+			gameMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+			game = miniGame;
+			
+			transform.GetChild(0).localScale = new Vector3(transform.GetChild(0).localScale.x, 0f, transform.GetChild(0).localScale.z);
+			transform.GetChild(0).gameObject.SetActive(false);
+        }
 		currentPopupLife = Random.Range(1, 3);
 
 		screenState = ScreenState.MiniGame;
@@ -60,43 +66,49 @@ public class Screen : MonoBehaviour
 
 	public void displayPopUp()
 	{
-		List<GameObject> popupsRandom = new List<GameObject>(popups);
+        Debug.Log("displayPopUp");
+        List<GameObject> popupsRandom = new List<GameObject>(popups);
 		//Debug.Log("displaying popup");
-		int n = Random.Range(3,7);
+		int n = Random.Range(3, popupsRandom.Count-1);
 		mySequence = DOTween.Sequence();
 		for (int j = 0; j < n; j++)
 		{
 				int i = Random.Range(0, popupsRandom.Count - 1);
 				popupsRandom[i].SetActive(true);
-				
-				mySequence.Insert(0,popups[i].transform.DOScale(new Vector3(0, 0, 0), 0.1f));
-				float scaleX = Random.Range(0.03f, 0.1f);
+            //popups[i].transform.localScale = new Vector3(0,0,0);
+            //mySequence.Insert(0,popups[i].transform.DOScale(new Vector3(0, 0, 0), 0.1f));
+            float scaleX = Random.Range(0.03f, 0.1f);
 				mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1, 0.01f), 0.2f).SetEase(Ease.OutBounce));
 				mySequence.Append(popups[i].transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
 				if (popups[i].transform.localScale.x == 0)
 				{
-				
+					
 					switch(Random.Range(0, 3))
 						{
 						case 0:
-						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.05f, 1, 0.03f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        mySequence.Append(popups[i].transform.DOScale(new Vector3(0.05f, 1, 0.03f), 0.2f).SetEase(Ease.OutBounce));
+                        popups[i].transform.localScale = new Vector3(0.05f, 1, 0.03f);
+                        break;
 						case 1:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.02f, 1, 0.04f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 						case 2:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.03f, 1, 0.05f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 						case 3:
 						mySequence.Append(popups[i].transform.DOScale(new Vector3(0.1f, 1, 0.04f), 0.2f).SetEase(Ease.OutBounce));
-						break;
+                        popups[i].transform.localScale = new Vector3(0.02f, 1, 0.04f);
+                        break;
 					}
 				}
-				
-			  
-				//Debug.Log("i = " + i);
-				//         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
-				currentPopup.Add(popupsRandom[i]);
+            if (popups[i].transform.localScale.x == 0)
+                popups[i].transform.localScale = new Vector3(0.05f, 1, 0.03f);
+
+            //Debug.Log("i = " + i);
+            //         Debug.Log("popupsRandom[i] = " + popupsRandom[i].name);
+            currentPopup.Add(popupsRandom[i]);
 				popupsRandom.RemoveAt(i);
 				HackerController.instance.CamShake();
 			
@@ -113,27 +125,38 @@ public class Screen : MonoBehaviour
 			currentPopupLife--;
 			if (currentPopupLife <= 0)
 			{
-				StartCoroutine(destroyPopup(currentPopup[0]));
-				currentPopup.RemoveAt(0);
+				HackerController.instance.audioS.PlayOneShot(SFXClosePopup);
+				StartCoroutine(destroyPopup());
+				
 				currentPopupLife = Random.Range(1, 3);
 			}
 			if (currentPopup.Count > 0)
 			{
+				HackerController.instance.audioS.PlayOneShot(SFXFightPopups[Random.Range(0, SFXFightPopups.Count - 1)]);
 				return true;
 			}
 		}
-		screenState = ScreenState.MiniGame;
 		return false;
 	}
-	IEnumerator destroyPopup(GameObject popup)
+	public IEnumerator destroyPopup()
 	{
 		mySequence = DOTween.Sequence();
-		mySequence.Append(popup.transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
+		mySequence.Append(currentPopup[0].transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
 		//mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
+		GameObject popup = currentPopup[0];
+		currentPopup.RemoveAt(0);
 		yield return new WaitForSeconds(0.2f);
 		popup.SetActive(false);
+		popup.transform.localScale = new Vector3(0.05f, 1, 0.03f);
 	}
 
+	public void ShutDownPopup()
+    {
+		foreach (GameObject popup in currentPopup)
+		{
+			StartCoroutine(destroyPopup());
+		}
+	}
 	public void LockScreen()
 	{
 		codeToUnlock = new List<string>();
@@ -173,7 +196,7 @@ public class Screen : MonoBehaviour
 			default:
 				break;
 		}
-
+		HackerController.instance.audioS.PlayOneShot(SFXSelect);
 		codeIndex++;
 		DisplayCode();
 		if (codeIndex >= 4)
@@ -184,6 +207,8 @@ public class Screen : MonoBehaviour
 				return true;
 			}
 			currentCode = new List<string>();
+			HackerController.instance.WrongAnswerLights();
+			HackerController.instance.audioS.PlayOneShot(SFXFail);
 			DisplayCode();
 		}
 		return false;
@@ -258,19 +283,19 @@ public class Screen : MonoBehaviour
 					else
 						firstDigit = codeToTrans[2] % 10;
 
-					if (firstDigit == 0 && codeToTrans[2] % 2 == 0)
+					if (firstDigit % 2 == 0 && codeToTrans[2] % 2 == 0)
                     {
 						translatedCode.Add("A");
 					}
-					else if (firstDigit != 0 && codeToTrans[2] % 2 != 0)
+					else if (firstDigit % 2 != 0 && codeToTrans[2] % 2 != 0)
 					{
 						translatedCode.Add("B");
 					}
-					else if (firstDigit == 0 && codeToTrans[2] % 2 != 0)
+					else if (firstDigit % 2 == 0 && codeToTrans[2] % 2 != 0)
 					{
 						translatedCode.Add("X");
 					}
-					else if (firstDigit != 0 && codeToTrans[2] % 2 == 0)
+					else if (firstDigit % 2 != 0 && codeToTrans[2] % 2 == 0)
 					{
 						translatedCode.Add("Y");
 					}
