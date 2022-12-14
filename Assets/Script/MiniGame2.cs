@@ -2,18 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class MiniGame2 : MonoBehaviour,IMinigame
 {
 	private float stickRotationInDeg;
-	private GameObject color, selectedColor;
+	private GameObject color, selectedColor, lastColor;
 	public AudioClip SFXSelect, SFXHover;
+	[SerializeField] private LayerMask layer;
 
 	public bool interact(InputAction.CallbackContext ctx)
 	{
 		if(selectedColor != null)
         {
 			int id = 0;
+			Sequence newSequence = DOTween.Sequence();
+
+			if(lastColor != null)
+            {
+				lastColor.transform.GetChild(0).gameObject.SetActive(false);
+				newSequence.Append(lastColor.transform.DOScale(new Vector3(1, 1, 1), 0.2f).SetEase(Ease.OutQuad));
+            }
+
+			selectedColor.transform.GetChild(0).gameObject.SetActive(true);
+			selectedColor.GetComponent<SimonColor>().isHover = false;
+			newSequence.Join(selectedColor.transform.DOScale(new Vector3(1.4f, 1.4f, 1f), 1f).SetEase(Ease.OutQuad));
+			lastColor = selectedColor;
+
             switch (selectedColor.GetComponent<SimonColor>().color)
             {
 				case SimonColor.CubeColor.Cyan:
@@ -60,18 +75,28 @@ public class MiniGame2 : MonoBehaviour,IMinigame
 		{
 			transform.rotation = Quaternion.Euler(0, 0, stickRotationInDeg);
 		}
+	}
+
+    public void Update()
+    {
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position, transform.up * 3, out hit))
-        {
-			if(hit.transform.tag == "MiniGame2")
-            {
+		if (Physics.Raycast(transform.position, transform.up * 3, out hit, layer))
+		{
+			if (hit.transform.tag == "MiniGame2")
+			{
 				color = hit.transform.gameObject;
-				if(selectedColor != color)
-                {
+				if (selectedColor != color)
+				{
+					if (selectedColor != null)
+						selectedColor.GetComponent<SimonColor>().isHover = false;
+
 					HackerController.instance.audioS.PlayOneShot(SFXHover);
 					selectedColor = color;
+
+					if (selectedColor != lastColor)
+						selectedColor.GetComponent<SimonColor>().isHover = true;
 				}
-            }
-        }
+			}
+		}
 	}
 }

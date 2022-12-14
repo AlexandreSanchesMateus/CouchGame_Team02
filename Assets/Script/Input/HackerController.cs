@@ -134,7 +134,6 @@ public class HackerController : MonoBehaviour
 									if (screen.GetComponentInChildren<VideoPlayer>() != null)
 									{
 										screen.GetComponentInChildren<VideoPlayer>().enabled = true;
-										screen.GetComponentInChildren<MeshRenderer>().enabled = false;
 									}
 									screen.miniGame = screen.game;
 									audioS.PlayOneShot(SFXBoot);
@@ -274,7 +273,6 @@ public class HackerController : MonoBehaviour
 			if (scr.GetComponentInChildren<VideoPlayer>() != null)
             {
 				scr.GetComponentInChildren<VideoPlayer>().enabled = false;
-				scr.GetComponentInChildren<MeshRenderer>().enabled = true;
 			}
 			scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = loadMaterial;
 			Sequence newSequence = DOTween.Sequence();
