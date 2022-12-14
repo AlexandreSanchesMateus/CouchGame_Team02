@@ -241,7 +241,7 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _AlbedoAffectEmissive: 0
-    - _Alpha: 1
+    - _Alpha: 0.819
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
@@ -363,7 +363,7 @@ Material:
     - _HeightTessCenter: 0.5
     - _HitEffectBlend: 1
     - _HitEffectGlow: 5
-    - _HologramBlend: 0.264
+    - _HologramBlend: 0.091
     - _HologramMaxAlpha: 2
     - _HologramMinAlpha: 0.343
     - _HologramStripesAmount: 0.073
@@ -505,7 +505,7 @@ Material:
     - _AlphaOutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 0.18039209, g: 0.8941177, b: 0.89019614, a: 0.38431373}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.18039206, g: 0.8941177, b: 0.89019614, a: 0.38431373}
+    - _Color: {r: 0.031149868, g: 0.2641509, b: 0.26287064, a: 0.9137255}
     - _ColorChangeNewCol: {r: 1, g: 1, b: 0, a: 1}
     - _ColorChangeNewCol2: {r: 1, g: 1, b: 0, a: 1}
     - _ColorChangeNewCol3: {r: 1, g: 1, b: 0, a: 1}
