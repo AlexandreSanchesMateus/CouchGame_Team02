@@ -25,7 +25,7 @@ public class ScrollCredit : MonoBehaviour
             ScrollingSequence = DOTween.Sequence();
             ScrollingSequence.Append(canvasGroup.DOFade(1f, 1f));
             ScrollingSequence.AppendInterval(2f);
-            ScrollingSequence.Append(gameObject.transform.DOLocalMoveY(1950, 30).SetEase(Ease.Linear));
+            ScrollingSequence.Append(gameObject.transform.DOLocalMoveY(2612, 40).SetEase(Ease.Linear));
             ScrollingSequence.AppendCallback(ExitCredit);
             ScrollingSequence.Append(canvasGroup.DOFade(0f, 1f));
             ScrollingSequence.AppendCallback(EnableCredit);

@@ -42,6 +42,7 @@ public class PauseManager : MonoBehaviour
 
         if (isGamePaused)
         {
+            Cursor.lockState = CursorLockMode.None;
             inputModule.enabled = true;
             eventSystem.SetSelectedGameObject(firstSelected);
             Time.timeScale = 0;
@@ -51,6 +52,7 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
             inputModule.enabled = false;
             Time.timeScale = 1;
             pauseMenu.alpha = 0;

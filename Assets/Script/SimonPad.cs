@@ -178,7 +178,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     public void OnItemHover()
     {
-        audioSource.PlayOneShot(hover[Random.Range(0, colors.Length)]);
+        audioSource.PlayOneShot(hover[Random.Range(0, hover.Length)]);
         GUIManager.instance.EnableUseGUI(true);
         // GUIhover.SetActive(true);
     }

@@ -81,7 +81,11 @@ public class PlayerControllerProto2 : MonoBehaviour
 
         // Désactivation des mouvement
         if (!enablePlayerMovement)
+        {
+            if (haveSomthingInHand && interactibleObject != null)
+                InteractWithEnigmes();
             return;
+        }
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -177,7 +181,7 @@ public class PlayerControllerProto2 : MonoBehaviour
     {
         rotateInput = context.ReadValue<Vector2>();
 
-        if (interactibleObject != null)
+        if (!haveSomthingInHand && interactibleObject != null)
             InteractWithEnigmes();
     }
 

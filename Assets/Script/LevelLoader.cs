@@ -8,6 +8,7 @@ public class LevelLoader : MonoBehaviour
 
     [SerializeField] private float transitionTime;
     [SerializeField] private Animator animator;
+    [SerializeField] private bool freeCursor = false;
 
     private void Awake()
     {
@@ -15,6 +16,12 @@ public class LevelLoader : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
+        if (freeCursor)
+            Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadNextScene()
