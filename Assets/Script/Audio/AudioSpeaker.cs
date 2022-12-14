@@ -95,18 +95,28 @@ public class AudioSpeaker : MonoBehaviour
         }
     }
 
-    public void PauseAudio()
+    public void PauseAudio(bool timer)
     {
-        foreach (Speaker actualSpeaker in speaker)
+        if (timer)
         {
-            actualSpeaker.timerSource.Pause();
-            actualSpeaker.alarmSource.Pause();
+            foreach (Speaker actualSpeaker in speaker)
+            {
+                actualSpeaker.timerSource.Pause();
+                actualSpeaker.alarmSource.Pause();
+            }
+        }
+        else
+        {
+            foreach (Speaker actualSpeaker in speaker)
+            {
+                actualSpeaker.alarmSource.Pause();
+            }
         }
     }
 
     public IEnumerator StopAfter(int duration)
     {
         yield return new WaitForSeconds(duration);
-        PauseAudio();
+        PauseAudio(false);
     }
 }
