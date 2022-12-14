@@ -14,6 +14,9 @@ public class Disck : MonoBehaviour, IInteractible
     [SerializeField] private GameObject indicator;
     [SerializeField] private Material greenMat;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
     [Header ("Accessibility")]
     [SerializeField] private CodeSection[] combination;
     [SerializeField] private bool snapSteps = false;
@@ -28,6 +31,12 @@ public class Disck : MonoBehaviour, IInteractible
 
     bool isOpen = false;
     bool init = false;
+
+    private void Update()
+    {
+        if (isOpen && Input.GetKeyDown(UnityEngine.KeyCode.B))
+            StartCoroutine(PanelComplet());
+    }
 
     public void OnActions(Vector2 action, Vector2 joystick)
     {
@@ -192,6 +201,7 @@ public class Disck : MonoBehaviour, IInteractible
         AudioManager.instance.IncreaseMusicLevel();
         vcam.SetActive(false);
         gameObject.layer = 0;
+        audioSource.Play();
 
         yield return new WaitForSeconds(2);
         PlayerControllerProto2.enablePlayerMovement = true;

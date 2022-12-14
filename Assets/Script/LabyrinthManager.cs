@@ -56,6 +56,12 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 		beginScreen.SetActive(true);
 	}
 
+	private void Update()
+	{
+		if (isOpen && Input.GetKeyDown(UnityEngine.KeyCode.B))
+			StartCoroutine(PanelComplet());
+	}
+
 	public void InitLabyrintheScreen()
 	{
 		isActive = true;
