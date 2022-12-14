@@ -47,6 +47,9 @@ public class HackerController : MonoBehaviour
 		{
 			Destroy(this);
 		}
+
+		popupStack = false;
+
 		loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
 		rotToAdd = MiniGamescreens.GetComponent<screensholder>().rotToAdd;
 		currentRot = 0;
@@ -130,7 +133,6 @@ public class HackerController : MonoBehaviour
 								if (loadGame.GetComponent<IMinigame>().interact(callback))
 								{
 									loadGame.transform.parent.GetComponentInChildren<VideoPlayer>().SetDirectAudioMute(0, true);
-									screen.transform.GetChild(0).GetComponent<MeshRenderer>().material = screen.gameMaterial;
 									if (screen.GetComponentInChildren<VideoPlayer>() != null)
 									{
 										screen.GetComponentInChildren<VideoPlayer>().enabled = true;
@@ -143,13 +145,8 @@ public class HackerController : MonoBehaviour
 										newSequence.Join(l.DOColor(baseColor, 0.5f));
 									}
 									GetComponentsInChildren<screensholder>()[0].TurnOnScreen(false, screen.transform);
-									screen.screenState = ScreenState.MiniGame;
+									StartCoroutine(EndSetup(screen));
 									StartCoroutine(loadDelay());
-									if (!popupStack)
-                                    {
-										screen.displayPopUp();
-										popupStack = false;
-                                    }
 								}
 								break;
 							case ScreenState.Hack:
@@ -242,9 +239,16 @@ public class HackerController : MonoBehaviour
 	IEnumerator EndSetup(Screen scr)
 	{
 		locked = false;
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
+		
 		scr.transform.GetChild(0).GetComponent<MeshRenderer>().material = scr.gameMaterial;
 		scr.screenState = ScreenState.MiniGame;
+
+		if (popupStack)
+		{
+			screen.displayPopUp();
+			popupStack = false;
+		}
 	}
 	public void CamShake()
 	{
@@ -263,7 +267,7 @@ public class HackerController : MonoBehaviour
 		Debug.Log("screen = " + hit.transform.name);
 		if (scr.screenState != ScreenState.Load && scr.tag != "FakeScreen")
 		{
-			if(scr.screenState == ScreenState.Popups)
+			if(scr.screenState == ScreenState.Popups && scr.currentPopup.Count > 0)
             {
 				scr.ShutDownPopup();
 			}

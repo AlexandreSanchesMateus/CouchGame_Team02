@@ -67,6 +67,7 @@ public class Screen : MonoBehaviour
 	public void displayPopUp()
 	{
         Debug.Log("displayPopUp");
+		screenState = ScreenState.Popups;
         List<GameObject> popupsRandom = new List<GameObject>(popups);
 		//Debug.Log("displaying popup");
 		int n = Random.Range(3, popupsRandom.Count-1);
@@ -114,7 +115,6 @@ public class Screen : MonoBehaviour
 			
 		}
 		
-		screenState = ScreenState.Popups;
 	}
 	public bool FightPopup()
 	{

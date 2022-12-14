@@ -1,6 +1,6 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.InputSystem;
 
 public class LoadingSreen : MonoBehaviour, IMinigame
@@ -12,7 +12,7 @@ public class LoadingSreen : MonoBehaviour, IMinigame
     public int numberRequired;
     private int currentNumber;
     public GameObject slider;
-    private float actualSliderValue;
+    public float actualSliderValue;
 
     private bool boolsfx;
     private void OnEnable()
@@ -42,13 +42,14 @@ public class LoadingSreen : MonoBehaviour, IMinigame
                 boolsfx = false;
             }
 
-            actualSliderValue += (1 / (float)numberRequired);
-            newSequence.Append(slider.transform.DOScale(new Vector3(actualSliderValue, 1f, 1f), 0.4f).SetEase(Ease.OutCirc));
             
             currentNumber++;
+            actualSliderValue += (1 / (float)numberRequired);
+            newSequence.Append(slider.transform.DOScale(new Vector3(Mathf.Clamp(actualSliderValue,0,1), 1f, 1f), 0.25f).SetEase(Ease.OutCirc));
         }
         if (currentNumber >= numberRequired)
         {
+            StartCoroutine(Delay());
             currentNumber = 0;
             return true;
         }
@@ -82,4 +83,11 @@ public class LoadingSreen : MonoBehaviour, IMinigame
         }
     }
     public void Move(InputAction.CallbackContext callback) { }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2f);
+        slider.transform.localScale = new Vector3(0, 1, 1);
+        actualSliderValue = 0;
+    }
 }
