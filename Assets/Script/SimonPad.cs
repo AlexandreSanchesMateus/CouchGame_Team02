@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
 
 public class SimonPad : MonoBehaviour, IInteractible
 {
@@ -15,7 +14,6 @@ public class SimonPad : MonoBehaviour, IInteractible
     [Header("Canvas")]
     /* [SerializeField] private GameObject GUIhover;
     [SerializeField] private GameObject Pad;*/
-
 
     [SerializeField] private TextMeshProUGUI display;
 
@@ -32,7 +30,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     [Header("Correspondance Editor")]
     [Header("ID : Jaune: 0; Rouge: 1; Magenta: 2; Bleu: 3; Cyan: 4; Vert: 5")]
-    public ColorSimon[] colors = { new ColorSimon(COLORS.ROUGE), new ColorSimon(COLORS.BLEU), new ColorSimon(COLORS.VERT), new ColorSimon(COLORS.JAUNE) };
+    public ColorSimon[] colors = { new ColorSimon(COLORS.RED), new ColorSimon(COLORS.BLUE), new ColorSimon(COLORS.GREEN), new ColorSimon(COLORS.YELLOW) };
 
     private ColorSimon currentColorText, currentColor;
 
@@ -105,6 +103,7 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     public void CheckPlayerEntry()
     {
+
         if(braqueurPlay && hackeurPlay)
         {
             if (hackeurId == currentColor.idHackeur && braqueurId == currentColorText.idBraqueur)
@@ -135,6 +134,10 @@ public class SimonPad : MonoBehaviour, IInteractible
                     HackerController.instance.WrongAnswerLights();
                 }
             }
+
+            MiniGame2.instance.lastColor.transform.GetChild(0).gameObject.SetActive(false);
+            MiniGame2.instance.lastColor.transform.DOScale(new Vector3(1, 1, 1), 0.2f);
+
             braqueurPlay = false;
             hackeurPlay = false;
 
@@ -205,22 +208,22 @@ public class SimonPad : MonoBehaviour, IInteractible
     {
         switch (color.color)
         {
-            case COLORS.ROUGE:
+            case COLORS.RED:
                 return Color.red;
 
-            case COLORS.BLEU:
+            case COLORS.BLUE:
                 return Color.blue;
 
-            case COLORS.VERT:
+            case COLORS.GREEN:
                 return Color.green;
 
-            case COLORS.JAUNE:
+            case COLORS.YELLOW:
                 return Color.yellow;
 
-            case COLORS.BLEUCLAIR:
+            case COLORS.LIGHTBLUE:
                 return Color.cyan;
 
-            case COLORS.ROSE:
+            case COLORS.PINK:
                 return Color.magenta;
 
         }
@@ -246,12 +249,12 @@ public class SimonPad : MonoBehaviour, IInteractible
 
     public enum COLORS
     {
-        BLEU,
-        ROUGE,
-        VERT,
-        JAUNE,
-        BLEUCLAIR,
-        ROSE
+        BLUE,
+        RED,
+        GREEN,
+        YELLOW,
+        LIGHTBLUE,
+        PINK
     }
 
     private IEnumerator ColorRotation()

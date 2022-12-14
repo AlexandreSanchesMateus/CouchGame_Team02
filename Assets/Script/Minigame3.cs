@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 using DG.Tweening;
 
-public class Minigame3 : MonoBehaviour , IMinigame
+public class Minigame3 : MonoBehaviour, IMinigame
 {
-	private int key, lastKey;
-	[SerializeField] private Material selected, notSelected;
-	[SerializeField] private List<GameObject> buttons;
+	public static Minigame3 instance { get; set; }
+	public int key, lastKey;
+	[SerializeField] public Material selected, notSelected;
+	[SerializeField] public List<GameObject> buttons;
 	public AudioClip SFXSelect, SFXHover;
 
 	private bool haveInput = false;
 
 	public void Start()
 	{
+		instance = this;
 		key = 0;
 		lastKey = 0;
 		foreach(GameObject g in buttons)

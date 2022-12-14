@@ -58,7 +58,7 @@ public class Timer : MonoBehaviour
 
 	public void DisplayGameOver()
     {
-		AudioSpeaker.instance.PauseAudio();
+		AudioSpeaker.instance.PauseAudio(true);
 		PauseManager.instance.GameOver();
 		/*Time.timeScale = 0;
 		gameOverScreen.SetActive(true);

@@ -221,6 +221,9 @@ public class ElementPad : MonoBehaviour, IInteractible
                     HackerController.instance.WrongAnswerLights();
                 }
             }
+
+            Minigame3.instance.buttons[Minigame3.instance.lastKey].transform.GetComponent<MeshRenderer>().material = Minigame3.instance.notSelected;
+
             braqHavePlayed = false;
             hackHavePlayed = false;
 

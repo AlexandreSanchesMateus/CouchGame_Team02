@@ -6,12 +6,18 @@ using DG.Tweening;
 
 public class MiniGame2 : MonoBehaviour,IMinigame
 {
+	public static MiniGame2 instance { get; set; }
 	private float stickRotationInDeg;
-	private GameObject color, selectedColor, lastColor;
+	public GameObject color, selectedColor, lastColor;
 	public AudioClip SFXSelect, SFXHover;
 	[SerializeField] private LayerMask layer;
 
-	public bool interact(InputAction.CallbackContext ctx)
+    public void Start()
+    {
+		instance = this;
+    }
+
+    public bool interact(InputAction.CallbackContext ctx)
 	{
 		if(selectedColor != null)
         {
