@@ -21,8 +21,8 @@ public class HackerController : MonoBehaviour
 
 	private Transform originalCamTransform;
 
-	public GameObject setUp, loadGame;
-	public Material setupMaterial, loadMaterial;
+	public GameObject setUp, loadGame, neon;
+	public Material setupMaterial, loadMaterial, lightRed, lightGood;
 	private bool locked;
 	private bool loadingSreen = false;
 	private bool popupStack = false;
@@ -299,9 +299,10 @@ public class HackerController : MonoBehaviour
 			Sequence newSequence = DOTween.Sequence();
 			for(int i = 0; i<3; i++)
 			{
-				newSequence.Append(l.DOColor(malus, 0.2f));
-				newSequence.Append(l.DOColor(baseColor, 0.2f));
+				newSequence.Append(l.DOColor(baseColor, 0.2f).OnComplete(() => neon.GetComponent<MeshRenderer>().material = lightRed));
+				newSequence.Append(l.DOColor(malus, 0.2f).OnComplete(()=> neon.GetComponent<MeshRenderer>().material = lightGood));
 			}
+			newSequence.Append(l.DOColor(baseColor, 0.2f));
 		}
 
 	}
