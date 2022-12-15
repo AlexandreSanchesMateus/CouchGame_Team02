@@ -223,7 +223,7 @@ public class HackerController : MonoBehaviour
 
 	IEnumerator popupDelay()
 	{
-		yield return new WaitForSeconds(Random.Range(20, 30));
+		yield return new WaitForSeconds(3f);
 		Physics.Raycast(cam1.transform.position, Vector3.forward * 2, out hit);
 		screen = hit.transform.GetComponent<Screen>();
 		Debug.Log("screen = " + hit.transform.name);
@@ -260,7 +260,7 @@ public class HackerController : MonoBehaviour
 	IEnumerator loadDelay()
 	{
 		loadingSreen = true;
-		yield return new WaitForSeconds(Random.Range(120, 140));
+		yield return new WaitForSeconds(10f);
 		yield return new WaitUntil(() => scrHold.CanRotate);
 		Physics.Raycast(transform.position, transform.TransformDirection(cam1.transform.forward) * 2, out hit);
 		Screen scr = hit.transform.GetComponent<Screen>();
@@ -270,6 +270,7 @@ public class HackerController : MonoBehaviour
 			if(scr.screenState == ScreenState.Popups && scr.currentPopup.Count > 0)
             {
 				scr.ShutDownPopup();
+				StartCoroutine(popupDelay());
 			}
 
 			scr.screenState = ScreenState.Load;

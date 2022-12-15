@@ -30,7 +30,6 @@ public class Screen : MonoBehaviour
 	public List<GameObject> popups;
 	public List<GameObject> currentPopup = new List<GameObject>();
 	private int currentPopupLife;
-	public bool focus = false;
 	Sequence mySequence;
 
 	private List<int> firstPossibility = new List<int>(new int[4] {127, 192, 169, 198 });
@@ -141,18 +140,23 @@ public class Screen : MonoBehaviour
 	public IEnumerator destroyPopup()
 	{
 		mySequence = DOTween.Sequence();
-		mySequence.Append(currentPopup[0].transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
-		//mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
 		GameObject popup = currentPopup[0];
+		if (popup != null)
+			mySequence.Append(popup.transform.DOScale(new Vector3(0, 1, 0), 0.2f).SetEase(Ease.OutBounce));
+		//mySequence.Append(popup.transform.DOScale(new Vector3(scaleX, 1, Random.Range(0.04f, 0.1f)), 0.2f).SetEase(Ease.OutBounce));
+		
 		currentPopup.RemoveAt(0);
 		yield return new WaitForSeconds(0.2f);
-		popup.SetActive(false);
-		popup.transform.localScale = new Vector3(0.05f, 1, 0.03f);
+		if(popup != null)
+        {
+			popup.SetActive(false);
+			popup.transform.localScale = new Vector3(0.05f, 1, 0.03f);
+        }
 	}
 
 	public void ShutDownPopup()
     {
-		foreach (GameObject popup in currentPopup)
+		for(int i = currentPopup.Count; i>0; i--)
 		{
 			StartCoroutine(destroyPopup());
 		}
