@@ -13,7 +13,10 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 	public GameObject beginScreen;
 	public GameObject sucsessScreen;
 
-	public GameObject vcam;
+	public MeshRenderer indicator;
+	public Material indicatorMat;
+
+    public GameObject vcam;
 	public Transform chestParent;
 
 	public AudioClip setUp;
@@ -259,6 +262,7 @@ public class LabyrinthManager : MonoBehaviour, IInteractible
 		vcam.SetActive(false);
 		isActive = false;
 		sucsessScreen.SetActive(true);
+		indicator.material = indicatorMat;
 		gameObject.layer = 0;
 		yield return new WaitForSeconds(2);
 		PlayerControllerProto2.enablePlayerMovement = true;

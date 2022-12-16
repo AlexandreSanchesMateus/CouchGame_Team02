@@ -8,7 +8,7 @@ public class InspectedObject : MonoBehaviour , IInteractible
     [SerializeField] private bool canBeInspected = true;
     [SerializeField] private float defaultThrowForce = 100;
     [SerializeField] private float deltaHardThrow = 400;
-    [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 0.5f;
+    [SerializeField, Range(0.01f, 5)] private float turnSensibitive = 1.5f;
     [SerializeField] private TrailRenderer trailRenderer;
 
     [HideInInspector] public Rigidbody rb;

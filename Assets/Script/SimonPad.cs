@@ -120,13 +120,6 @@ public class SimonPad : MonoBehaviour, IInteractible
             }
             else
             {
-                for (int i = nbValid-1; i > -1; i--)
-                {
-                    // lights[i].color = Color.red;
-                    lights[i].GetComponent<MeshRenderer>().material = redMat;
-                }
-                nbValid = 0;
-
                 audioSource.PlayOneShot(fail);
 
                 if (braqueurId == currentColorText.idBraqueur)

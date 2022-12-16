@@ -43,6 +43,7 @@ public class PauseManager : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0;
+        inputModule.enabled = true;
         endGameMenu.SetActive(true);
         background.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;

@@ -33,6 +33,12 @@ public class LabyrintheEditor : Editor
         GUILayout.Label("sucess");
         myObject.SFXSucess = (AudioClip)EditorGUILayout.ObjectField(myObject.SFXSucess, typeof(AudioClip), true);
 
+        GUILayout.Label("indicator");
+        myObject.indicator = (MeshRenderer)EditorGUILayout.ObjectField(myObject.indicator, typeof(MeshRenderer), true);
+
+        GUILayout.Label("material");
+        myObject.indicatorMat = (Material)EditorGUILayout.ObjectField(myObject.indicatorMat, typeof(Material), true);
+
         GUILayout.Label("Parent slot");
         myObject.chestParent = (Transform)EditorGUILayout.ObjectField(myObject.chestParent, typeof(Transform), true);
 

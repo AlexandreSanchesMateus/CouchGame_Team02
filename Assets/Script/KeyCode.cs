@@ -186,7 +186,7 @@ public class KeyCode : MonoBehaviour, IInteractible
             displayCode.text = " G O O D";
             gameObject.layer = 0;
 
-            // Destroy(door);
+            Destroy(door);
             EnigmeManager.instance.SuccessKeypade();
 
             yield return new WaitForSeconds(1);
