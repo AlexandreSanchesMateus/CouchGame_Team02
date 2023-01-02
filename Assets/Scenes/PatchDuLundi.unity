@@ -1954,7 +1954,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41702
+  m_Name: pb_Mesh225972
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13206,7 +13206,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40188
+  m_Name: pb_Mesh219672
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14253,6 +14253,10 @@ PrefabInstance:
     - target: {fileID: 1770616332562219916, guid: e799991da88220e4bb17c48d48ae23d4, type: 3}
       propertyPath: m_Name
       value: TimerDisplay (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5350833362340269709, guid: e799991da88220e4bb17c48d48ae23d4, type: 3}
+      propertyPath: timeValue
+      value: 1260
       objectReference: {fileID: 0}
     - target: {fileID: 5350833362340269709, guid: e799991da88220e4bb17c48d48ae23d4, type: 3}
       propertyPath: gameOverScreen
@@ -18412,13 +18416,13 @@ GameObject:
   - component: {fileID: 806557370}
   - component: {fileID: 806557369}
   - component: {fileID: 806557368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &806557367
 Transform:
   m_ObjectHideFlags: 0
@@ -18427,7 +18431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806557366}
   m_LocalRotation: {x: 0.6535428, y: -0.26996624, z: -0.26996624, w: 0.6535428}
-  m_LocalPosition: {x: 0.16947934, y: 0.72826904, z: 28.370722}
+  m_LocalPosition: {x: 0.16947934, y: 0.72826904, z: 30.1}
   m_LocalScale: {x: 18.589056, y: 16.620918, z: 21.082397}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30349,7 +30353,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41384
+  m_Name: pb_Mesh224684
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31740,7 +31744,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41518
+  m_Name: pb_Mesh225160
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -37330,7 +37334,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41592
+  m_Name: pb_Mesh225470
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -42978,7 +42982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5350833362340269709, guid: e799991da88220e4bb17c48d48ae23d4, type: 3}
       propertyPath: timeValue
-      value: 1200
+      value: 1260
       objectReference: {fileID: 0}
     - target: {fileID: 5350833362340269709, guid: e799991da88220e4bb17c48d48ae23d4, type: 3}
       propertyPath: gameOverScreen
@@ -43425,7 +43429,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40348
+  m_Name: pb_Mesh220364
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -43796,6 +43800,14 @@ PrefabInstance:
       propertyPath: SFXSelect
       value: 
       objectReference: {fileID: 8300000, guid: 5ee105a7ea25e434881685440a0b6e75, type: 3}
+    - target: {fileID: 1011943897861264152, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.399998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455723035635289653, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2490576432834156474, guid: db57755365553804c91f44faac2e5b2b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -43840,9 +43852,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4306989966239378896, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.399998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566329459880575342, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.399998
+      objectReference: {fileID: 0}
     - target: {fileID: 5917864922972750614, guid: db57755365553804c91f44faac2e5b2b, type: 3}
       propertyPath: m_Name
       value: Minigame 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983670978239517260, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.399998
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550695286394260841, guid: db57755365553804c91f44faac2e5b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.399998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db57755365553804c91f44faac2e5b2b, type: 3}
